@@ -5,6 +5,7 @@ import profileImage from './assets/portfolio.JPG';
 import PMOverviewImg from './assets/pm_overview.JPG';
 import UIPreview from './assets/ui_example.JPG';
 import Sensorama from './assets/sensorama_external.jpg';
+import B52Lobby from './assets/fs_remake.jpg';
 
 
 export default function GameDevPortfolio() {
@@ -89,8 +90,8 @@ export default function GameDevPortfolio() {
 
     {
       id: 2,
-      title: 'B52 Training Suite (Military Contract)',
-      category: 'VR/Military - AAA-Scale Production',
+      title: 'B52 Training Suite',
+      category: 'VR/USAF - Large-Scale Production',
       thumbnail: cld('v1770171103/B52training_immersion_wjoscn.jpg', 1600),
       description:
         'Multi-million dollar immersive B52 training system. Multiple trainees linked using Normcore (migrated to Photon).',
@@ -106,7 +107,7 @@ export default function GameDevPortfolio() {
         {
           type: 'youtube',
           src: 'https://www.youtube.com/watch?v=RwfVfCtx3-M',
-          poster: cld('v1770171103/B52training_immersion_wjoscn.jpg', 1200),
+          poster: B52Lobby),
           label: 'Sizzle Reel — Networked Training Flow',
           system: 'Multiplayer',
         },
@@ -125,17 +126,11 @@ export default function GameDevPortfolio() {
       category: 'VR/AR & Robotics',
       thumbnail: Sensorama,
       description:
-        'Sensorama is an action-horror research game developed in collaboration with a robotics R&D team. Players control miniature characters trapped inside a hostile claw-machine environment, navigating physics-driven hazards while real-time sensor data (LiDAR, radar, sonar) dynamically influences enemy behavior and environmental threats.',
+        'Action-horror VR/AR prototype where players are miniaturized inside a claw machine while real-world sensor feeds influence in-game threats in real time.',
       tags: ['Unity', 'C#', 'Action Horror', 'Physics Systems', 'Sensor Integration', 'Experimental Gameplay'],
       github: 'https://github.com/Michamm79',
       codeDownload: 'https://github.com/Michamm79/archive/refs/heads/main.zip',
       media: [
-        {
-          type: 'video',
-          src: '/media/b52-demo.mp4',
-          label: 'Anchor Placement',
-          system: 'XR',
-        },
         {
           type: 'image',
           src: Sensorama,
@@ -144,8 +139,8 @@ export default function GameDevPortfolio() {
         },
       ],
       highlights: [
-  'Integrated real-time sensor data (LiDAR, radar, sonar) into gameplay systems to drive enemy behavior and environmental responses.',
-  'Designed physics-based interactions emphasizing player scale, tension, and emergent problem-solving.',
+  'Integrated real-time sensor inputs (LiDAR, radar, sonar) into gameplay systems to drive enemy behavior and environmental responses.',
+  'Designed physics-based interactions emphasizing player scale/physical limitations, tension, and emergent problem-solving.',
   'Collaborated with robotics R&D engineers to translate physical sensing constraints into interactive gameplay mechanics.'
       ],
     },
@@ -803,8 +798,12 @@ export default function GameDevPortfolio() {
         .modal-media{
           width:100%;
           max-width:1200px;
-          border-radius:10px;
-          display:block;
+          max-height: 78vh;
+          height: auto;
+          display: block;
+          border-radius: 10px;
+          object-fit: contain;
+          background: rgba(0,0,0,0.35);
         }
 
         .code-btn{
@@ -989,7 +988,7 @@ export default function GameDevPortfolio() {
                             <img
                               src={m.poster || m.project.thumbnail}
                               alt={m.label || `${m.project.title} media`}
-                              className="thumb-poster"
+                              className="thumb-image"
                             />
                             <div className="thumb-play">
                               <Eye size={18} />
@@ -1056,7 +1055,7 @@ export default function GameDevPortfolio() {
                   <img
                     src={m.src}
                     alt={m.label || m.type}
-                    className="modal-video"
+                    className="modal-media"
                   />
                 );
               }
@@ -1068,7 +1067,7 @@ export default function GameDevPortfolio() {
 
                 return (
                   <iframe
-                    className="modal-video"
+                    className="modal-media"
                     src={`https://www.youtube.com/embed/${id}`}
                     title={m.label || 'YouTube video'}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
