@@ -2,10 +2,16 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Eye, Download, X, ExternalLink } from 'lucide-react';
 
 import profileImage from './assets/portfolio.JPG';
-import PMOverviewImg from './assets/pm_overview.JPG';
-import UIPreview from './assets/ui_example.JPG';
-import Sensorama from './assets/sensorama_external.jpg';
-import B52Lobby from './assets/fs_remake.jpg';
+import menuTwo from './assets/MallCop_MainMenu2.jpg';
+import lobbyFive from './assets/MallCop_Lobby5.jpg';
+import mallCopMall from './assets/MallCop_Mall.jpg';
+import coreEight from './assets/MallCop_MallCore8.jpg';
+import mallFour from './assets/MallCop_Mall4.jpg';
+import coreTwo from './assets/MallCop_MallCore2.jpg';
+import sensorama from './assets/sensorama_external.jpg';
+import B52_USAF from './assets/B52training_immersion.jpg';
+import B52_internaltraining from './assets/fs_remake.jpg';
+import sensorama_Environment from './assets/Sensorama_ElephantPlush.jpg';
 
 
 export default function GameDevPortfolio() {
@@ -21,9 +27,9 @@ export default function GameDevPortfolio() {
       id: 0,
       title: 'Regressor’s Endgame',
       category: 'Action RPG | ML Progression | Story Systems',
-      thumbnail: PMOverviewImg,
+      thumbnail: profileImage,
       description:
-        'An in-progress action RPG built around storyline-driven progression with a machine-learning leveling/class system that adapts player builds over time.',
+        'In-progress Action RPG focused on readable combat and a regression-driven progression system, exploring ML-assisted build evolution using ML.NET.',
       tags: [
         'Unity',
         'C#',
@@ -41,27 +47,91 @@ export default function GameDevPortfolio() {
       media: [
         {
           type: 'image',
-          src: PMOverviewImg,
-          poster: 'https://your-thumbnail-link-here.jpg',
+          src: profileImage,
           label: 'Combat Loop & Ability Flow',
           system: 'Combat',
         },
-      
       ],
       highlights: [
-  'Designing and implementing a modular combat system with a focus on readability and player expression.',
-  'Developing a regression-based progression framework to support long-term build evolution.',
-  'Iterating on gameplay feel and system tuning through rapid prototyping.'
+        'Modular combat/ability framework built for rapid iteration and designer-friendly tuning.',
+        'RPG-style progression loop designed for long-term build evolution and replayable growth.',
+        'Data-driven architecture + tooling to keep systems scalable as content expands.',
+      ],
+      recruiterHighlights: [
+        'Modular combat + ability framework built for fast iteration and designer-friendly tuning.',
+        'Progression system designed around long-term build evolution (regression loops + adaptive class growth).',
+        'Tooling + data-driven architecture to keep features scalable as content expands.'
       ],
     },
 
     {
       id: 1,
-      title: 'Project Maelstrom - Solo Dev Game Demo',
-      category: 'Action-Adventure RPG',
-      thumbnail: PMOverviewImg, // ✅ local thumbnail
+      title: 'Mall Cop Madhouse',
+      category: 'Multiplayer | Asymmetric | Minigame Stealth / Chase',
+      thumbnail: mallCopMall, //MallCop_Mall ✅ local thumbnail
       description:
-        'Inclusive Action-RPG where players unknowingly exist in a hyper-realistic virtual experiment. Multiplayer coming.',
+      'Unique goal-oriented multiplayer stealth-and-chase game: hooligans complete disruptive minigames under pressure while a taser-wielding Mall Cop hunts them through a high-clarity mall map.',
+      tags: [
+        'Unity',
+        'C#',
+        'Multiplayer',
+        'UI/UX',
+        'Minigames',
+        'Game Feel',
+        'Systems',
+      ],
+      github: 'https://github.com/Michamm79',
+      media: [
+        {
+          type: 'image',
+          src: coreTwo, //MallCop_MallCore2,
+          label: 'Core Loop — Stealth + Tasks Under Pressure',
+          system: 'Gameplay',
+        },
+        {
+          type: 'image',
+          src: lobbyFive, //MallCop_MainMenu2,
+          label: 'Lobby + Role Selection UI',
+          system: 'UI/UX',
+        },
+        {
+          type: 'image',
+          src: coreEight, //MallCop_MallCore8,
+          label: 'Level Layout — Readable Navigation & Sightlines',
+          system: 'Level Design',
+        },
+        {
+          type: 'image',
+          src: menuTwo, //MallCop_Lobby5,
+          label: 'Match Setup — Player Onboarding & Controls',
+          system: 'UI/UX',
+        },
+        {
+          type: 'image',
+          src: mallFour, //MallCop_Mall4,
+          label: 'Environment Showcase — Stylized Visual Clarity',
+          system: 'Presentation',
+        },
+      ],
+
+      highlights: [
+        'Built/implemented networked gameplay loops supporting stealth objectives vs pursuit pressure.',
+        'Designed and integrated UI flows: role selection, task tracking, and readable in-world objectives.',
+        'Balanced game feel via tuning-friendly parameters for chase speed, detection, and task pacing.',
+      ],
+      recruiterHighlights: [
+        'Asymmetric multiplayer loop (objectives vs hunter pressure) designed for readable decisions.',
+        'UI/UX flows: role select, onboarding, task tracking, and clear in-world objectives.',
+        'Tuned “game feel” knobs: chase pacing, detection pressure, and minigame timing.',
+      ],
+    },
+    {
+      id: 2,
+      title: 'Project Maelstrom ',
+      category: 'Action-Adventure RPG',
+      thumbnail: profileImage, // ✅ local thumbnail
+      description:
+        'Inclusive Action-RPG where players unknowingly exist in a virtual experiment. Multiplayer coming.',
       tags: ['Unity', 'C#', 'Combat Systems', 'AI', 'Cinematics'],
       github: 'https://github.com/Michamm79/Project_Maelstrom',
       codeDownload:
@@ -76,72 +146,93 @@ export default function GameDevPortfolio() {
         },
         {
           type: 'image', // ✅ supports images now
-          src: PMOverviewImg,
+          src: profileImage,
           label: 'Battle Essence',
           system: 'AI',
         },
       ],
       highlights: [
         'Owned end-to-end gameplay systems: player controller, combat loop, progression, and encounter pacing.',
-        'Built data-driven systems for abilities and upgrades to support rapid iteration.',
-        'Implemented enemy behavior coordination to prevent dog-piling and improve readability.',
+        'Data-driven abilities/upgrades built for rapid iteration and balance passes.',
+        'Enemy coordination in pack-style combat to reduce dog-piling and improve player readability.',
       ],
+      recruiterHighlights: [
+        'Owned end-to-end gameplay systems: player controller, combat loop, progression, and encounter pacing.',
+        'Data-driven abilities/upgrades built for rapid iteration and balance passes.',
+        'Enemy coordination in pack-style combat to reduce dog-piling and improve player readability.',
+      ],
+
     },
 
     {
-      id: 2,
-      title: 'B52 Training Suite',
+      id: 3,
+      title: 'B52 Training Suite USAF',
       category: 'VR/USAF - Large-Scale Production',
-      thumbnail: cld('v1770171103/B52training_immersion_wjoscn.jpg', 1600),
+      thumbnail: B52_USAF,
       description:
-        'Multi-million dollar immersive B52 training system. Multiple trainees linked using Normcore (migrated to Photon).',
+        'Large-scale VR training suite with multi-trainee networking (Normcore → Photon migration) built for reliable repeated sessions.',
       tags: ['Unity', 'VR', 'Multiplayer', 'Photon', 'XR Training'],
 
       media: [
         {
           type: 'image',
-          src: cld('v1770171103/B52training_immersion_wjoscn.jpg', 1600),
+          src: B52_USAF,
           label: 'Training Cockpit (In-Engine)',
           system: 'Multiplayer',
         },
         {
           type: 'youtube',
           src: 'https://www.youtube.com/watch?v=RwfVfCtx3-M',
-          poster: B52Lobby),
+          poster: B52_internaltraining,
           label: 'Sizzle Reel — Networked Training Flow',
           system: 'Multiplayer',
         },
       ],
-
       highlights: [
         'Built multiplayer training interactions across multiple trainees with networked state sync.',
         'Collaborated with cross-functional teams to ship stable features under production constraints.',
         'Optimized performance and reliability for repeated training sessions and hardware variability.',
       ],
+      recruiterHighlights: [
+        'Multi-trainee networking + synchronized state with reliability-first constraints (training repeatability).',
+        'Supported production delivery: collaborated across disciplines, shipped stable features under deadlines.',
+        'Performance/robustness improvements for repeated sessions across variable hardware setups.',    
+      ],
     },
-
     {
-      id: 3,
+      id: 4,
       title: 'Sensorama R&D Project',
       category: 'VR/AR & Robotics',
-      thumbnail: Sensorama,
+      thumbnail: sensorama,
       description:
-        'Action-horror VR/AR prototype where players are miniaturized inside a claw machine while real-world sensor feeds influence in-game threats in real time.',
-      tags: ['Unity', 'C#', 'Action Horror', 'Physics Systems', 'Sensor Integration', 'Experimental Gameplay'],
+        'Experimental VR/AR action-horror prototype where real-world sensor feeds (LiDAR/radar/sonar) influence gameplay threats in real time.',
+      tags: [
+        'Unity',
+        'C#',
+        'Action Horror',
+        'Physics Systems',
+        'Sensor Integration',
+        'Experimental Gameplay',
+      ],
       github: 'https://github.com/Michamm79',
       codeDownload: 'https://github.com/Michamm79/archive/refs/heads/main.zip',
       media: [
         {
           type: 'image',
-          src: Sensorama,
+          src: sensorama_Environment,
           label: 'Gameplay Mechanics/Environment',
           system: 'Research & Development',
         },
       ],
       highlights: [
-  'Integrated real-time sensor inputs (LiDAR, radar, sonar) into gameplay systems to drive enemy behavior and environmental responses.',
-  'Designed physics-based interactions emphasizing player scale/physical limitations, tension, and emergent problem-solving.',
-  'Collaborated with robotics R&D engineers to translate physical sensing constraints into interactive gameplay mechanics.'
+        'Integrated real-time sensor inputs (LiDAR, radar, sonar) into gameplay systems to drive enemy behavior and environmental responses.',
+        'Designed physics-based interactions emphasizing player scale/physical limitations, tension, and emergent problem-solving.',
+        'Collaborated with robotics R&D engineers to translate physical sensing constraints into interactive gameplay mechanics.',
+      ],
+      recruiterHighlights: [
+        'Real-time sensor-to-gameplay mapping: physical sensing constraints (LiDAR/Radar/sonar) translated into interactive mechanics.',
+        'Physics-driven interactions built around miniature scale, tension, and emergent problem-solving.',
+        'Cross-disciplinary R&D collaboration bridging robotics hardware constraints and game design.',    
       ],
     },
   ];
@@ -700,7 +791,11 @@ export default function GameDevPortfolio() {
           outline: 2px solid rgba(99,197,218,0.65);
           outline-offset: 3px;
         }
-
+.media-label{
+  text-alight:center;
+  opacity:0.85;
+  margin-bottom:0.75rem;
+}
         .media-ring{
           border-radius: 14px;
           padding: 6px;
@@ -766,15 +861,20 @@ export default function GameDevPortfolio() {
         }
         .modal-content{
           position:relative;
-          max-width:90vw;
-          max-height:90vh;
+          width: min(1100px, 92vw);
+          height: min(820px, 92vh);
           background: var(--deep-shadow);
           border: 2px solid var(--electric-cyan);
           border-radius:16px;
-          padding:2rem;
+          padding: 1.25rem;
           box-shadow: 0 0 80px rgba(127,233,255,0.18);
-          overflow:auto;
+          overflow: hidden;
+        
+          display:flex;
+          flex-direction:column;
+          gap: 0.75rem;
         }
+        
         .modal-close{
           position:absolute;
           top:1rem;
@@ -795,17 +895,26 @@ export default function GameDevPortfolio() {
           background: var(--electric-cyan);
           box-shadow: 0 0 20px var(--electric-cyan);
         }
-        .modal-media{
-          width:100%;
-          max-width:1200px;
-          max-height: 78vh;
-          height: auto;
-          display: block;
+        .modal-media,
+        .modal-video{
+          width: 100%;
+          height: 100%;
+          max-height: 100%;
           border-radius: 10px;
           object-fit: contain;
           background: rgba(0,0,0,0.35);
         }
 
+        .modal-media{
+          /* for iframe + img */
+          aspect-ratio: 16 / 9;
+        }
+        
+        .modal-video{
+          /* video element respects size now */
+          aspect-ratio: 16 / 9;
+        }
+        
         .code-btn{
           display:inline-flex;
           align-items:center;
@@ -831,7 +940,36 @@ export default function GameDevPortfolio() {
           nav{ padding: 1rem 1.25rem; }
           .nav-links{ gap: 1.25rem; }
         }
-      `}</style>
+
+        .recruiter-highlights{
+          margin: 0.75rem auto 1rem;
+          max-width: 720px;
+          padding: 0.75rem 1rem;
+          border: 1px solid rgba(99,197,218,0.28);
+          border-radius: 12px;
+          background: rgba(4,10,18,0.55);
+        }
+        
+        .recruiter-title{
+          font-family: 'Orbitron', sans-serif;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          opacity: 0.9;
+          margin-bottom: 0.5rem;
+        }
+        
+        .recruiter-highlights ul{
+          margin: 0;
+          padding-left: 1.1rem;
+        }
+        
+        .recruiter-highlights li{
+          opacity: 0.9;
+          margin: 0.25rem 0;
+        }
+
+              `}</style>
 
       <nav>
         <ul className="nav-links">
@@ -1018,53 +1156,50 @@ export default function GameDevPortfolio() {
       </section>
 
       {selectedMedia && (
-        <div className="modal-overlay" onClick={() => setSelectedMedia(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-close" onClick={() => setSelectedMedia(null)}>
-              <X />
-            </div>
+  <div className="modal-overlay" onClick={() => setSelectedMedia(null)}>
+    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-close" onClick={() => setSelectedMedia(null)}>
+        <X />
+      </div>
 
+      {/** derive the selected media ONCE */}
+      {(() => {
+        const project = selectedMedia.project;
+        const m = project.media?.[selectedMedia.mediaIndex];
+
+        return (
+          <>
             <h3
               style={{
                 fontFamily: 'Orbitron',
                 color: 'var(--electric-cyan)',
-                marginBottom: '0.75rem',
+                marginBottom: '0.25rem',
                 textAlign: 'center',
               }}
             >
-              {selectedMedia.project.title}
+              {project.title}
             </h3>
 
-            <p
-              style={{
-                textAlign: 'center',
-                opacity: 0.85,
-                marginBottom: '1rem',
-              }}
-            >
-              {selectedMedia.project.media?.[selectedMedia.mediaIndex]?.label ||
-                ''}
-            </p>
+            {m?.label && <p className="media-label">{m.label}</p>}
 
-            {(() => {
-              const m = selectedMedia.project.media?.[selectedMedia.mediaIndex];
-              if (!m) return null;
+            {project.recruiterHighlights?.length > 0 && (
+              <div className="recruiter-highlights">
+                <div className="recruiter-title">Recruiter Highlights</div>
+                <ul>
+                  {project.recruiterHighlights.map((h, i) => (
+                    <li key={i}>{h}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-              if (m.type === 'image' || m.type === 'gif') {
-                return (
-                  <img
-                    src={m.src}
-                    alt={m.label || m.type}
-                    className="modal-media"
-                  />
-                );
-              }
-
-              if (m.type === 'youtube') {
+            {/** media render */}
+            {!m ? null : m.type === 'image' || m.type === 'gif' ? (
+              <img src={m.src} alt={m.label || m.type} className="modal-media" />
+            ) : m.type === 'youtube' ? (
+              (() => {
                 const url = new URL(m.src);
-                const id =
-                  url.searchParams.get('v') || url.pathname.split('/').pop();
-
+                const id = url.searchParams.get('v') || url.pathname.split('/').pop();
                 return (
                   <iframe
                     className="modal-media"
@@ -1074,57 +1209,59 @@ export default function GameDevPortfolio() {
                     allowFullScreen
                   />
                 );
-              }
+              })()
+            ) : (
+              <video
+                className="modal-video"
+                controls
+                autoPlay
+                playsInline
+                poster={m.poster || project.thumbnail}
+                src={m.src}
+              />
+            )}
+          </>
+        );
+      })()}
 
-              return (
-                <video
-                  className="modal-video"
-                  controls
-                  autoPlay
-                  playsInline
-                  poster={m.poster || selectedMedia.project.thumbnail}
-                  src={m.src}
-                />
-              );
-            })()}
+      {/** buttons */}
+      <div
+        style={{
+          display: 'flex',
+          gap: '1rem',
+          justifyContent: 'center',
+          marginTop: '1.25rem',
+          flexWrap: 'wrap',
+        }}
+      >
+        {selectedMedia.project.github && (
+          <a
+            className="code-btn"
+            href={selectedMedia.project.github}
+            target="_blank"
+            rel="noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ExternalLink size={16} />
+            View GitHub
+          </a>
+        )}
 
-            <div
-              style={{
-                display: 'flex',
-                gap: '1rem',
-                justifyContent: 'center',
-                marginTop: '1.25rem',
-                flexWrap: 'wrap',
-              }}
-            >
-              {selectedMedia.project.github && (
-                <a
-                  className="code-btn"
-                  href={selectedMedia.project.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ExternalLink size={16} />
-                  View GitHub
-                </a>
-              )}
-
-              {selectedMedia.project.codeDownload && (
-                <a
-                  className="code-btn"
-                  href={selectedMedia.project.codeDownload}
-                  download
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Download size={16} />
-                  Download Code Sample
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+        {selectedMedia.project.codeDownload && (
+          <a
+            className="code-btn"
+            href={selectedMedia.project.codeDownload}
+            download
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Download size={16} />
+            Download Code Sample
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }
