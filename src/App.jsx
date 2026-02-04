@@ -4,6 +4,8 @@ import { Eye, Download, X, ExternalLink } from 'lucide-react';
 import profileImage from './assets/portfolio.JPG';
 import PMOverviewImg from './assets/pm_overview.JPG';
 import UIPreview from './assets/ui_example.JPG';
+import Sensorama from './assets/sensorama_external.jpg';
+
 
 export default function GameDevPortfolio() {
   const [activeSection, setActiveSection] = useState('hammond');
@@ -20,7 +22,7 @@ export default function GameDevPortfolio() {
       category: 'Action RPG | ML Progression | Story Systems',
       thumbnail: PMOverviewImg,
       description:
-        'Action RPG built around regression-driven, story-forward progression with a machine-learning leveling/class system that adapts player builds over time.',
+        'An in-progress action RPG built around storyline-driven progression with a machine-learning leveling/class system that adapts player builds over time.',
       tags: [
         'Unity',
         'C#',
@@ -43,43 +45,12 @@ export default function GameDevPortfolio() {
           label: 'Combat Loop & Ability Flow',
           system: 'Combat',
         },
-        {
-          type: 'gif',
-          src: '/media/regressor-enemy-telegraph.gif',
-          label: 'Telegraphs & Readability',
-          system: 'AI',
-        },
-        {
-          type: 'video',
-          src: '/media/regressor-locomotion-blend.mp4',
-          poster: 'https://your-thumbnail-link-here.jpg',
-          label: 'Locomotion → Combat Blends',
-          system: 'Animation',
-        },
-        {
-          type: 'video',
-          src: '/media/regressor-ml-leveling.mp4',
-          poster: 'https://your-thumbnail-link-here.jpg',
-          label: 'ML Leveling / Class Evolution',
-          system: 'Progression',
-        },
-        {
-          type: 'gif',
-          src: '/media/regressor-progression-state.gif',
-          label: 'Story/Run State Tracking',
-          system: 'Progression',
-        },
-        {
-          type: 'gif',
-          src: '/media/regressor-debug-overlay.gif',
-          label: 'Tuning + Debug Overlay',
-          system: 'Tools',
-        },
+      
       ],
       highlights: [
-        'Built an ActionRPG combat loop with tuning-friendly parameters for fast iteration and feel.',
-        'Implemented an ML-driven leveling/class system that evolves builds based on player progression data.',
-        'Developed story-forward progression state that persists across runs and supports gated events.',
+  'Designing and implementing a modular combat system with a focus on readability and player expression.',
+  'Developing a regression-based progression framework to support long-term build evolution.',
+  'Iterating on gameplay feel and system tuning through rapid prototyping.'
       ],
     },
 
@@ -152,10 +123,10 @@ export default function GameDevPortfolio() {
       id: 3,
       title: 'Sensorama R&D Project',
       category: 'VR/AR & Robotics',
-      thumbnail: UIPreview,
+      thumbnail: Sensorama,
       description:
-        'Holographic content placement system using OVR and Photon networking.',
-      tags: ['Unity', 'MR', 'OVR', 'Spatial Anchors'],
+        'Sensorama is an action-horror research game developed in collaboration with a robotics R&D team. Players control miniature characters trapped inside a hostile claw-machine environment, navigating physics-driven hazards while real-time sensor data (LiDAR, radar, sonar) dynamically influences enemy behavior and environmental threats.',
+      tags: ['Unity', 'C#', 'Action Horror', 'Physics Systems', 'Sensor Integration', 'Experimental Gameplay'],
       github: 'https://github.com/Michamm79',
       codeDownload: 'https://github.com/Michamm79/archive/refs/heads/main.zip',
       media: [
@@ -167,15 +138,15 @@ export default function GameDevPortfolio() {
         },
         {
           type: 'image',
-          src: UIPreview,
-          label: 'UI Customization',
-          system: 'AR',
+          src: Sensorama,
+          label: 'Gameplay Mechanics/Environment',
+          system: 'Research & Development',
         },
       ],
       highlights: [
-        'Developed MR placement workflows with snap + alignment logic for consistent user experience.',
-        'Integrated runtime UI/UX feedback for spatial interactions and calibration.',
-        'Prototyped and iterated quickly based on test feedback and technical constraints.',
+  'Integrated real-time sensor data (LiDAR, radar, sonar) into gameplay systems to drive enemy behavior and environmental responses.',
+  'Designed physics-based interactions emphasizing player scale, tension, and emergent problem-solving.',
+  'Collaborated with robotics R&D engineers to translate physical sensing constraints into interactive gameplay mechanics.'
       ],
     },
   ];
