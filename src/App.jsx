@@ -12,8 +12,9 @@ import sensorama from './assets/sensorama_external.jpg';
 import B52_USAF from './assets/B52training_immersion.jpg';
 import B52_internaltraining from './assets/fs_remake.jpg';
 import sensorama_Environment from './assets/Sensorama_ElephantPlush.jpg';
-
-
+import PM_Overview from './assets/pm_overview.jpg';
+import PM_PlayerFocus from './assets/pm_tools.jpg'
+import PM_Combat from './assets/pm_enemies-combat.jpg'
 export default function GameDevPortfolio() {
   const [activeSection, setActiveSection] = useState('hammond');
   const [selectedMedia, setSelectedMedia] = useState(null);
@@ -129,7 +130,7 @@ export default function GameDevPortfolio() {
       id: 2,
       title: 'Project Maelstrom ',
       category: 'Action-Adventure RPG',
-      thumbnail: profileImage, // ✅ local thumbnail
+      thumbnail: PM_Overview, // ✅ local thumbnail
       description:
         'Inclusive Action-RPG where players unknowingly exist in a virtual experiment. Multiplayer coming.',
       tags: ['Unity', 'C#', 'Combat Systems', 'AI', 'Cinematics'],
@@ -138,15 +139,8 @@ export default function GameDevPortfolio() {
         'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
       media: [
         {
-          type: 'video',
-          src: '/media/maelstrom-reel.mp4',
-          poster: 'https://i.ibb.co/S4MBjHTs/PM-Environment.jpg',
-          label: 'Gameplay Reel',
-          system: 'Combat',
-        },
-        {
           type: 'image', // ✅ supports images now
-          src: profileImage,
+          src: PM_PlayerFocus,
           label: 'Battle Essence',
           system: 'AI',
         },
@@ -215,7 +209,6 @@ export default function GameDevPortfolio() {
         'Experimental Gameplay',
       ],
       github: 'https://github.com/Michamm79',
-      codeDownload: 'https://github.com/Michamm79/archive/refs/heads/main.zip',
       media: [
         {
           type: 'image',
@@ -432,9 +425,9 @@ export default function GameDevPortfolio() {
           background-clip: text;
           
           text-shadow:
-          0 8px 0 rgba(99,197,218,0.18),
-          0 15px 0px rgba(40,50,194,0.22),
-          0 12px 0px rgba(40,30,93,0.35);
+          0 2px 0 rgba(99,197,218,0.18),
+          0 8px 0px rgba(40,50,194,0.22),
+          0 11px 0px rgba(40,30,93,0.35);
 
         }
 
@@ -451,29 +444,6 @@ export default function GameDevPortfolio() {
           -webkit-background-clip: text;
           background-clip: text;
           -webkit-text-fill-color: transparent;
-        }
-
-        .stroke-title::before{
-          content:"";
-          position:absolute;
-          left: -0.18em;
-          right: -0.18em;
-          top: 55%;
-          height: 0.72em;
-          transform: translateY(-50%) skewX(-10deg);
-          border-radius: 999px;
-          opacity: 0.42;
-          z-index: -1;
-
-          background: linear-gradient(90deg,
-            rgba(99,197,218,0.95) 0%,
-            rgba(122,223,255,0.80) 35%,
-            rgba(40,50,194,0.85) 100%
-          );
-
-          box-shadow:
-            0 0 18px var(--glow-sky),
-            0 0 26px var(--glow-lapis);
         }
 
         /* HERO */
@@ -699,7 +669,7 @@ export default function GameDevPortfolio() {
         }
         .project-card{
           background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
-          border: 1px solid var(--border);
+          border: 5px solid var(--border);
           border-radius: 12px;
           overflow:hidden;
           cursor:pointer;
@@ -740,16 +710,25 @@ export default function GameDevPortfolio() {
         /* Systems in Motion */
         .media-grid{
           display:grid;
-          gap: 2rem;
-          max-width: 1400px;
-          margin: 0 auto;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap:3rem;
+          max-width:1400px;
+          margin:0 auto;
         }
         .media-card{
           background: linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
-          border: 1px solid var(--border);
+          border: 5px solid var(--border);
           border-radius: 14px;
           padding: 1.25rem;
           box-shadow: 0 16px 60px rgba(0,0,0,0.25);
+        }
+        .media-card:hover{
+          transform: translateY(-8px);
+          border-color: var(--border-strong);
+          box-shadow:
+            0 20px 70px rgba(0,0,0,0.35),
+            0 0 22px var(--glow-sky),
+            0 0 34px var(--glow-lapis);
         }
         .media-category{
           display:inline-block;
