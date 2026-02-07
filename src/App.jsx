@@ -162,7 +162,7 @@ export default function GameDevPortfolio() {
       media: [
         {
           type: 'youtube',
-          src: 'https://www.youtube.com/watch?v=yfuFpTZCy2g&t=131s',
+          src: 'https://youtu.be/yfuFpTZCy2g?si=TgEWj1p08yPcPYMQ',
           poster: B52_USAF,
           label: 'Training Cockpit (In-Engine)',
           system: 'Multiplayer',
@@ -170,7 +170,7 @@ export default function GameDevPortfolio() {
         },
         {
           type: 'youtube',
-          src: 'https://youtu.be/Rwhttps://youtu.be/RwfVfCtx3-M?si=HzuSHQE7rvOb72JxfVfCtx3-M?si=avruqaIDuuu474D6',
+          src: 'https://youtu.be/RwfVfCtx3-M?si=CVPqiLuieOj_MsIj',
           poster: B52_internaltraining,
           label: 'XR Training Highlights',
           system: 'Multiplayer',
