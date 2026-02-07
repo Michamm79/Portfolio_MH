@@ -163,7 +163,7 @@ export default function GameDevPortfolio() {
         {
           type: 'youtube',
           src: 'https://youtu.be/RwfVfCtx3-M?si=OlzIGy4tvBD3d2dA',
-          src: B52_USAF,
+          poster: B52_USAF,
           label: 'Training Cockpit (In-Engine)',
           system: 'Multiplayer',
 
