@@ -13,22 +13,22 @@ import B52_USAF from './assets/B52training_immersion.jpg';
 import B52_internaltraining from './assets/fs_remake.jpg';
 import sensorama_Environment from './assets/Sensorama_ElephantPlush.jpg';
 import PM_Overview from './assets/pm_overview.jpg';
-import PM_PlayerFocus from './assets/pm_tools.jpg'
-import PM_Combat from './assets/pm_enemies-combat.jpg'
+import PM_PlayerFocus from './assets/pm_tools.jpg';
+import PM_Combat from './assets/pm_enemies-combat.jpg';
+import ComingSoon from './assets/ComingSoon.jpg';
+
 export default function GameDevPortfolio() {
   const [activeSection, setActiveSection] = useState('hammond');
   const [selectedMedia, setSelectedMedia] = useState(null);
   const hammondRef = useRef(null);
 
-  const cld = (path, w = 1600) =>
-    `https://res.cloudinary.com/dlhazdpo7/image/upload/f_auto,q_auto,w_${w}/${path}`;
-
+  // ✅ PROJECTS ARRAY (this is the one you were asking about)
   const projects = [
     {
       id: 0,
       title: 'Regressor’s Endgame',
       category: 'Action RPG | ML Progression | Story Systems',
-      thumbnail: profileImage,
+      thumbnail: ComingSoon,
       description:
         'In-progress Action RPG focused on readable combat and a regression-driven progression system, exploring ML-assisted build evolution using ML.NET.',
       tags: [
@@ -42,26 +42,25 @@ export default function GameDevPortfolio() {
         'ML.NET',
         'Tools',
       ],
-      github: 'https://github.com/Michamm79/Regressor-s_Endgame.git',
+      github: 'https://github.com/Michamm79/Regressor-s_Endgame',
+      // IMPORTANT: replace this with your actual repo zip link if you want it to download a zip
+      // This format is correct:
+      // https://github.com/<USER>/<REPO>/archive/refs/heads/main.zip
       codeDownload:
-        'https://github.com/yourname/regressors-endgame/archive/refs/heads/main.zip',
+        'https://github.com/Michamm79/Regressor-s_Endgame/archive/refs/heads/main.zip',
+
       media: [
         {
           type: 'image',
-          src: profileImage,
+          src: ComingSoon,
           label: 'Combat Loop & Ability Flow',
           system: 'Combat',
         },
       ],
-      highlights: [
-        'Modular combat/ability framework built for rapid iteration and designer-friendly tuning.',
-        'RPG-style progression loop designed for long-term build evolution and replayable growth.',
-        'Data-driven architecture + tooling to keep systems scalable as content expands.',
-      ],
       recruiterHighlights: [
         'Modular combat + ability framework built for fast iteration and designer-friendly tuning.',
         'Progression system designed around long-term build evolution (regression loops + adaptive class growth).',
-        'Tooling + data-driven architecture to keep features scalable as content expands.'
+        'Tooling + data-driven architecture to keep features scalable as content expands.',
       ],
     },
 
@@ -69,9 +68,9 @@ export default function GameDevPortfolio() {
       id: 1,
       title: 'Mall Cop Madhouse',
       category: 'Multiplayer | Asymmetric | Minigame Stealth / Chase',
-      thumbnail: mallCopMall, //MallCop_Mall ✅ local thumbnail
+      thumbnail: mallCopMall,
       description:
-      'Unique goal-oriented multiplayer stealth-and-chase game: hooligans complete disruptive minigames under pressure while a taser-wielding Mall Cop hunts them through a high-clarity mall map.',
+        'Unique goal-oriented multiplayer stealth-and-chase game: hooligans complete disruptive minigames under pressure while a taser-wielding Mall Cop hunts them through a high-clarity mall map.',
       tags: [
         'Unity',
         'C#',
@@ -81,44 +80,37 @@ export default function GameDevPortfolio() {
         'Game Feel',
         'Systems',
       ],
-      github: 'https://github.com/Michamm79',
       media: [
         {
           type: 'image',
-          src: coreTwo, //MallCop_MallCore2,
+          src: coreTwo,
           label: 'Core Loop — Stealth + Tasks Under Pressure',
           system: 'Gameplay',
         },
         {
           type: 'image',
-          src: lobbyFive, //MallCop_MainMenu2,
+          src: lobbyFive,
           label: 'Lobby + Role Selection UI',
           system: 'UI/UX',
         },
         {
           type: 'image',
-          src: coreEight, //MallCop_MallCore8,
+          src: coreEight,
           label: 'Level Layout — Readable Navigation & Sightlines',
           system: 'Level Design',
         },
         {
           type: 'image',
-          src: menuTwo, //MallCop_Lobby5,
+          src: menuTwo,
           label: 'Match Setup — Player Onboarding & Controls',
           system: 'UI/UX',
         },
         {
           type: 'image',
-          src: mallFour, //MallCop_Mall4,
+          src: mallFour,
           label: 'Environment Showcase — Stylized Visual Clarity',
           system: 'Presentation',
         },
-      ],
-
-      highlights: [
-        'Built/implemented networked gameplay loops supporting stealth objectives vs pursuit pressure.',
-        'Designed and integrated UI flows: role selection, task tracking, and readable in-world objectives.',
-        'Balanced game feel via tuning-friendly parameters for chase speed, detection, and task pacing.',
       ],
       recruiterHighlights: [
         'Asymmetric multiplayer loop (objectives vs hunter pressure) designed for readable decisions.',
@@ -126,11 +118,12 @@ export default function GameDevPortfolio() {
         'Tuned “game feel” knobs: chase pacing, detection pressure, and minigame timing.',
       ],
     },
+
     {
       id: 2,
-      title: 'Project Maelstrom ',
+      title: 'Project Maelstrom',
       category: 'Action-Adventure RPG',
-      thumbnail: PM_Overview, // ✅ local thumbnail
+      thumbnail: PM_Overview,
       description:
         'Inclusive Action-RPG where players unknowingly exist in a virtual experiment. Multiplayer coming.',
       tags: ['Unity', 'C#', 'Combat Systems', 'AI', 'Cinematics'],
@@ -139,23 +132,23 @@ export default function GameDevPortfolio() {
         'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
       media: [
         {
-          type: 'image', // ✅ supports images now
+          type: 'image',
           src: PM_PlayerFocus,
-          label: 'Battle Essence',
-          system: 'AI',
+          label: 'Setting up the Scene',
+          system: 'Editor Tools',
+        },
+        {
+          type: 'image',
+          src: PM_Combat,
+          label: 'Combat Readability / Threat Zones',
+          system: 'Combat',
         },
       ],
-      highlights: [
-        'Owned end-to-end gameplay systems: player controller, combat loop, progression, and encounter pacing.',
-        'Data-driven abilities/upgrades built for rapid iteration and balance passes.',
-        'Enemy coordination in pack-style combat to reduce dog-piling and improve player readability.',
-      ],
       recruiterHighlights: [
-        'Owned end-to-end gameplay systems: player controller, combat loop, progression, and encounter pacing.',
+        'Owned end-to-end gameplay systems: controller, combat loop, progression, encounter pacing.',
         'Data-driven abilities/upgrades built for rapid iteration and balance passes.',
-        'Enemy coordination in pack-style combat to reduce dog-piling and improve player readability.',
+        'Enemy coordination to reduce dog-piling and improve player readability.',
       ],
-
     },
 
     {
@@ -166,33 +159,30 @@ export default function GameDevPortfolio() {
       description:
         'Large-scale VR training suite with multi-trainee networking (Normcore → Photon migration) built for reliable repeated sessions.',
       tags: ['Unity', 'VR', 'Multiplayer', 'Photon', 'XR Training'],
-
       media: [
         {
-          type: 'image',
+          type: 'youtube',
+          src: 'https://www.youtube.com/watch?v=RwfVfCtx3-M&t=83s',
           src: B52_USAF,
           label: 'Training Cockpit (In-Engine)',
           system: 'Multiplayer',
+
         },
         {
           type: 'youtube',
-          src: 'https://www.youtube.com/watch?v=RwfVfCtx3-M',
+          src: 'https://youtu.be/Rwhttps://youtu.be/RwfVfCtx3-M?si=HzuSHQE7rvOb72JxfVfCtx3-M?si=avruqaIDuuu474D6',
           poster: B52_internaltraining,
-          label: 'Sizzle Reel — Networked Training Flow',
+          label: 'XR Training Highlights',
           system: 'Multiplayer',
         },
       ],
-      highlights: [
-        'Built multiplayer training interactions across multiple trainees with networked state sync.',
-        'Collaborated with cross-functional teams to ship stable features under production constraints.',
-        'Optimized performance and reliability for repeated training sessions and hardware variability.',
-      ],
       recruiterHighlights: [
-        'Multi-trainee networking + synchronized state with reliability-first constraints (training repeatability).',
-        'Supported production delivery: collaborated across disciplines, shipped stable features under deadlines.',
-        'Performance/robustness improvements for repeated sessions across variable hardware setups.',    
+        'Multi-trainee networking + synchronized state with reliability-first constraints.',
+        'Collaborated across disciplines; shipped stable features under deadlines.',
+        'Performance/robustness improvements for repeated sessions across variable setups.',
       ],
     },
+
     {
       id: 4,
       title: 'Sensorama R&D Project',
@@ -208,44 +198,36 @@ export default function GameDevPortfolio() {
         'Sensor Integration',
         'Experimental Gameplay',
       ],
-      github: 'https://github.com/Michamm79',
       media: [
         {
           type: 'image',
           src: sensorama_Environment,
-          label: 'Gameplay Mechanics/Environment',
+          label: 'Gameplay Mechanics / Environment',
           system: 'Research & Development',
         },
       ],
-      highlights: [
-        'Integrated real-time sensor inputs (LiDAR, radar, sonar) into gameplay systems to drive enemy behavior and environmental responses.',
-        'Designed physics-based interactions emphasizing player scale/physical limitations, tension, and emergent problem-solving.',
-        'Collaborated with robotics R&D engineers to translate physical sensing constraints into interactive gameplay mechanics.',
-      ],
       recruiterHighlights: [
-        'Real-time sensor-to-gameplay mapping: physical sensing constraints (LiDAR/Radar/sonar) translated into interactive mechanics.',
+        'Real-time sensor-to-gameplay mapping (LiDAR/Radar/Sonar) translated into mechanics.',
         'Physics-driven interactions built around miniature scale, tension, and emergent problem-solving.',
-        'Cross-disciplinary R&D collaboration bridging robotics hardware constraints and game design.',    
+        'Cross-disciplinary R&D collaboration bridging hardware constraints and game design.',
       ],
     },
   ];
 
+  // Group media into system buckets (Combat / UI/UX / etc.)
   const systemBuckets = useMemo(() => {
     const buckets = {};
     projects.forEach((p) => {
-      (p.media || []).forEach((m) => {
+      (p.media || []).forEach((m, i) => {
         const key = m.system || 'Other';
         if (!buckets[key]) buckets[key] = [];
-        buckets[key].push({
-          ...m,
-          project: p,
-          _index: (p.media || []).indexOf(m),
-        });
+        buckets[key].push({ ...m, project: p, _index: i });
       });
     });
     return buckets;
   }, [projects]);
 
+  // Active nav link highlight based on scroll
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['hammond', 'projects', 'motion'];
@@ -263,6 +245,7 @@ export default function GameDevPortfolio() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Embers effect
   const embers = useMemo(() => {
     const count = 90;
     return Array.from({ length: count }, (_, i) => {
@@ -285,6 +268,19 @@ export default function GameDevPortfolio() {
       };
     });
   }, []);
+
+  // Helper: youtube id extraction
+  const getYouTubeId = (url) => {
+    try {
+      const u = new URL(url);
+      const v = u.searchParams.get('v');
+      if (v) return v;
+      const parts = u.pathname.split('/').filter(Boolean);
+      return parts[parts.length - 1] || null;
+    } catch {
+      return null;
+    }
+  };
 
   return (
     <div className="portfolio">
@@ -321,17 +317,12 @@ export default function GameDevPortfolio() {
           --text: #eaf3ff;
           --text-dim: rgba(234,243,255,0.78);
 
-          /* ✅ FIXED: closed properly */
           --title-grad: linear-gradient(135deg,
             #bfefff 0%,
             var(--sky) 32%,
             #7adfff 48%,
             var(--lapis) 100%
           );
-
-          --seafoam:#7fe9ff;
-          --seafoam-soft: rgba(127,233,255, 0.12);
-          --seafoam-border: rgba(127,233,255, 0.55);
 
           --glass: rgba(7,18,33, 0.62);
           --glass-2: rgba(11,31,58, 0.55);
@@ -351,6 +342,9 @@ export default function GameDevPortfolio() {
         }
 
         .portfolio{ position:relative; min-height:100vh; }
+
+        /* ✅ so clicking nav anchors doesn't hide headings under fixed nav */
+        section{ scroll-margin-top: calc(var(--navH) + 18px); }
 
         nav{
           height: var(--navH);
@@ -403,15 +397,15 @@ export default function GameDevPortfolio() {
           position: relative;
           display: inline-block;
           opacity: 0.95;
-        
+
           font-family:'Orbitron', sans-serif;
           font-size: clamp(1.9rem, 4.2vw, 3.1rem);
-          margin-bottom: 2.25rem; /* reduced from 3rem */
+          margin-bottom: 2.25rem;
           font-weight: 800;
           text-transform: uppercase;
           letter-spacing: 0.14em;
-          text-align: center;                 
-        
+          text-align: center;
+
           background: linear-gradient(
             110deg,
             #ffffff 0%,
@@ -423,15 +417,13 @@ export default function GameDevPortfolio() {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          
-          text-shadow:
-          0 2px 0 rgba(99,197,218,0.18),
-          0 8px 0px rgba(40,50,194,0.22),
-          0 11px 0px rgba(40,30,93,0.35);
 
+          text-shadow:
+            0 2px 0 rgba(99,197,218,0.18),
+            0 8px 0px rgba(40,50,194,0.22),
+            0 11px 0px rgba(40,30,93,0.35);
         }
 
-        /* ✅ Paint-stroke title treatment */
         .stroke-title{
           position: relative;
           display: inline-block;
@@ -502,9 +494,7 @@ export default function GameDevPortfolio() {
           pointer-events:none;
           z-index: 6;
 
-          opacity: 1;
           mix-blend-mode: screen;
-          filter: none;
           transform: translateZ(0);
 
           background:
@@ -534,7 +524,6 @@ export default function GameDevPortfolio() {
             rgba(77,183,255,0.00) 72%
           );
           filter: blur(10px);
-          pointer-events:none;
         }
 
         @media (max-width: 900px){
@@ -688,6 +677,7 @@ export default function GameDevPortfolio() {
           width:100%;
           height:240px;
           object-fit:cover;
+          object-position:center;
           display:block;
         }
         .project-info{ padding: 1.25rem; }
@@ -721,6 +711,7 @@ export default function GameDevPortfolio() {
           border-radius: 14px;
           padding: 1.25rem;
           box-shadow: 0 16px 60px rgba(0,0,0,0.25);
+          transition: all 0.25s ease;
         }
         .media-card:hover{
           transform: translateY(-8px);
@@ -770,11 +761,13 @@ export default function GameDevPortfolio() {
           outline: 2px solid rgba(99,197,218,0.65);
           outline-offset: 3px;
         }
-.media-label{
-  text-alight:center;
-  opacity:0.85;
-  margin-bottom:0.75rem;
-}
+
+        .media-label{
+          text-align:center; /* ✅ fixed typo */
+          opacity:0.85;
+          margin-bottom:0.75rem;
+        }
+
         .media-ring{
           border-radius: 14px;
           padding: 6px;
@@ -794,7 +787,6 @@ export default function GameDevPortfolio() {
           background: rgba(0,0,0,0.20);
         }
 
-        .thumb-poster,
         .thumb-image{
           width:100%;
           height: 150px;
@@ -838,22 +830,25 @@ export default function GameDevPortfolio() {
           z-index:2000;
           padding:2rem;
         }
+
+        /* ✅ make modal scrollable + not cut off */
         .modal-content{
           position:relative;
           width: min(1100px, 92vw);
-          height: min(820px, 92vh);
+          max-height: 92vh;
           background: var(--deep-shadow);
           border: 2px solid var(--electric-cyan);
           border-radius:16px;
           padding: 1.25rem;
           box-shadow: 0 0 80px rgba(127,233,255,0.18);
-          overflow: hidden;
-        
+
           display:flex;
           flex-direction:column;
           gap: 0.75rem;
+
+          overflow: auto;  /* ✅ key fix */
         }
-        
+
         .modal-close{
           position:absolute;
           top:1rem;
@@ -874,26 +869,16 @@ export default function GameDevPortfolio() {
           background: var(--electric-cyan);
           box-shadow: 0 0 20px var(--electric-cyan);
         }
+
         .modal-media,
         .modal-video{
           width: 100%;
-          height: 100%;
-          max-height: 100%;
           border-radius: 10px;
           object-fit: contain;
           background: rgba(0,0,0,0.35);
+          aspect-ratio: 16 / 9;
         }
 
-        .modal-media{
-          /* for iframe + img */
-          aspect-ratio: 16 / 9;
-        }
-        
-        .modal-video{
-          /* video element respects size now */
-          aspect-ratio: 16 / 9;
-        }
-        
         .code-btn{
           display:inline-flex;
           align-items:center;
@@ -914,14 +899,8 @@ export default function GameDevPortfolio() {
           box-shadow: 0 0 22px rgba(127,233,255,0.35);
         }
 
-        @media (max-width: 768px){
-          section{ padding: 5.25rem 1.25rem; }
-          nav{ padding: 1rem 1.25rem; }
-          .nav-links{ gap: 1.25rem; }
-        }
-
         .recruiter-highlights{
-          margin: 0.75rem auto 1rem;
+          margin: 0.75rem auto 0.5rem;
           max-width: 720px;
           padding: 0.75rem 1rem;
           border: 1px solid rgba(99,197,218,0.28);
@@ -936,6 +915,7 @@ export default function GameDevPortfolio() {
           font-size: 0.85rem;
           opacity: 0.9;
           margin-bottom: 0.5rem;
+          text-align: center;
         }
         
         .recruiter-highlights ul{
@@ -948,16 +928,19 @@ export default function GameDevPortfolio() {
           margin: 0.25rem 0;
         }
 
-              `}</style>
+        @media (max-width: 768px){
+          section{ padding: 5.25rem 1.25rem; }
+          nav{ padding: 1rem 1.25rem; }
+          .nav-links{ gap: 1.25rem; }
+        }
+      `}</style>
 
       <nav>
         <ul className="nav-links">
           <li>
             <a
               href="#hammond"
-              className={`nav-link ${
-                activeSection === 'hammond' ? 'active' : ''
-              }`}
+              className={`nav-link ${activeSection === 'hammond' ? 'active' : ''}`}
             >
               Home
             </a>
@@ -965,9 +948,7 @@ export default function GameDevPortfolio() {
           <li>
             <a
               href="#projects"
-              className={`nav-link ${
-                activeSection === 'projects' ? 'active' : ''
-              }`}
+              className={`nav-link ${activeSection === 'projects' ? 'active' : ''}`}
             >
               Projects
             </a>
@@ -975,9 +956,7 @@ export default function GameDevPortfolio() {
           <li>
             <a
               href="#motion"
-              className={`nav-link ${
-                activeSection === 'motion' ? 'active' : ''
-              }`}
+              className={`nav-link ${activeSection === 'motion' ? 'active' : ''}`}
             >
               Systems
             </a>
@@ -1012,11 +991,7 @@ export default function GameDevPortfolio() {
         <div className="hammond-content">
           <div className="hammond-layout">
             <div className="hammond-avatar-wrap">
-              <img
-                src={profileImage}
-                alt="Michael Hammond"
-                className="hammond-avatar"
-              />
+              <img src={profileImage} alt="Michael Hammond" className="hammond-avatar" />
             </div>
 
             <div className="hammond-text">
@@ -1025,11 +1000,10 @@ export default function GameDevPortfolio() {
                 Gameplay Engineer | Player Systems &amp; Interactive Experiences
               </p>
               <p className="hammond-positioning">
-                Gameplay engineer and designer with 5+ years building
-                player-centric systems across combat, AI behavior, progression,
-                animation integration, and interactive tools in Unity and
-                Unreal. Known for owning features end to end—from design and
-                prototyping through implementation, tuning, and polish.
+                Gameplay engineer and designer with 5+ years building player-centric systems across
+                combat, AI behavior, progression, animation integration, and interactive tools in
+                Unity and Unreal. Known for owning features end to end—from design and prototyping
+                through implementation, tuning, and polish.
               </p>
               <p className="nav-hint">↓ Scroll to explore ↓</p>
             </div>
@@ -1038,9 +1012,7 @@ export default function GameDevPortfolio() {
       </section>
 
       <section id="projects">
-        <h2 className="section-title" data-shadow="FEATURED PROJECTS">
-          Featured Projects
-        </h2>
+        <h2 className="section-title">Featured Projects</h2>
 
         <div className="projects-grid">
           {projects.map((project) => (
@@ -1048,16 +1020,10 @@ export default function GameDevPortfolio() {
               key={project.id}
               className="project-card"
               onClick={() =>
-                project.media?.length
-                  ? setSelectedMedia({ project, mediaIndex: 0 })
-                  : null
+                project.media?.length ? setSelectedMedia({ project, mediaIndex: 0 }) : null
               }
             >
-              <img
-                src={project.thumbnail}
-                alt={project.title}
-                className="project-thumbnail"
-              />
+              <img src={project.thumbnail} alt={project.title} className="project-thumbnail" />
               <div className="project-info">
                 <h3 className="project-title">
                   <span className="stroke-title">{project.title}</span>
@@ -1077,9 +1043,7 @@ export default function GameDevPortfolio() {
       </section>
 
       <section id="motion">
-        <h2 className="section-title" data-shadow="SYSTEMS IN MOTION">
-          Systems in Motion
-        </h2>
+        <h2 className="section-title">Systems in Motion</h2>
 
         <div className="media-grid">
           {Object.entries(systemBuckets).map(([system, items]) => (
@@ -1091,16 +1055,12 @@ export default function GameDevPortfolio() {
                   <button
                     key={`${system}-${idx}`}
                     className="thumb"
-                    onClick={() =>
-                      setSelectedMedia({
-                        project: m.project,
-                        mediaIndex: m._index,
-                      })
-                    }
+                    onClick={() => setSelectedMedia({ project: m.project, mediaIndex: m._index })}
+                    type="button"
                   >
                     <div className="media-ring">
                       <div className="media-ring-inner">
-                        {m.type === 'video' || m.type === 'youtube' ? (
+                        {m.type === 'youtube' ? (
                           <div className="thumb-video">
                             <img
                               src={m.poster || m.project.thumbnail}
@@ -1134,113 +1094,115 @@ export default function GameDevPortfolio() {
         </div>
       </section>
 
+      {/* MODAL */}
       {selectedMedia && (
-  <div className="modal-overlay" onClick={() => setSelectedMedia(null)}>
-    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-      <div className="modal-close" onClick={() => setSelectedMedia(null)}>
-        <X />
-      </div>
+        <div className="modal-overlay" onClick={() => setSelectedMedia(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-close" onClick={() => setSelectedMedia(null)}>
+              <X />
+            </div>
 
-      {/** derive the selected media ONCE */}
-      {(() => {
-        const project = selectedMedia.project;
-        const m = project.media?.[selectedMedia.mediaIndex];
+            {(() => {
+              const project = selectedMedia.project;
+              const m = project.media?.[selectedMedia.mediaIndex];
 
-        return (
-          <>
-            <h3
-              style={{
-                fontFamily: 'Orbitron',
-                color: 'var(--electric-cyan)',
-                marginBottom: '0.25rem',
-                textAlign: 'center',
-              }}
-            >
-              {project.title}
-            </h3>
+              return (
+                <>
+                  <h3
+                    style={{
+                      fontFamily: 'Orbitron',
+                      color: 'var(--electric-cyan)',
+                      marginBottom: '0.25rem',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {project.title}
+                  </h3>
 
-            {m?.label && <p className="media-label">{m.label}</p>}
+                  {m?.label && <p className="media-label">{m.label}</p>}
 
-            {project.recruiterHighlights?.length > 0 && (
-              <div className="recruiter-highlights">
-                <div className="recruiter-title">Recruiter Highlights</div>
-                <ul>
-                  {project.recruiterHighlights.map((h, i) => (
-                    <li key={i}>{h}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+                  {project.recruiterHighlights?.length > 0 && (
+                    <div className="recruiter-highlights">
+                      <div className="recruiter-title">Recruiter Highlights</div>
+                      <ul>
+                        {project.recruiterHighlights.map((h, i) => (
+                          <li key={i}>{h}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-            {/** media render */}
-            {!m ? null : m.type === 'image' || m.type === 'gif' ? (
-              <img src={m.src} alt={m.label || m.type} className="modal-media" />
-            ) : m.type === 'youtube' ? (
-              (() => {
-                const url = new URL(m.src);
-                const id = url.searchParams.get('v') || url.pathname.split('/').pop();
-                return (
-                  <iframe
-                    className="modal-media"
-                    src={`https://www.youtube.com/embed/${id}`}
-                    title={m.label || 'YouTube video'}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                );
-              })()
-            ) : (
-              <video
-                className="modal-video"
-                controls
-                autoPlay
-                playsInline
-                poster={m.poster || project.thumbnail}
-                src={m.src}
-              />
-            )}
-          </>
-        );
-      })()}
+                  {!m ? null : m.type === 'image' || m.type === 'gif' ? (
+                    <img src={m.src} alt={m.label || m.type} className="modal-media" />
+                  ) : m.type === 'youtube' ? (
+                    (() => {
+                      const id = getYouTubeId(m.src);
+                      return id ? (
+                        <iframe
+                          className="modal-media"
+                          src={`https://www.youtube.com/embed/${id}`}
+                          title={m.label || 'YouTube video'}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <div style={{ textAlign: 'center', opacity: 0.85 }}>
+                          Couldn’t parse YouTube link.
+                        </div>
+                      );
+                    })()
+                  ) : (
+                    <video
+                      className="modal-video"
+                      controls
+                      autoPlay
+                      playsInline
+                      poster={m.poster || project.thumbnail}
+                      src={m.src}
+                    />
+                  )}
 
-      {/** buttons */}
-      <div
-        style={{
-          display: 'flex',
-          gap: '1rem',
-          justifyContent: 'center',
-          marginTop: '1.25rem',
-          flexWrap: 'wrap',
-        }}
-      >
-        {selectedMedia.project.github && (
-          <a
-            className="code-btn"
-            href={selectedMedia.project.github}
-            target="_blank"
-            rel="noreferrer"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <ExternalLink size={16} />
-            View GitHub
-          </a>
-        )}
+                  <div
+                    style={{
+                      display: 'flex',
+                      gap: '1rem',
+                      justifyContent: 'center',
+                      marginTop: '1rem',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    {project.github && (
+                      <a
+                        className="code-btn"
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ExternalLink size={16} />
+                        View GitHub
+                      </a>
+                    )}
 
-        {selectedMedia.project.codeDownload && (
-          <a
-            className="code-btn"
-            href={selectedMedia.project.codeDownload}
-            download
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Download size={16} />
-            Download Code Sample
-          </a>
-        )}
-      </div>
-    </div>
-  </div>
-)}
+                    {project.codeDownload && (
+                      <a
+                        className="code-btn"
+                        href={project.codeDownload}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Download size={16} />
+                        Download Code Sample
+                      </a>
+                    )}
+                  </div>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
