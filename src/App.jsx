@@ -26,14 +26,15 @@ export default function GameDevPortfolio() {
   const projects = [
     {
       id: 0,
-      title: 'Regressor’s Endgame',
+      title: 'Regressors Endgame',
       category: 'Action RPG | ML Progression | Story Systems',
       thumbnail: ComingSoon,
       description:
         'In-progress Action RPG focused on readable combat and a regression-driven progression system, exploring ML-assisted build evolution using ML.NET.',
       tags: [
-        'Unity',
-        'C#',
+        'Unreal Engine 5',
+        'C++',
+        'Blueprint',
         'Action RPG',
         'Combat',
         'AI',
@@ -84,7 +85,7 @@ export default function GameDevPortfolio() {
         {
           type: 'image',
           src: coreTwo,
-          label: 'Core Loop — Stealth + Tasks Under Pressure',
+          label: 'Core Loop — Stealth + Task Timeline',
           system: 'Gameplay',
         },
         {
@@ -104,12 +105,6 @@ export default function GameDevPortfolio() {
           src: menuTwo,
           label: 'Match Setup — Player Onboarding & Controls',
           system: 'UI/UX',
-        },
-        {
-          type: 'image',
-          src: mallFour,
-          label: 'Environment Showcase — Stylized Visual Clarity',
-          system: 'Presentation',
         },
       ],
       recruiterHighlights: [
@@ -297,8 +292,8 @@ export default function GameDevPortfolio() {
           --lapis:#2832C2;
           --indigo:#281E5D;
 
-          --void-black:#050508;
-          --deep-shadow:#070b14;
+          --void-black:#000037;
+          --deep-shadow:#ff1400;
           --midnight-blue:#0b1224;
 
           --panel: rgba(8,12,28,0.68);
