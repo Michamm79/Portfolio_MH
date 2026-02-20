@@ -144,14 +144,15 @@ export default function GameDevPortfolio() {
 
   const embers = useMemo(() => {
     const palette = [
-      'rgba(126,184,247,0.85)',
-      'rgba(181,123,238,0.80)',
+      'rgba(0, 149, 255,1)',
+      'rgba(153, 48, 255,0.80)',
       'rgba(232,121,184,0.75)',
       'rgba(232,224,255,0.70)',
       'rgba(254,192,1,0.65)',
     ];
     return Array.from({ length: 70 }, (_, i) => {
       const dur = 7 + Math.random() * 10;
+      const colorIndex = Math.floor(Math.random() * palette.length);
       return {
         id: i,
         left: Math.random() * 100,
@@ -161,8 +162,9 @@ export default function GameDevPortfolio() {
         duration: dur,
         dx: -60 + Math.random() * 120,
         alpha: 0.4 + Math.random() * 0.5,
-        color: palette[Math.floor(Math.random() * palette.length)],
-      };
+        color: palette[colorIndex],
+        colorCategory: ['A', 'B', 'C', 'D', 'E'][colorIndex], // ADD THIS LINE
+        };
     });
   }, []);
 
@@ -288,7 +290,7 @@ export default function GameDevPortfolio() {
         }
         .nav-brand {
           font-family: 'Cinzel', serif;
-          font-size: clamp(0.5rem, 1vw, 0.7rem);
+          font-size: clamp(0.8rem, 1vw, 1.2rem);
           font-weight: 700;
           letter-spacing: 0.24em;
           text-transform: uppercase;
@@ -296,7 +298,7 @@ export default function GameDevPortfolio() {
           opacity: 0.82;
           white-space: nowrap;
         }
-        .nav-links { display: flex; gap: clamp(1.1rem, 3vw, 2.5rem); list-style: none; }
+        .nav-links { display: flex; gap: clamp(1rem, 3vw, 2.5rem); list-style: none; }
         .nav-link {
           background: var(--galaxy-bar);
           background-size: 260% auto;
@@ -307,7 +309,7 @@ export default function GameDevPortfolio() {
           filter: drop-shadow(0 0 4px rgba(254,192,1,0.30));
           text-decoration: none;
           font-family: 'Cinzel', serif;
-          font-size: clamp(0.65rem, 1.05vw, 0.73rem);
+          font-size: clamp(.6rem, 1.5vw, 1rem);
           font-weight: 600;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -319,7 +321,7 @@ export default function GameDevPortfolio() {
           position: absolute;
           bottom: -6px; left: 0;
           width: 0; height: 1px;
-          background: var(--gold);
+          background: var(--shimmer-grad);
           box-shadow: 0 0 8px var(--gold);
           transition: width 0.25s ease;
         }
@@ -358,7 +360,7 @@ export default function GameDevPortfolio() {
         }
         @keyframes spin-ring { to { transform: rotate(360deg); } }
         .nebula-seal::after {
-          content: '◇';
+          content: '';
           font-size: clamp(25px, 2.2vw, 40px);
           background: linear-gradient(135deg, #7eb8f7 0%, #b57bee 40%, #e8e0ff 55%, #b57bee 70%, #7eb8f7 100%);
           -webkit-background-clip: text;
@@ -374,8 +376,7 @@ export default function GameDevPortfolio() {
           display: flex;
           align-items: center;
           gap: 0.85rem;
-          margin-bottom: clamp(1.75rem, 3vh, 2.5rem);
-
+          margin-bottom: clamp(2rem, 4vh, 3rem);
         }
         .section-header::after {
           content: '';
@@ -393,7 +394,7 @@ export default function GameDevPortfolio() {
         }
         .section-title {
           font-family: 'Cinzel', serif;
-          font-size: clamp(0.65rem, 1.55vw, .85rem);
+          font-size: clamp(1rem, 1.55vw, 1.2rem);
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.20em;
@@ -414,7 +415,7 @@ export default function GameDevPortfolio() {
         .hammond {
           position: relative;
           isolation: isolate;
-          height: 100vh;
+          height: 75vh;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -466,7 +467,29 @@ export default function GameDevPortfolio() {
           100% { transform: translate3d(var(--dx, 0px), -115vh, 0) scale(0.65); opacity: 0; }
         }
 
-        .hammond-content { position: relative; z-index: 3; padding: 2rem; }
+        .ember[data-color="A"] {
+          filter: drop-shadow(0 0 8px rgba(153, 48, 255, 1))
+                  drop-shadow(0 0 16px rgba(201, 145, 255, 1));
+        }
+        .ember[data-color="B"] {
+          filter: drop-shadow(0 0 8px rgba(230, 85, 167, 1))
+                  drop-shadow(0 0 16px rgba(232,121,184, 1));
+        }
+        .ember[data-color="C"] {
+          filter: drop-shadow(0 0 8px rgba(187, 163, 255, 1))
+                  drop-shadow(0 0 16px rgba(232,224,255, 1));
+        }
+        .ember[data-color="D"] {
+          filter: drop-shadow(0 0 8px rgba(0, 149, 255,1))
+                  drop-shadow(0 0 16px rgba(115, 197, 255, 1));
+        }
+        .ember[data-color="E"] {
+          filter: drop-shadow(0 0 8px rgba(254, 192, 1, 1))
+                  drop-shadow(0 0 16px rgba(255, 220, 100, 1));
+        }
+      }
+
+      hammond-content { position: relative; z-index: 3; padding: 3rem; }
         .hammond-layout {
           display: flex;
           align-items: center;
@@ -474,7 +497,7 @@ export default function GameDevPortfolio() {
           gap: clamp(1.25rem, 4vw, 3.5rem);
           max-width: min(1100px, 95vw);
           margin: 0 auto;
-          padding: 0 clamp(0.5rem, 2vw, 1.5rem);
+          padding: 0 clamp(0.8rem, 2vw, 1.5rem);
         }
 
         /* Avatar with spinning galaxy ring */
@@ -506,7 +529,7 @@ export default function GameDevPortfolio() {
           inset: -14px;
           border-radius: 999px;
           border: 1px solid var(--border-nebula);
-          box-shadow: 0 0 22px rgba(74,45,138,0.35), inset 0 0 22px rgba(74,45,138,0.15);
+          box-shadow: 0 0 22px rgba(101, 42, 232,0.45), inset 0 0 22px rgba(255, 207, 61,0.35);
         }
         .hammond-avatar {
           width:  clamp(128px, 18vw, 215px);
@@ -550,6 +573,7 @@ export default function GameDevPortfolio() {
           opacity: 0.92;
           white-space: normal;  /* Changed from nowrap */
           max-width: 100%;      /* Add this to let it wrap properly */
+          margin-bottom: 12px;
         }
         .hammond-positioni
         ng {
@@ -587,10 +611,10 @@ export default function GameDevPortfolio() {
         .nav-hint {
           margin-top: 1.4rem;
           font-family: 'Cinzel', serif;
-          font-size: clamp(0.56rem, 0.88vw, 0.70rem);
+          font-size: clamp(0.65rem, 1vw, 0.9rem);
           letter-spacing: 0.20em;
           color: var(--gold);
-          opacity: 0.55;
+          opacity: 0.888;
           animation: bounce 2.8s ease-in-out infinite;
         }
         @keyframes bounce {
@@ -604,36 +628,44 @@ export default function GameDevPortfolio() {
           .hammond-subtitle { white-space: normal; }
           .nav-brand      { display: none; }
         }
-        @media (max-width: 520px) {
+        @media (max-width: 400px) {
           .nav-links { gap: 1rem; }
-          .nav-link  { font-size: 0.56rem; letter-spacing: 0.1em; }
+          .nav-link  { font-size: 0.6rem; }
         }
 
         /* SECTIONS */
-        @media (max-width: 200px){
         section {
           min-height: 100vh;
-          padding: 3rem clamp(0.75rem, 3vw, 1.25rem) 2.5rem;
+          padding: clamp(2.5rem, 5vh, 4rem) clamp(4rem, 3vw, 2rem);
           position: relative;
           z-index: 1;
         }
-      }
-
+        
+        /* Only adjust for very small screens if needed */
+        @media (max-width: 480px) {
+          section {
+            padding: 4rem 4rem;
+          }
+        }
+        @media (max-width: 420px) {
+          .media-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        @media (max-width: 280px) {
+          .projects-grid{
+            grid-template-columns: 1fr;
+          }
+        }
       /* PROJECT CARDS */
       .projects-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: clamp(1rem, 2.5vw, 1.75rem);
         max-width: 1400px;
         margin: 0 auto;
       }
-      
-      @media (max-width: 480px) {
-        .projects-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-              
+                    
       .project-card {
         background: var(--panel);
         border: 1px solid var(--border-nebula);
@@ -641,14 +673,17 @@ export default function GameDevPortfolio() {
         overflow: hidden;
         cursor: pointer;
         transition: all 0.28s ease;
+        padding: clamp(1rem, calc(2.5rem - 0.5vw), 1.5rem);
         position: relative;
       }
+      
       .project-card::before {
           content: '';
           position: absolute;
           top: 0; left: 0;
           width: 34px; height: 2px;
           z-index: 2;
+          box-shadow: 0 0 5px var(--star-blue);
         }
         .project-card::after {
           content: '';
@@ -738,14 +773,17 @@ export default function GameDevPortfolio() {
         /* SYSTEMS IN MOTION */
         .media-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: clamp(1rem, 2.5vw, 1.75rem);
           max-width: 1400px;
           margin: 0 auto;
-        }
+          }
         
         @media (max-width: 420px) {
           .media-grid {
+            grid-template-columns: 1fr;
+          }
+          .projects-grid{
             grid-template-columns: 1fr;
           }
         }
@@ -756,14 +794,14 @@ export default function GameDevPortfolio() {
           overflow: hidden;
           cursor: pointer;
           transition: all 0.28s ease;
-          padding: clamp(0.9rem, 1.8vw, 1.3rem);
+          padding: clamp(1rem, calc(2.5rem - 0.5vw), 1.5rem);
           position: relative;
         }
         .media-card::before {
           content: '';
           position: absolute;
           top: 0; left: 0;
-          width: 52px; height: 2px;
+          width: 120px; height: 2px;
           border-radius: 0 0 2px 0;
         }
         .media-card:nth-child(3n+1)::before { background: linear-gradient(to right, var(--star-blue),   transparent); }
@@ -862,8 +900,6 @@ export default function GameDevPortfolio() {
           z-index: 2000;
           padding: 2rem;
         }
-        @media (max-width: 200px) {
-
         .modal-content {
           position: relative;
           max-height: 95vh;
@@ -1025,14 +1061,42 @@ export default function GameDevPortfolio() {
       </nav>
 
       {/* CORNER SEAL */}
-      <div className="nebula-seal" aria-hidden="true" />
-
+      <div className="nebula-seal" aria-hidden="true">
+      <svg viewBox="0 0 100 100" style={{ width: '60%', height: '60%', position: 'relative', zIndex: 1 }}>
+    <defs>
+      <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style={{ stopColor: '#ff6bb5', stopOpacity: 1 }} />
+        <stop offset="50%" style={{ stopColor: '#e879b8', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#b57bee', stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    
+    {/* Flame petals */}
+    <path d="M50,10 Q40,25 45,40 Q50,30 50,50 Q50,30 55,40 Q60,25 50,10 Z" 
+          fill="url(#roseGrad)" opacity="0.9" />
+    <path d="M30,30 Q25,40 30,50 Q40,45 50,50 Q40,40 30,30 Z" 
+          fill="url(#roseGrad)" opacity="0.8" />
+    <path d="M70,30 Q75,40 70,50 Q60,45 50,50 Q60,40 70,30 Z" 
+          fill="url(#roseGrad)" opacity="0.8" />
+    <path d="M20,50 Q18,60 25,70 Q35,65 50,70 Q40,60 20,50 Z" 
+          fill="url(#roseGrad)" opacity="0.7" />
+    <path d="M80,50 Q82,60 75,70 Q65,65 50,70 Q60,60 80,50 Z" 
+          fill="url(#roseGrad)" opacity="0.7" />
+    
+    {/* Center spiral */}
+    <circle cx="50" cy="50" r="8" fill="white" opacity="0.9" />
+    <path d="M50,42 Q58,50 50,58 Q42,50 50,42 Z" 
+          fill="white" opacity="0.7" />
+  </svg>
+</div>
       {/* HERO */}
       <section id="hammond" className="hammond" ref={hammondRef}>
         <div className="hero-scanlines" />
         <div className="energy-particles">
           {embers.map((e) => (
-            <div key={e.id} className="ember" style={{
+            <div key={e.id} className="ember" 
+            data-color={e.colorCategory}
+            style={{
               left: `${e.left}%`, top: `${e.top}%`,
               width: `${e.size}px`, height: `${e.size}px`,
               background: e.color, opacity: e.alpha,
@@ -1137,7 +1201,7 @@ export default function GameDevPortfolio() {
 
       {/* FOOTER */}
       <div className="nebula-footer">
-        ✦ &nbsp; Group 7 · Aether Awakened · <span>Galaxy Division</span> &nbsp; ✦
+        ✦ &nbsp; Gameplay Engineer <span>Michael Hammond</span> &nbsp; ✦
       </div>
 
       {/* MODAL */}
