@@ -15,6 +15,8 @@ import PM_Overview from './assets/pm_overview.jpg';
 import PM_PlayerFocus from './assets/pm_tools.jpg';
 import PM_Combat from './assets/pm_enemies-combat.jpg';
 import ComingSoon from './assets/ComingSoon.jpg';
+import roseEmblem from './assets/Rose_Color.png';
+
 
 export default function GameDevPortfolio() {
   const [activeSection, setActiveSection] = useState('hammond');
@@ -85,7 +87,7 @@ export default function GameDevPortfolio() {
       category: 'VR/USAF - Large-Scale Production',
       color: 'blue',
       thumbnail: B52_USAF,
-      description: 'Large-scale VR training suite with multi-trainee networking (Normcore → Photon migration) built for reliable repeated sessions.',
+      description: 'Large-scale VR training suite with multi-trainee networking (Normcore → Photon migration) built for reliable repeated sessions. Recorded 95% reduction in training time, 33% increase in trainee retention, and 19% decrease in procedural errors',
       tags: ['Unity', 'VR', 'Multiplayer', 'Photon', 'XR Training'],
       media: [
         { type: 'youtube', src: 'https://youtu.be/yfuFpTZCy2g?si=TgEWj1p08yPcPYMQ', poster: B52_USAF, label: 'Training Cockpit (In-Engine)', system: 'Multiplayer' },
@@ -229,7 +231,7 @@ export default function GameDevPortfolio() {
             #5f01d0, #9a1fff, #e879b8, #7eb8f7, #b57bee, #fec001, #5f01d0
           );
 
-          --moonSize:      clamp(42px, 5vw, 62px);
+          --moonSize:      clamp(62px, 5vw, 84px);
           --moonRight:     clamp(14px, 3vw, 68px);
           --moonTopOffset: clamp(14px, 2vh, 26px);
         }
@@ -321,7 +323,7 @@ export default function GameDevPortfolio() {
           position: absolute;
           bottom: -6px; left: 0;
           width: 0; height: 1px;
-          background: var(--shimmer-grad);
+          background: var(--gold-light);
           box-shadow: 0 0 8px var(--gold);
           transition: width 0.25s ease;
         }
@@ -342,10 +344,47 @@ export default function GameDevPortfolio() {
           pointer-events: none;
           z-index: 999;
         }
+        .rose-emblem {
+          width: 65%;
+          height: 65%;
+          position: absolute;
+          z-index: 1;
+        }
+        
+        .rose-gradient {
+          -webkit-mask-size: contain;
+          mask-size: contain;
+          -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+          -webkit-mask-position: center;
+          mask-position: center;
+          
+          background: conic-gradient(from
+            0deg,
+            #5f01d0, 
+            #9a1fff, 
+            #e879b8, 
+            #7eb8f7, 
+            #b57bee, 
+            #fec001, 
+            #5f01d0
+          );
+          
+          filter: saturate(200%);
+        }
+        
+        .rose-details {
+          object-fit: contain;
+          opacity: 1;
+          mix-blend-mode: multiply;
+          pointer-events: none;
+        }
+        
         .nebula-seal::before {
           content: '';
           position: absolute;
           inset: 0;
+          filter: saturate(150%);
           border-radius: 50%;
           padding: 2px;
           background: conic-gradient(
@@ -464,6 +503,7 @@ export default function GameDevPortfolio() {
         @keyframes ember-rise {
           0%   { transform: translate3d(0, 22vh, 0) scale(1); opacity: 0; }
           8%   { opacity: 1; }
+          35%   { opacity: 1; }
           100% { transform: translate3d(var(--dx, 0px), -115vh, 0) scale(0.65); opacity: 0; }
         }
 
@@ -513,6 +553,7 @@ export default function GameDevPortfolio() {
           inset: -4px;
           border-radius: 50%;
           padding: 3px;
+          filter: saturate(200%);
           background: conic-gradient(
             from 0deg,
             #5f01d0, #9a1fff, #e879b8, #7eb8f7, #b57bee, #fec001, #e8d5ff, #5f01d0
@@ -1050,7 +1091,7 @@ export default function GameDevPortfolio() {
 
       {/* NAV */}
       <nav>
-        <div className="nav-brand">✦ Eclipse Division ✦</div>
+        <div className="nav-brand">✦ White Rose Division ✦</div>
         <ul className="nav-links">
           {[['hammond', 'Home'], ['projects', 'Projects'], ['motion', 'Systems']].map(([id, label]) => (
             <li key={id}>
@@ -1062,33 +1103,20 @@ export default function GameDevPortfolio() {
 
       {/* CORNER SEAL */}
       <div className="nebula-seal" aria-hidden="true">
-      <svg viewBox="0 0 100 100" style={{ width: '60%', height: '60%', position: 'relative', zIndex: 1 }}>
-    <defs>
-      <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style={{ stopColor: '#ff6bb5', stopOpacity: 1 }} />
-        <stop offset="50%" style={{ stopColor: '#e879b8', stopOpacity: 1 }} />
-        <stop offset="100%" style={{ stopColor: '#b57bee', stopOpacity: 1 }} />
-      </linearGradient>
-    </defs>
-    
-    {/* Flame petals */}
-    <path d="M50,10 Q40,25 45,40 Q50,30 50,50 Q50,30 55,40 Q60,25 50,10 Z" 
-          fill="url(#roseGrad)" opacity="0.9" />
-    <path d="M30,30 Q25,40 30,50 Q40,45 50,50 Q40,40 30,30 Z" 
-          fill="url(#roseGrad)" opacity="0.8" />
-    <path d="M70,30 Q75,40 70,50 Q60,45 50,50 Q60,40 70,30 Z" 
-          fill="url(#roseGrad)" opacity="0.8" />
-    <path d="M20,50 Q18,60 25,70 Q35,65 50,70 Q40,60 20,50 Z" 
-          fill="url(#roseGrad)" opacity="0.7" />
-    <path d="M80,50 Q82,60 75,70 Q65,65 50,70 Q60,60 80,50 Z" 
-          fill="url(#roseGrad)" opacity="0.7" />
-    
-    {/* Center spiral */}
-    <circle cx="50" cy="50" r="8" fill="white" opacity="0.9" />
-    <path d="M50,42 Q58,50 50,58 Q42,50 50,42 Z" 
-          fill="white" opacity="0.7" />
-  </svg>
-</div>
+        <div 
+          className="rose-emblem rose-gradient"
+          style={{
+            WebkitMaskImage: `url(${roseEmblem})`,
+            maskImage: `url(${roseEmblem})`,
+          }}
+        ></div>
+        <img 
+          src={roseEmblem} 
+          alt="Rose details"
+          className="rose-emblem rose-details"
+        />
+      </div>
+
       {/* HERO */}
       <section id="hammond" className="hammond" ref={hammondRef}>
         <div className="hero-scanlines" />
