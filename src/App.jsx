@@ -23,12 +23,12 @@ import PM_Combat     from './assets/pm_enemies-combat.jpg';
 const PROJECTS = [
   {
     id: 0,
-    title: "Regressor's Endgame",
-    category: 'Action RPG · ML Progression · GAS',
+    title: "Evigheden",
+    category: 'Dark Survival · Data-Driven Systems · Cross-Platform',
     color: 'blue',
     thumbnail: ComingSoon,
-    description: 'In-progress UE5 Action RPG with a full GAS combo system and a regression-driven progression system exploring ML-assisted build evolution.',
-    tags: ['UE5','C++','GAS','Blueprint','Combat','AI','ML.NET','Tools'],
+    description: 'A dark survival gauntlet spanning Unity mobile and UE5 PC builds. Players are teleported to hostile worlds with randomly assigned runes — every behavior driven by a designer-first ScriptableObject architecture. Includes Regressor\'s Endgame, a hardcore mode where exceeding a death threshold triggers a full game reset.',
+    tags: ['Unity','UE5','C#','ScriptableObjects','Mobile','PC','In Development'],
     github: 'https://github.com/Michamm79/Regressor-s_Endgame',
     codeDownload: 'https://github.com/Michamm79/Regressor-s_Endgame/archive/refs/heads/main.zip',
     media: [{ type:'image', src: ComingSoon, label:'Combat Loop & Ability Flow', system:'Combat' }],
@@ -479,6 +479,59 @@ public class SensorDataMapper : MonoBehaviour
       'Each creature decides for itself how to react, keeping the sensor and AI systems fully decoupled.',
     ],
   },
+  typescript_state: {
+    file: 'GameStateManager.ts', lang: 'typescript',
+    code: `type GamePhase =
+    'lobby' | 'loading' | 'playing'
+  | 'round_end' | 'game_over';
+
+class Observable<T> {
+  private listeners = new Set<((e: StateChangeEvent<T>) => void)>();
+  private _value: T;
+
+  constructor(initial: T) { this._value = initial; }
+  get value(): T { return this._value; }
+
+  set(next: T): void {
+    const e = { prev: this._value, next, timestamp: Date.now() };
+    this._value = next;
+    this.listeners.forEach(fn => fn(e));
+  }
+
+  subscribe(fn: (e: StateChangeEvent<T>) => void): () => void {
+    this.listeners.add(fn);
+    return () => this.listeners.delete(fn);
+  }
+}
+
+export class GameStateManager {
+  readonly phase = new Observable<GamePhase>('lobby');
+  private static instance: GameStateManager;
+
+  static getInstance(): GameStateManager {
+    return this.instance ??= new GameStateManager();
+  }
+
+  transitionTo(next: GamePhase): void {
+    const allowed: Record<GamePhase, GamePhase[]> = {
+      lobby:     ['loading'],
+      loading:   ['playing'],
+      playing:   ['round_end'],
+      round_end: ['playing', 'game_over'],
+      game_over: ['lobby']
+    };
+    if (!allowed[this.phase.value].includes(next)) return;
+    this.phase.set(next);
+  }
+}`,
+  bullets: [
+    'Observable<T> is generic — the same class handles a GamePhase, score, player list, anything. TypeScript enforces correctness at compile time.',
+    'subscribe() returns its own unsubscribe function — callers clean up with one call, no manual listener tracking needed.',
+    'transitionTo() validates against an allowed-moves map — illegal state transitions are silently rejected, the game can never reach an undefined phase.',
+    'Lazy singleton via nullish coalescing assignment (??=) — one instance, created only when first needed, no boilerplate.',
+  ],
+  },
+
 };
 
 // ─────────────────────────────────────────────
@@ -714,6 +767,7 @@ export default function Portfolio() {
         .code-lang-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
         .code-lang-dot.csharp { background:#9b59b6; box-shadow:0 0 6px rgba(155,89,182,.7); }
         .code-lang-dot.cpp    { background:#0095d5; box-shadow:0 0 6px rgba(0,149,213,.7); }
+        .code-lang-dot.typescript { background:#3178c6; box-shadow:0 0 6px rgba(49,120,198,.7); }
         .code-file-name { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:rgba(255,255,255,.55); letter-spacing:.04em; }
         .card-code-pre { font-family:'JetBrains Mono',monospace; font-size:.62rem; line-height:1.7; color:#c9d1d9; white-space:pre; overflow-x:auto; }
         .card-detail-col { padding:.75rem 1rem 1rem; border-top:1px solid rgba(238,203,44,.08); border-left:1px solid rgba(238,203,44,.06); }
@@ -912,6 +966,17 @@ export default function Portfolio() {
             </div>
             <div className="panel-grid">
 
+              {/* Evigheden WIP */}
+              <div className="project-card-hub">
+                <div className="card-hub-header">
+                  <div className="card-hub-overline">Data-Driven Systems · Cross-Platform · In Development</div>
+                  <div className="card-hub-title">Evigheden</div>
+                  <div className="card-hub-desc">A dark survival gauntlet spanning Unity mobile and UE5 PC builds — every rune behavior driven by ScriptableObject assets, zero code changes required per archetype. Includes Regressor's Endgame hardcore mode.</div>
+                  <div className="card-hub-tags">{['Unity', 'UE5', 'C#', 'ScriptableObjects', 'Mobile', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                </div>
+                <CodeCard snippet={CODE_SNIPPETS.regressor} />
+              </div>
+
               {/* Project Maelstrom */}
               <div className="project-card-hub">
                 <div className="card-hub-header">
@@ -926,17 +991,6 @@ export default function Portfolio() {
                   ))}
                 </div>
                 <CodeCard snippets={[CODE_SNIPPETS.maelstrom, CODE_SNIPPETS.maelstrom_boss, CODE_SNIPPETS.maelstrom_cinematic]} />
-              </div>
-
-              {/* Regressor's Endgame */}
-              <div className="project-card-hub">
-                <div className="card-hub-header">
-                  <div className="card-hub-overline">GAS Combat · Behavior Trees</div>
-                  <div className="card-hub-title">Regressor's Endgame</div>
-                  <div className="card-hub-desc">UE5 Action RPG with a full GAS combo system and AI-driven enemies whose behaviors designers can tune without touching code.</div>
-                  <div className="card-hub-tags">{['UE5','C++','GAS','Behavior Trees'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <CodeCard snippet={CODE_SNIPPETS.regressor} />
               </div>
 
               {/* Mall Cop Madhouse */}
@@ -985,19 +1039,16 @@ export default function Portfolio() {
                 <CodeCard snippet={CODE_SNIPPETS.sensorama} />
               </div>
 
-              {/* StoneHeart — coming soon */}
-              <div className="project-card-hub" style={{ opacity:.65, cursor:'default' }}>
+              {/* TypeScript — Game State Manager */}
+              <div className="project-card-hub">
                 <div className="card-hub-header">
-                  <div className="card-hub-overline">UE5 · C++ · Coming Soon</div>
-                  <div className="card-hub-title">StoneHeart</div>
-                  <div className="card-hub-desc">Demo in development. Check back soon for screenshots, gameplay footage, and a full C++ code breakdown.</div>
-                  <div className="card-hub-tags">{['UE5','C++','GAS','In Progress'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-overline">TypeScript · OOP · Design Patterns</div>
+                  <div className="card-hub-title">Game State Manager</div>
+                  <div className="card-hub-desc">A typed, reactive state system with a validated phase machine — each transition checks against an allowed-moves map, so the game can never enter an illegal state.</div>
+                  <div className="card-hub-tags">{['TypeScript', 'OOP', 'Observer', 'State Machine'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
-                <div style={{ padding:'1.5rem', textAlign:'center', color:'rgba(238,203,44,.35)', fontFamily:"'Cinzel',serif", fontSize:'.62rem', letterSpacing:'.16em', textTransform:'uppercase', borderTop:'1px solid rgba(238,203,44,.08)' }}>
-                  ✦ Demo in progress ✦
-                </div>
+                <CodeCard snippet={CODE_SNIPPETS.typescript_state} />
               </div>
-
             </div>
           </div>
 
@@ -1017,7 +1068,7 @@ export default function Portfolio() {
               <div className="exp-bullet">Co-built the USAF B-52 VR training platform in both Unity and Unreal simultaneously — recognized in an official USAF whitepaper (95% reduction in training time).</div>
             </div>
             <div className="exp-entry">
-              <div className="exp-company">Oregon State University — Kesterson VR Lab</div>
+              <div className="exp-company">Oregon State University — Kesterson VR Immersion Lab</div>
               <div className="exp-role">Virtual Reality Lab Technician</div>
               <div className="exp-dates">September 2018 — June 2020</div>
               <div className="exp-bullet">Built RPG prototypes with full creature systems, combat, and AI adversaries in both UE and Unity.</div>
@@ -1217,7 +1268,7 @@ function CodeCard({ snippet, snippets }) {
           <div className="card-body-hub">
             <div className="card-code-col">
               <div className="code-file-tab">
-              <div className={`code-lang-dot ${active.lang === 'cpp' ? 'cpp' : 'csharp'}`} />
+              <div className={`code-lang-dot ${active.lang === 'cpp' ? 'cpp' : active.lang === 'typescript' ? 'typescript' : 'csharp'}`} />
                 <span className="code-file-name">{active.file}</span>
               </div>
               <pre className="card-code-pre" dangerouslySetInnerHTML={{ __html: highlight(active.code) }} />
