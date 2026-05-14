@@ -24,18 +24,20 @@ const PROJECTS = [
   {
     id: 0,
     title: "Evigheden",
-    category: 'Dark Survival · Data-Driven Systems · Cross-Platform',
+    category: 'Designer-Driven Architecture · Cross-Engine · ScriptableObjects',
     color: 'blue',
     thumbnail: ComingSoon,
-    description: 'A dark survival gauntlet spanning Unity mobile and UE5 PC builds. Players are teleported to hostile worlds with randomly assigned runes — every behavior driven by a designer-first ScriptableObject architecture. Includes Regressor\'s Endgame, a hardcore mode where exceeding a death threshold triggers a full game reset.',
-    tags: ['Unity','UE5','C#','ScriptableObjects','Mobile','PC','In Development'],
+    description: 'A dark survival gauntlet built across Unity PC and Unreal Engine 5 PC with a fully data-driven rune architecture at its core. Every rune behavior — stat multipliers, dodge style, combo finishers, passives, VFX — is configured through designer-authored data assets (ScriptableObjects in Unity, Data Assets in UE5), so entire new rune archetypes can be authored and deployed without a single line of additional code. Players are teleported to hostile worlds with randomly assigned runes, with Regressor\'s Endgame as a hardcore mode where exceeding a death threshold triggers a full game reset.',
+    tags: ['Unity','UE5','C#','C++','ScriptableObjects','Designer Tooling','PC','In Development'],
     github: 'https://github.com/Michamm79/Regressor-s_Endgame',
     codeDownload: 'https://github.com/Michamm79/Regressor-s_Endgame/archive/refs/heads/main.zip',
-    media: [{ type:'image', src: ComingSoon, label:'Combat Loop & Ability Flow', system:'Combat' }],
+    media: [{ type:'image', src: ComingSoon, label:'Rune Authoring & Inspector Workflow', system:'Designer Tooling' }],
     recruiterHighlights: [
-      'Data-driven rune system built entirely on ScriptableObject assets — designers configure every behavior through the Inspector with zero code changes required per archetype.',
-      'OpenAI API-driven quest generation system adapts objectives and world events based on player performance and faction relationships.',
-      'Cross-platform architecture spanning Unity mobile and UE5 PC builds from a single shared design philosophy.',
+      'Cross-engine build — Unity PC and Unreal Engine 5 PC — with a shared designer-driven architecture pattern across both engines.',
+      'Single rune data asset holds every behavior field on one editor-authored asset. Designers spin up new archetypes with no engineer involvement.',
+      'In Unity: ScriptableObject with CreateAssetMenu integration. In UE5: UPrimaryDataAsset for Asset Manager discovery and lazy loading.',
+      'Inspector header grouping keeps the authoring experience readable even with 15+ fields per asset — design velocity stays high as the rune library grows.',
+      'Regressor\'s Endgame hardcore mode: exceeding a death threshold triggers a full game reset, building on the same data-driven core.',
     ],
   },
   {
@@ -64,8 +66,8 @@ const PROJECTS = [
     category: 'Action RPG · AI Systems · Pack Combat',
     color: 'pink',
     thumbnail: PM_Overview,
-    description: 'Action RPG featuring coordinated pack AI where creatures flank, apply pressure, and fall back as a unit — plus a OpenAI-integrated dynamic narrative system.',
-    tags: ['Unity','C#','Pack AI','Combat','Cinematics','OpenAI'],
+    description: 'An exploratory survival RPG built around a signature two-orb crafting system — players collect materials into floating orb containers, then transmute them into tools and weapons mid-fight or alchemically decompose them into elemental components for deeper crafting. Coordinated pack AI for enemy encounters layers on top of the exploration loop.',
+    tags: ['Unity','C#','Crafting Systems','ScriptableObjects','Pack AI','In Development'],
     github: 'https://github.com/Michamm79/Project_Maelstrom',
     codeDownload: 'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
     media: [
@@ -73,9 +75,10 @@ const PROJECTS = [
       { type:'image', src: PM_Combat,      label:'Combat Readability / Threat Zones',system:'Combat' },
     ],
     recruiterHighlights: [
-      'Slot-based pack AI keeps only 2 attackers active — the rest flank, making fights tactical.',
-      'Boss Cinematic System orchestrates camera, animation, physics, and VFX in one pipeline.',
-      'Data-driven abilities and upgrades built for rapid iteration and balance passes.',
+      'Signature two-orb crafting system: collect materials into orb containers, transmute into tools and weapons mid-fight, or alchemically decompose into elemental components for deeper crafting.',
+      'Data-driven recipe architecture on ScriptableObjects — designers add new transmutation or alchemy outputs by dropping assets into a folder, no code changes per recipe.',
+      'Slot-based pack AI keeps only 2 enemy attackers active — the rest flank, making encounters tactical rather than chaotic.',
+      'Element pool system aggregates quantities across decomposed materials, with alchemy gated behind a player progression unlock.',
     ],
   },
   {
@@ -99,16 +102,17 @@ const PROJECTS = [
   {
     id: 4,
     title: 'Sensorama R&D',
-    category: 'VR · Sensor Integration · Environmental AI',
+    category: 'VR · Simulated Sensing · AI Perception',
     color: 'purple',
     thumbnail: sensorama,
-    description: 'Research project that piped live sensor data (LiDAR, radar, heat signature) from physical hardware into a game world, making AI creatures react to real space in real time.',
-    tags: ['Unity','C#','LiDAR','Environmental AI','OSU VR Lab','Experimental'],
+    description: 'Cross-disciplinary R&D project simulating the characteristics and evolution of real-world sensing technology — RADAR, LIDAR, echolocation, and others — as enemy AI perception in a VR environment. Built in collaboration with the OSU robotics department and academic partners at the University of Stuttgart.',
+    tags: ['Unity','C#','AI Perception','VR','OSU VR Lab','Academic R&D','Experimental'],
     media: [{ type:'image', src: sensorama_Environment, label:'Gameplay Mechanics / Environment', system:'Research & Development' }],
     recruiterHighlights: [
-      'Buffered point-cloud ingestion with a fixed 64-point-per-frame cap to prevent hitches.',
-      'Sphere-overlap alerts decouple sensor data from AI behavior — creatures decide independently.',
-      'Cross-disciplinary R&D bridging hardware constraints and real-time game design.',
+      'Translated the characteristics of real-world sensing technology — sweep patterns, sampling rates, directional cones — into enemy AI perception models that produced distinctly different gameplay for each archetype.',
+      'Buffered queue with a fixed 64-point-per-frame cap keeps perception updates stable under load.',
+      'Sphere-overlap alerts decouple the perception system from creature AI — each creature decides independently how to respond.',
+      'Cross-disciplinary collaboration with the OSU robotics department and academic partners at the University of Stuttgart on simulating real-world sensing concepts as game design.',
     ],
   },
 ];
@@ -139,6 +143,76 @@ const SECTION_ICONS = {
 
 // Code snippets for Work cards
 const CODE_SNIPPETS = {
+  evigheden_runes: {
+    file: 'RuneData.cs', lang: 'csharp',
+    code: `using UnityEngine;
+
+// Single Rune ScriptableObject — designers configure
+// every behavior on one asset, no code per archetype
+[CreateAssetMenu(fileName = "NewRune", menuName = "Evigheden/Rune")]
+public class RuneData : ScriptableObject
+{
+    [Header("Identity")]
+    public string runeName;
+    [TextArea] public string description;
+    public Sprite icon;
+
+    [Header("Stat Modifiers")]
+    public float healthMultiplier    = 1f;
+    public float damageMultiplier    = 1f;
+    public float moveSpeedMultiplier = 1f;
+    public float dodgeCooldownMod    = 0f;
+
+    [Header("Dodge Behavior")]
+    public DodgeStyle dodgeStyle;     // Roll | Dash | Blink | Phase
+    public float     dodgeDistance;
+    public float     iFrameDuration;
+
+    [Header("Combo Finisher")]
+    public FinisherType finisher;     // Cleave | Pierce | Knockback | Detonate
+    public float        finisherDamage;
+    public GameObject   finisherVFX;
+
+    [Header("Passive")]
+    public PassiveTrigger passiveTrigger;  // OnHit | OnDodge | OnKill | OnLowHP
+    public PassiveEffect  passiveEffect;
+    public float          passiveValue;
+
+    [Header("Presentation")]
+    public Color     auraColor;
+    public AudioClip equipSound;
+}
+
+public class RuneController : MonoBehaviour
+{
+    [SerializeField] private RuneData equippedRune;
+    private CharacterStats stats;
+
+    public void EquipRune(RuneData rune)
+    {
+        if (equippedRune != null) UnapplyRune(equippedRune);
+        equippedRune = rune;
+        ApplyRune(rune);
+    }
+
+    private void ApplyRune(RuneData r)
+    {
+        stats.ApplyMultiplier(StatType.Health,    r.healthMultiplier);
+        stats.ApplyMultiplier(StatType.Damage,    r.damageMultiplier);
+        stats.ApplyMultiplier(StatType.MoveSpeed, r.moveSpeedMultiplier);
+        DodgeSystem.SetStyle(r.dodgeStyle, r.dodgeDistance, r.iFrameDuration);
+        ComboSystem.SetFinisher(r.finisher, r.finisherDamage, r.finisherVFX);
+        PassiveSystem.Register(r.passiveTrigger, r.passiveEffect, r.passiveValue);
+        AudioSource.PlayClipAtPoint(r.equipSound, transform.position);
+    }
+}`,
+    bullets: [
+      'A single Rune ScriptableObject holds every behavior field — stats, dodge style, combo finisher, passive, presentation. Designers author one asset and the whole rune is defined.',
+      'CreateAssetMenu means right-click in the Project window → Create → Evigheden → Rune. No engineer involvement to spin up a new archetype.',
+      'RuneController is the only place that reads the data — designers can tune any value through the Inspector and the runtime picks it up on the next equip.',
+      'Header attributes group fields in the Inspector so the authoring experience stays readable even with 15+ fields on one asset.',
+    ],
+  },
   maelstrom: {
     file: 'PackBehaviorManager.cs', lang: 'csharp',
     code: `using System.Collections.Generic;
@@ -184,156 +258,152 @@ public class PackBehaviorManager : MonoBehaviour
       'Flanking uses the current attacker\'s position as a reference so creatures spread out naturally.',
     ],
   },
-  maelstrom_boss: {
-    file: 'BossCinematicSystem.cs', lang: 'csharp',
-    code: `using System.Collections;
+  maelstrom_orb: {
+    file: 'OrbContainer.cs', lang: 'csharp',
+    code: `using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using UnityEngine.Events;
 
-public class BossCinematicSystem : MonoBehaviour
+// Two floating orbs above the player's hands. Materials go in;
+// transmutation or alchemy comes out.
+public class OrbContainer : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera dramaCam;
-    [SerializeField] private Animator bossAnimator;
-    [SerializeField] private ParticleSystem[] impactVFX;
-    [SerializeField] private float shakeIntensity = 1.8f;
+    public enum Hand { Left, Right }
 
-    private bool hitFrameReached = false;
+    [Header("Player State")]
+    public int playerLevel = 1;
+    public int alchemyUnlockLevel = 5;
 
-    public IEnumerator PlayEntrance()
+    [Header("Spawn Settings")]
+    public Transform spawnPoint;
+
+    private MaterialSO leftOrb;
+    private MaterialSO rightOrb;
+    private Dictionary<ElementSO, int> elementPool = new();
+
+    public UnityEvent OnOrbContentsChanged;
+    public UnityEvent OnElementPoolChanged;
+
+    public MaterialSO LeftOrb => leftOrb;
+    public MaterialSO RightOrb => rightOrb;
+    public IReadOnlyDictionary<ElementSO, int> ElementPool => elementPool;
+    public bool AlchemyUnlocked => playerLevel >= alchemyUnlockLevel;
+
+    // --- Transmutation: combine two orb materials into a new object ---
+
+    public TransmutationRecipe PeekTransmutation()
     {
-        // Cut to drama cam
-        dramaCam.Priority = 20;
-        yield return new WaitForSeconds(0.18f);
-
-        // Trigger entrance animation
-        bossAnimator.SetTrigger("EntranceTrigger");
-
-        // Wait for Animation Event at the impact frame
-        yield return new WaitUntil(() => hitFrameReached);
-
-        // Fire VFX and screen shake simultaneously
-        foreach (ParticleSystem vfx in impactVFX)
-        {
-            vfx.Play();
-        }
-        CameraShake.Instance.Shake(shakeIntensity, 0.45f);
-
-        // Hold, then return control to gameplay camera
-        yield return new WaitForSeconds(1.2f);
-        dramaCam.Priority = 0;
-        hitFrameReached = false;
+        if (leftOrb == null || rightOrb == null) return null;
+        return TransmutationSystem.FindRecipe(leftOrb, rightOrb, playerLevel);
     }
 
-    // Called by Animation Event on the impact frame
-    public void OnHitFrame()
+    public GameObject TryTransmute()
     {
-        hitFrameReached = true;
+        var recipe = PeekTransmutation();
+        if (recipe == null) return null;
+
+        leftOrb = null;
+        rightOrb = null;
+        OnOrbContentsChanged?.Invoke();
+        return SpawnResult(recipe.resultPrefab);
+    }
+
+    // --- Alchemy: break a material down into elemental components ---
+
+    public bool DecomposeMaterialAt(Hand hand)
+    {
+        if (!AlchemyUnlocked) return false;
+        MaterialSO target = (hand == Hand.Left) ? leftOrb : rightOrb;
+        if (target == null) return false;
+
+        foreach (var comp in target.elementComposition)
+        {
+            if (!elementPool.ContainsKey(comp.element))
+                elementPool[comp.element] = 0;
+            elementPool[comp.element] += comp.quantity;
+        }
+
+        ClearOrb(hand);
+        OnElementPoolChanged?.Invoke();
+        return true;
     }
 }`,
     bullets: [
-      'A single coroutine owns the entire sequence — camera cut, animation trigger, VFX, shake, and return to gameplay all run in declared order with no scattered event subscriptions.',
-      'The hit-frame wait uses an Animation Event callback rather than a fixed timer, so the impact beat always lands on the correct frame regardless of frame rate.',
-      'All VFX fire in a single loop rather than individual calls — adding more impact particles means one extra array entry in the Inspector, no code change.',
-      'Camera priority swap is non-destructive — the gameplay camera resumes automatically when the drama cam drops back to 0, keeping the system stateless.',
+      'Two-orb runtime state lives on a single MonoBehaviour — UI subscribes via UnityEvents, the orb logic stays free of UI dependencies.',
+      'PeekTransmutation returns the resulting recipe without consuming inputs, so the UI can preview the outcome before the player commits.',
+      'Alchemy decomposition is gated behind alchemyUnlockLevel — same code path, locked or unlocked based on player progression.',
+      'Element pool is a Dictionary<ElementSO, int> so quantities aggregate cleanly across multiple decomposed materials.',
     ],
   },
-  regressor: {
-    file: 'GA_MeleeCombo.cpp', lang: 'cpp',
-    code: `// GAS combo — each attack chains into the next
-// if input arrives during the window
-void UGA_MeleeCombo::ActivateAbility(
-    FGameplayAbilitySpecHandle Handle,
-    FGameplayAbilityActorInfo* ActorInfo,
-    FGameplayAbilityActivationInfo ActivationInfo,
-    const FGameplayEventData* TriggerEventData)
-{
-    if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
-    {
-        EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
-        return;
-    }
-
-    UAbilityTask_PlayMontageAndWait* MontageTask =
-        UAbilityTask_PlayMontageAndWait::
-        CreatePlayMontageAndWaitProxy(
-            this, NAME_None,
-            ComboMontages[CurrentComboIndex]);
-
-    MontageTask->OnCompleted.AddDynamic(
-        this, &UGA_MeleeCombo::OnMontageComplete);
-    MontageTask->ReadyForActivation();
-
-    UAbilityTask_WaitGameplayEvent* ComboTask =
-        UAbilityTask_WaitGameplayEvent::WaitGameplayEvent(
-            this, TAG_Combo_Input_Light);
-
-    ComboTask->EventReceived.AddDynamic(
-        this, &UGA_MeleeCombo::OnComboInput);
-    ComboTask->ReadyForActivation();
-}`,
-    bullets: [
-      'Each hit plays a different animation — designers swap them out in a data file without touching code.',
-      'The combo window is a gameplay tag waiting to fire — the animation controls timing by signaling at the right frame.',
-      'Costs and cooldowns are handled by GAS automatically so the combo code only focuses on chaining attacks.',
-      'The chain loops cleanly back to the first hit so players can keep going without the system breaking.',
-    ],
-  },
-  maelstrom_cinematic: {
-    file: 'BossCinematicDirector.cs', lang: 'csharp',
-    code: `using System;
-using System.Collections;
+  maelstrom_alchemy: {
+    file: 'AlchemySystem.cs', lang: 'csharp',
+    code: `using System.Collections.Generic;
 using UnityEngine;
 
-public class BossCinematicDirector : MonoBehaviour
+// Stateless lookup service for alchemy recipes.
+// Returns every recipe the player's element pool can satisfy —
+// the UI presents the choices.
+public static class AlchemySystem
 {
-    [SerializeField] private CinematicSequence sequence;
-    [SerializeField] private CinematicCamera cam;
-    [SerializeField] private VFXController vfx;
-    [SerializeField] private AudioSource audioSource;
+    private static List<AlchemyRecipe> recipes = new();
+    private static bool initialized = false;
 
-    public void Play(BossActor boss)
+    public static void Initialize()
     {
-        StartCoroutine(RunSequence(boss));
+        if (initialized) return;
+        recipes.Clear();
+        recipes.AddRange(Resources.LoadAll<AlchemyRecipe>("Recipes/Alchemy"));
+        initialized = true;
     }
 
-    private IEnumerator RunSequence(BossActor boss)
+    public static List<AlchemyRecipe> FindAvailableRecipes(
+        Dictionary<ElementSO, int> availableElements,
+        int playerLevel = int.MaxValue)
     {
-        foreach (CinematicBeat beat in sequence.beats)
+        if (!initialized) Initialize();
+
+        var matches = new List<AlchemyRecipe>();
+        if (availableElements == null || availableElements.Count == 0)
+            return matches;
+
+        foreach (var recipe in recipes)
         {
-            switch (beat.type)
-            {
-                case BeatType.Camera:
-                    cam.MoveTo(beat.cameraTarget, beat.duration);
-                    break;
-                case BeatType.Animation:
-                    boss.Animator.CrossFade(beat.animState, 0.15f);
-                    break;
-                case BeatType.Physics:
-                    boss.Rigidbody.AddForce(beat.impulse, ForceMode.Impulse);
-                    break;
-                case BeatType.VFX:
-                    vfx.Play(beat.effectId, beat.worldPosition);
-                    break;
-                case BeatType.Audio:
-                    audioSource.PlayOneShot(beat.clip);
-                    break;
-            }
-
-            if (beat.waitForEnd)
-            {
-                yield return new WaitForSeconds(beat.duration);
-            }
+            if (recipe == null) continue;
+            if (recipe.requiredLevel > playerLevel) continue;
+            if (CanFulfill(recipe, availableElements)) matches.Add(recipe);
         }
-        OnSequenceComplete?.Invoke();
+        return matches;
     }
 
-    public event Action OnSequenceComplete;
+    private static bool CanFulfill(AlchemyRecipe recipe,
+                                   Dictionary<ElementSO, int> available)
+    {
+        foreach (var req in recipe.requiredElements)
+        {
+            if (!available.TryGetValue(req.element, out int have)) return false;
+            if (have < req.quantity) return false;
+        }
+        return true;
+    }
+
+    public static bool ConsumeElements(AlchemyRecipe recipe,
+                                       Dictionary<ElementSO, int> pool)
+    {
+        if (!CanFulfill(recipe, pool)) return false;
+
+        foreach (var req in recipe.requiredElements)
+        {
+            pool[req.element] -= req.quantity;
+            if (pool[req.element] <= 0) pool.Remove(req.element);
+        }
+        return true;
+    }
 }`,
     bullets: [
-      'Each beat in the sequence is a data-driven instruction — camera move, animation crossfade, physics impulse, VFX spawn, or audio cue — authored in the Inspector, not hardcoded.',
-      'WaitForEnd per beat lets some steps run in parallel (fire VFX and audio together) while others block until they finish before the next beat fires.',
-      'The director knows nothing about specific boss behaviors — it just drives a sequence. Any boss or encounter can hand it a different CinematicSequence asset.',
-      'OnSequenceComplete fires when the full sequence ends, letting the boss AI resume control cleanly without the director needing to know what comes next.',
+      'Returns a list of available recipes, not a single answer — the same element pool often satisfies multiple outputs, and the UI menu is exactly the choice the player should make.',
+      'Recipes auto-load from Resources/Recipes/Alchemy at startup — designers add new alchemy outputs by dropping new ScriptableObject assets into the folder, no code edits.',
+      'CanFulfill checks each required element against the available pool — partial matches silently fail rather than producing degraded results.',
+      'ConsumeElements is separate from FindAvailableRecipes — peek and commit are decoupled, so the UI can show previews without burning inputs.',
     ],
   },
   mallcop: {
@@ -473,10 +543,10 @@ public class SensorDataMapper : MonoBehaviour
     }
 }`,
     bullets: [
-      'LiDAR sends point clouds in irregular bursts — queued data is handled in fixed 64-point chunks per frame to avoid hitches.',
-      'The per-frame cap keeps performance stable even when the sensor dumps a large burst at once.',
-      'Sphere overlap finds any creature near each hit point and sends an alert — the sensor system doesn\'t know anything about AI behavior.',
-      'Each creature decides for itself how to react, keeping the sensor and AI systems fully decoupled.',
+      'The simulated LIDAR archetype emits point bursts in irregular pulses — queued data is handled in fixed 64-point chunks per frame to keep performance stable.',
+      'The per-frame cap protects frame rate even when a perception sweep dumps a large burst at once.',
+      'Sphere overlap finds any creature near each point and sends an alert — the perception system doesn\'t know anything about AI behavior.',
+      'Each creature decides for itself how to react, keeping the perception and AI systems fully decoupled.',
     ],
   },
   typescript_state: {
@@ -966,17 +1036,18 @@ export default function Portfolio() {
             </div>
             <div className="panel-grid">
 
-              {/* Evigheden WIP */}
+              {/* Evigheden — Rune Architecture */}
               <div className="project-card-hub" onClick={(e) => {
   if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
   e.currentTarget.querySelector('.media-open-btn')?.click();
-}}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Data-Driven Systems · Cross-Platform · In Development</div>
-                  <div className="card-hub-title">Evigheden</div>
-                  <div className="card-hub-desc">A dark survival gauntlet spanning Unity mobile and UE5 PC builds — every rune behavior driven by ScriptableObject assets, zero code changes required per archetype. Includes Regressor's Endgame hardcore mode.</div>
-                  <div className="card-hub-tags">{['Unity', 'UE5', 'C#', 'ScriptableObjects', 'Mobile', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+}}>
+                <div className="card-hub-header">
+                  <div className="card-hub-overline">Cross-Engine Architecture · Unity + UE5 · In Development</div>
+                  <div className="card-hub-title">Evigheden — Rune System</div>
+                  <div className="card-hub-desc">A fully data-driven rune architecture built across Unity PC and Unreal Engine 5 PC — designers configure every behavior (stat multipliers, dodge style, combo finisher, passives, VFX) entirely through Inspector-editable fields. Entirely new rune archetypes can be authored and deployed without a single line of additional code in either engine.</div>
+                  <div className="card-hub-tags">{['Unity', 'UE5', 'C#', 'C++', 'ScriptableObjects', 'Designer Tooling', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
-                <CodeCard snippet={CODE_SNIPPETS.regressor} />
+                <CodeCard snippet={CODE_SNIPPETS.evigheden_runes} />
               </div>
 
               {/* Project Maelstrom */}
@@ -984,17 +1055,17 @@ export default function Portfolio() {
   if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
   e.currentTarget.querySelector('.media-open-btn')?.click();
 }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Creature AI · Pack Coordination</div>
+                  <div className="card-hub-overline">Exploration RPG · Crafting Systems · Pack AI</div>
                   <div className="card-hub-title">Project Maelstrom</div>
-                  <div className="card-hub-desc">A pack AI system where creatures work together — flanking, applying pressure, and falling back as a coordinated unit.</div>
-                  <div className="card-hub-tags">{['Unity','C#','Pack AI','Encounter Design'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-desc">Exploratory survival RPG built around a signature two-orb crafting system — collect materials, transmute them mid-fight, or alchemically decompose them into elemental components for deeper crafting. Coordinated pack AI for enemy encounters layers on top.</div>
+                  <div className="card-hub-tags">{['Unity','C#','Crafting Systems','Pack AI','ScriptableObjects'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{padding:'0 1rem 6px'}}>
                   {[PM_Overview, PM_Combat, PM_PlayerFocus].map((src,i)=>(
                     <img key={i} src={src} alt="Project Maelstrom" onClick={()=>openMedia(PROJECTS[2], i===2?1:i)} />
                   ))}
                 </div>
-                <CodeCard snippets={[CODE_SNIPPETS.maelstrom, CODE_SNIPPETS.maelstrom_boss, CODE_SNIPPETS.maelstrom_cinematic]} />
+                <CodeCard snippets={[CODE_SNIPPETS.maelstrom_orb, CODE_SNIPPETS.maelstrom_alchemy, CODE_SNIPPETS.maelstrom]} />
               </div>
 
               {/* Mall Cop Madhouse */}
@@ -1037,10 +1108,10 @@ export default function Portfolio() {
   if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
   e.currentTarget.querySelector('.media-open-btn')?.click();
 }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Sensor Integration · Environmental AI · OSU VR Lab</div>
+                  <div className="card-hub-overline">AI Perception · Cross-Disciplinary R&D · OSU VR Lab</div>
                   <div className="card-hub-title">Sensorama R&D</div>
-                  <div className="card-hub-desc">Research project piping live LiDAR, radar, and heat signature data into a game world — AI creatures react to real physical space in real time.</div>
-                  <div className="card-hub-tags">{['Unity','LiDAR','Environmental AI','OSU VR Lab'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-desc">Cross-disciplinary R&D project simulating real-world sensing technology — RADAR, LIDAR, echolocation — as enemy AI perception in a VR environment. Built with the OSU robotics department and academic partners at the University of Stuttgart.</div>
+                  <div className="card-hub-tags">{['Unity','AI Perception','VR','OSU VR Lab','Academic R&D'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{padding:'0 1rem 6px'}}>
                   <img src={sensorama} alt="Sensorama" onClick={()=>openMedia(PROJECTS[4],0)} />
@@ -1132,8 +1203,8 @@ export default function Portfolio() {
                 objectFit:'cover', border:'1px solid rgba(238,203,44,.4)',
                 boxShadow:'0 0 20px rgba(238,203,44,.20)', flexShrink:0 }} />
               <div style={{ flex:1, minWidth:240 }}>
-                <p className="panel-text">Gameplay Engineer and Designer with 8+ years building complete interactive systems — synchronized multiplayer architecture, AI behaviors that make NPCs feel vibrant and alive, and tools that let design teams move fast without tedious back-and-forth.</p>
-                <p className="panel-text">The connecting thread has been a genuine interest in what makes a virtual world feel real — both functionally and in the essence of what makes them come alive and respond in ways players feel even when they can't articulate why.</p>
+                <p className="panel-text">Gameplay Engineer and Designer with 8+ years building complete interactive systems across Unity and Unreal Engine — synchronized multiplayer architecture, AI behaviors that make NPCs feel vibrant and alive, and tools that let design teams move fast without tedious back-and-forth.</p>
+                <p className="panel-text">The connecting thread has been a genuine interest in what makes a virtual world feel real — both functionally and in the essence of what makes them come alive and respond in ways players feel even when they can't articulate why. Comfortable across the full stack of a game project, from C# and C++ engineering through designer-facing tooling, with current work spanning shipped Unity titles and active Unreal Engine 5 development on Evigheden.</p>
               </div>
             </div>
             <div className="exp-entry" style={{ borderTop:'1px solid rgba(238,203,44,.10)', marginTop:'1.2rem' }}>
@@ -1141,7 +1212,7 @@ export default function Portfolio() {
               <div className="exp-role">Professional Certificate</div>
             </div>
             <div className="exp-entry">
-              <div className="exp-company">Oregon State University — B.A. Digital Communication Arts</div>
+              <div className="exp-company">Oregon State University — Bachelor in Digital Communication Arts</div>
               <div className="exp-role">Game Development Specialization · Minor: History & Education</div>
             </div>
           </div>
@@ -1154,9 +1225,9 @@ export default function Portfolio() {
             </div>
             <p className="panel-text">Actively looking for gameplay engineering roles. If you're building something with passion — AI that thinks, exhilarating combat, multiplayer built to last — I'd love to talk.</p>
             <div className="contact-links">
-              <a href="mailto:hammondsk.9@gmail.com" className="contact-link">
+              <a href="mailto:hammondsk.09@gmail.com" className="contact-link">
                 <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                hammondsk.9@gmail.com
+                hammondsk.09@gmail.com
               </a>
               <a href="tel:+15419731430" className="contact-link">
                 <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 9.81 19.79 19.79 0 0 1 .1 1.18 2 2 0 0 1 2.09 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -1217,18 +1288,6 @@ export default function Portfolio() {
                   ) : m ? (
                     <video className="modal-media" controls autoPlay playsInline poster={m.poster || project.thumbnail} src={m.src} />
                   ) : null}
-                  <div style={{ display:'flex', gap:'1rem', justifyContent:'center', flexWrap:'wrap', marginTop:'.5rem' }}>
-                    {project.github && (
-                      <a className="code-btn-modal" href={project.github} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}>
-                        <ExternalLink size={14} /> View GitHub
-                      </a>
-                    )}
-                    {project.codeDownload && (
-                      <a className="code-btn-modal" href={project.codeDownload} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}>
-                        <Download size={14} /> Download Code
-                      </a>
-                    )}
-                  </div>
                 </>
               );
             })()}
@@ -1266,7 +1325,7 @@ function CodeCard({ snippet, snippets }) {
           {list.length > 1 && (
             <div style={{ display:'flex', gap:0, borderBottom:'1px solid rgba(238,203,44,.12)', marginBottom:0 }}>
               {list.map((s, i) => (
-                <button key={i} onClick={() => setTab(i)} style={{
+                <button key={i} onClick={(e) => { e.stopPropagation(); setTab(i); }} style={{
                   padding:'.3rem .85rem', background: tab===i ? 'rgba(238,203,44,.10)' : 'transparent',
                   border:'none', borderBottom: tab===i ? '2px solid var(--gold)' : '2px solid transparent',
                   color: tab===i ? 'var(--gold-hi)' : 'rgba(255,255,255,.45)',
