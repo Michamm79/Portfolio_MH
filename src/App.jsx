@@ -113,8 +113,7 @@ const PROJECTS = [
     recruiterHighlights: [
       'Inspector-serialized ChecklistManager: each step owns its own verification type (Audio / Confirm / Interact), target object ID, and interaction mode.',
       'Multi-trainee Photon networking with synchronized session state and master-client authority.',
-      '95% reduction in training time — 33% trainee retention increase — 19% fewer procedural errors.',
-    ],
+      '95% reduction in training time — up to 75% increase in crew retention — 19% fewer procedural errors.',    ],
   },
   {
     id: 4,
@@ -792,7 +791,7 @@ const STARS = Array.from({ length: 200 }, (_, i) => {
 // MAIN COMPONENT
 // ─────────────────────────────────────────────
 export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState(null);
+  const [activeSection, setActiveSection] = useState('work');
   const [selectedMedia, setSelectedMedia] = useState(null);
   const hubWrapRef  = useRef(null);
   const centerRef   = useRef(null);
@@ -844,7 +843,7 @@ export default function Portfolio() {
       if (!b) return;
       b.style.width  = bs + 'px';
       b.style.height = bs + 'px';
-      const pos = toRail ? railPos(i) : orbitPos(ORBIT_ORDER.indexOf(i));
+      const pos = orbitPos(ORBIT_ORDER.indexOf(i));
       b.style.left = pos.left + 'px';
       b.style.top  = pos.top  + 'px';
     });
@@ -853,11 +852,7 @@ export default function Portfolio() {
   // ── init & resize ──
   useEffect(() => {
     applyLayout(false);
-    let timer;
-    const onResize = () => { clearTimeout(timer); timer = setTimeout(() => applyLayout(activeSection !== null), 60); };
-    window.addEventListener('resize', onResize);
-    return () => { window.removeEventListener('resize', onResize); clearTimeout(timer); };
-  }, [applyLayout, activeSection]);
+  }, []);
 
   // ── section toggle ──
   const selectSection = (id) => {
@@ -909,10 +904,7 @@ export default function Portfolio() {
           box-shadow:0 0 12px rgba(238,203,44,.22),0 4px 20px rgba(0,0,0,.7);
           display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
           cursor:pointer; z-index:15;
-          transition:left .48s cubic-bezier(.22,1,.36,1),top .48s cubic-bezier(.22,1,.36,1),
-                     width .35s,height .35s,opacity .3s,border-color .22s,box-shadow .22s,transform .22s;
         }
-        .hub-bubble.floats { animation:float 4s ease-in-out infinite; }
         .hub-bubble:hover  { border-color:rgba(247,235,99,.65); box-shadow:0 0 26px rgba(238,203,44,.22),0 0 60px rgba(238,203,44,.09); transform:scale(1.08); }
         .hub-bubble.active { border-color:rgba(238,203,44,.9); box-shadow:0 0 22px rgba(238,203,44,.45),0 0 50px rgba(238,203,44,.18); }
         .hub-bubble.active:hover { transform:none; }
@@ -1085,9 +1077,21 @@ export default function Portfolio() {
           <div style={{ width:1, height:14, background:'rgba(238,203,44,.20)', margin:'0 .5rem' }} />
           <span className="top-bar-title">Gameplay Engineer</span>
         </div>
-        <button className="top-bar-close" onClick={resetHub}><X size={12} /></button>
-      </div>
-
+        <div style={{ display:'flex', alignItems:'center', gap:'1rem' }}>
+        <a href="/MichaelHammond_Resume.pdf" download="MichaelHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"            style={{
+              fontFamily:"'Cinzel',serif", fontSize:'.62rem', letterSpacing:'.14em',
+              textTransform:'uppercase', color:'var(--gold)', textDecoration:'none',
+              border:'1px solid rgba(238,203,44,.35)', borderRadius:'3px',
+              padding:'.35rem .7rem', transition:'all .2s', display:'inline-flex',
+              alignItems:'center', gap:'.4rem', whiteSpace:'nowrap'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--gold-hi)'; e.currentTarget.style.color = 'var(--gold-hi)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(238,203,44,.35)'; e.currentTarget.style.color = 'var(--gold)'; }}>
+            <Download size={11} /> Résumé
+          </a>
+          <button className="top-bar-close" onClick={resetHub}><X size={12} /></button>
+        </div>
+      </div>        
       {/* ── HUB PAGE ── */}
       <div style={{ position:'relative', zIndex:10, display:'flex', flexDirection:'column', alignItems:'center',
         paddingTop: activeSection ? 'calc(52px + 4vh)' : '6vh', paddingBottom:'3rem',
@@ -1112,13 +1116,27 @@ export default function Portfolio() {
             display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
             overflow:'hidden', zIndex:10,
           }}>
-            {/* emblem — scales with circle via --cs CSS var */}
-            <div style={{ width:'calc(var(--cs, 330px) * 0.36)', height:'calc(var(--cs, 330px) * 0.36)',
-              display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-              <img src={SunEmblem} alt="SunEmblem" style={{ width:'100%', height:'100%', objectFit:'contain',
-                filter:'drop-shadow(0 0 10px rgba(238,203,44,.65)) drop-shadow(0 0 22px rgba(204,0,238,.50)) drop-shadow(0 0 40px rgba(204,0,238,.25))' }} />
-            </div>
-            <div style={{ fontFamily:"'Cinzel',serif",
+{/* emblem — original inline SVG, scales with circle via --cs */}
+<div style={{ width:'calc(var(--cs, 330px) * 0.36)', height:'calc(var(--cs, 330px) * 0.36)',
+              display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0,
+              filter:'drop-shadow(0 0 10px rgba(238,203,44,.65)) drop-shadow(0 0 22px rgba(204,0,238,.50)) drop-shadow(0 0 40px rgba(204,0,238,.25))' }}>
+              <svg viewBox="0 0 100 100" style={{ width:'100%', height:'100%' }}>
+                <circle cx="50" cy="50" r="13" fill="none" stroke="#eecb2c" strokeWidth="2.5" />
+                <circle cx="50" cy="50" r="5" fill="#f7eb63" />
+                <g stroke="#eecb2c" strokeWidth="2.5" strokeLinecap="round">
+                  <line x1="50" y1="4"  x2="50" y2="24" />
+                  <line x1="50" y1="76" x2="50" y2="96" />
+                  <line x1="4"  y1="50" x2="24" y2="50" />
+                  <line x1="76" y1="50" x2="96" y2="50" />
+                </g>
+                <g stroke="#cc00ee" strokeWidth="1.6" strokeLinecap="round" opacity="0.85">
+                  <line x1="22" y1="22" x2="34" y2="34" />
+                  <line x1="78" y1="22" x2="66" y2="34" />
+                  <line x1="22" y1="78" x2="34" y2="66" />
+                  <line x1="78" y1="78" x2="66" y2="66" />
+                </g>
+              </svg>
+            </div>            <div style={{ fontFamily:"'Cinzel',serif",
               fontSize:'calc(var(--cs, 330px) * 0.058)', fontWeight:700, letterSpacing:'.10em',
               color:'#fff', textShadow:'0 0 24px rgba(247,235,99,.42)', lineHeight:1.2, textTransform:'uppercase',
               textAlign:'center', marginTop:'calc(var(--cs, 330px) * 0.02)' }}>
@@ -1160,8 +1178,8 @@ export default function Portfolio() {
           {SECTIONS.map((sec, i) => (
             <div key={sec.id}
               ref={el => bubblesRef.current[i] = el}
-              className={`hub-bubble floats ${activeSection === sec.id ? 'active' : ''}`}
-              style={{ width:88, height:88, animationDelay:`${i*0.9}s` }}
+              className={`hub-bubble ${activeSection === sec.id ? 'active' : ''}`}
+              style={{ width:88, height:88}}
               onClick={() => toggleSection(sec.id)}>
               <div className="bubble-icon">{SECTION_ICONS[sec.id]}</div>
               <div className="bubble-label">{sec.label}</div>
@@ -1244,7 +1262,8 @@ export default function Portfolio() {
   if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
   e.currentTarget.querySelector('.media-open-btn')?.click();
 }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Asymmetric Multiplayer · Capture Mechanics · 10,000+ CCU</div>
+                  <div className="card-hub-overline">Asymmetric Multiplayer · Capture Mechanics · Photon PUN</div>
+
                   <div className="card-hub-title">Mall Cop Madhouse</div>
                   <div className="card-hub-desc">Asymmetric stealth-and-chase: Hooligans complete disruptive tasks while the taser-wielding Mall Cop hunts, carries, and books them into jail to score.</div>
                   <div className="card-hub-tags">{['Unity','C#','Photon Pun','Asymmetric','Multiplayer'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
@@ -1316,11 +1335,16 @@ export default function Portfolio() {
               <div className="exp-company">King Crow Studios</div>
               <div className="exp-role">Gameplay Engineer & Systems Designer</div>
               <div className="exp-dates">March 2022 — December 2025 · Remote</div>
-              <div className="exp-bullet">Co-built the USAF B-52 VR training platform in Unity — recognized in an official USAF whitepaper (95% reduction in training time, 19% reduction in errors).</div>
+              <div className="exp-bullet">Co-built the USAF B-52 VR training platform in Unity and Unreal — recognized in an official USAF whitepaper (95% reduction in training time, 19% reduction in errors).</div>
               <div className="exp-bullet">Built room-based multiplayer infrastructure on Photon PUN with RPC-driven state synchronization — engineered for stability under sustained live load across VR, desktop, and mobile simultaneously.</div>
-              <div className="exp-bullet">Designed coordinated AI with role-based group tactics — state-machine agents executing flanking, support, and pressure behaviors assigned by a higher-level coordinator.</div>
-              <div className="exp-bullet">Contributed to <em>Necroball</em> (Oct 2021, 91% positive) and <em>Hive Slayer</em> (Oct 2020, 94% positive, Free-to-Play) — both shipped to Steam.</div>
+              <div className="exp-bullet">Built and integrated coordinated AI behavior systems — state-machine agents with role-based group tactics (flanking, support, pressure) driven by a higher-level coordinator, tunable by designers through a hybrid code/ScriptableObject architecture.</div>              <div className="exp-bullet">Contributed to <em>Necroball</em> (Oct 2021, 91% positive) and <em>Hive Slayer</em> (Oct 2020, 94% positive, Free-to-Play) — both shipped to Steam.</div>
               <div className="exp-bullet">Built ScriptableObject-driven designer tooling allowing non-technical team members to author and tune gameplay content without engineering involvement.</div>
+            </div>
+            <div className="exp-entry">
+              <div className="exp-company">VedX Solutions</div>
+              <div className="exp-role">Game Development Intern — Remote</div>
+              <div className="exp-dates">January 2021 — January 2022</div>
+              <div className="exp-bullet">Designed and engineered VR hydroponic simulation to implement in a virtual reality-based education program.</div>
             </div>
             <div className="exp-entry">
               <div className="exp-company">Oregon State University — Kesterson VR Immersion Lab</div>
@@ -1329,12 +1353,6 @@ export default function Portfolio() {
               <div className="exp-bullet">Built RPG prototypes with full creature systems, combat, and AI adversaries in both UE and Unity.</div>
               <div className="exp-bullet">Led a drone R&D project integrating LiDAR, radar, and machine learning for real-time environmental mapping.</div>
               <div className="exp-bullet">Created 3D assets in Maya and Blender, and mentored students in VR development.</div>
-            </div>
-            <div className="exp-entry">
-              <div className="exp-company">VedX Solutions</div>
-              <div className="exp-role">Game Development Intern — Remote</div>
-              <div className="exp-dates">January 2021 — January 2022</div>
-              <div className="exp-bullet">Designed and engineered VR hydroponic simulation to implement in a virtual reality-based education program.</div>
             </div>
           </div>
 
@@ -1346,12 +1364,11 @@ export default function Portfolio() {
             </div>
             <div className="panel-grid">
               {[
-                ['AI & LLM',               'OpenAI API · Claude · Copilot · Prompt Engineering · Agent Workflows · Chatbot Development'],
                 ['AI & Creature Systems',  'Behavior Trees · Blackboards · Pack AI · State Machines · Engagement Slots · Adaptive Difficulty'],
                 ['Combat & Encounters',    'GAS · Combo Systems · Encounter Pacing · Boss Cinematics · Multiplayer Balancing'],
                 ['Languages',              'C++ (Expert) · C# (Expert) · Python · Blueprint · JavaScript · TypeScript · Lua'],
                 ['Engines & Tools',        'Unreal Engine 5 · Unity (8+ yrs) · Photon · Git · Plastic SCM · Visual Studio'],
-                ['Platforms',              'VR / AR / MR · Android · iOS · PC · Cross-Platform Multiplayer'],
+                ['Platforms',              'VR / AR / MR · Android · PC · Cross-Platform Multiplayer'],
                 ['3D & Art',               'Maya · Blender · Rigging · Animation · Environment Modeling · Krita'],
                 ['Web & Tools',            'React · HTML/CSS · JavaScript · Node.js · Vercel · SVG/CSS Animation'],
                 ['Collaboration',          'Cross-Discipline · Rapid Prototyping · Playtesting · Designer Tooling · Mentorship'],
