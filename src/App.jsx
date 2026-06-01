@@ -1433,7 +1433,7 @@ export default function Portfolio() {
               </a>
               <a href="https://michaelhammond.vercel.app" target="_blank" rel="noopener noreferrer" className="contact-link">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                portfolio-mh-delta.vercel.app
+                michaelhammond.vercel.app
               </a>
             </div>
             <div style={{ fontFamily:"'Cinzel',serif", fontSize:'.76rem', color:'#fff', marginTop:'1.2rem',
