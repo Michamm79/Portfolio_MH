@@ -27,7 +27,7 @@ const PROJECTS = [
     category: 'Exploration · Procedural World · Companion AI',
     color: 'green',
     thumbnail: ComingSoon,
-    description: 'A post-apocalyptic exploration game. You are a robot. The world ended long ago. Seven artifacts of humanity\'s greatest myths are scattered across a procedurally generated world — each watched over by a guardian with their own conditions. A fox has decided to come with you. You did not ask. You do not mind.',
+    description: 'A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanitys greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. A fox travels with you. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.',
     tags: ['Unity','C#','Procedural Generation','Companion AI','ScriptableObjects','In Development'],
     github: 'https://github.com/Michamm79/Valtara',
     codeDownload: 'https://github.com/Michamm79/Valtara/archive/refs/heads/main.zip',
@@ -1069,7 +1069,7 @@ export default function Portfolio() {
             left:`${s.left}%`, top:`${s.top}%`, background:s.color, opacity:s.opacity, boxShadow:s.shadow }} />
         ))}
       </div>
-
+      
       {/* ── TOP BAR ── */}
       <div className={`top-bar ${activeSection ? 'visible' : ''}`}>
         <div style={{ display:'flex', alignItems:'center', gap:'.6rem' }}>
@@ -1078,7 +1078,8 @@ export default function Portfolio() {
           <span className="top-bar-title">Gameplay Engineer</span>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:'1rem' }}>
-        <a href="/MichaelHammond_Resume.pdf" download="MichaelHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"            style={{
+        {/* <a href={ResumePDF} download="MichaelHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"
+           style={{
               fontFamily:"'Cinzel',serif", fontSize:'.62rem', letterSpacing:'.14em',
               textTransform:'uppercase', color:'var(--gold)', textDecoration:'none',
               border:'1px solid rgba(238,203,44,.35)', borderRadius:'3px',
@@ -1088,7 +1089,7 @@ export default function Portfolio() {
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--gold-hi)'; e.currentTarget.style.color = 'var(--gold-hi)'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(238,203,44,.35)'; e.currentTarget.style.color = 'var(--gold)'; }}>
             <Download size={11} /> Résumé
-          </a>
+          </a> */}
           <button className="top-bar-close" onClick={resetHub}><X size={12} /></button>
         </div>
       </div>        
@@ -1430,7 +1431,7 @@ export default function Portfolio() {
                 <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                 LinkedIn
               </a>
-              <a href="https://portfolio-mh-delta.vercel.app" target="_blank" rel="noopener noreferrer" className="contact-link">
+              <a href="https://michaelhammond.vercel.app" target="_blank" rel="noopener noreferrer" className="contact-link">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 portfolio-mh-delta.vercel.app
               </a>
