@@ -229,77 +229,141 @@ public class RuneController : MonoBehaviour
     ],
   },
   maelstrom: {
-    file: 'OrbContainer.cs', lang: 'csharp',
-    code: `using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+    file: 'OrbContainer.cpp', lang: 'cpp',
+    code: `#include "OrbContainer.h"
+#include "GameFramework/Actor.h"
+#include "Engine/World.h"
 
-// Runtime component managing the two orb slots
-// and the player's alchemic element pool.
-// No UI dependencies — state changes fire UnityEvents;
-// the UI layer subscribes and updates independently.
-public class OrbContainer : MonoBehaviour
+UOrbContainer::UOrbContainer()
 {
-    public enum Hand { Left, Right }
+    PrimaryComponentTick.bCanEverTick = false; // Kept lightweight, no ticking
+    LeftOrb = nullptr;
+    RightOrb = nullptr;
+    CraftedResultSpawnPoint = nullptr;
+}
 
-    public int playerLevel = 1;
-    public int alchemyUnlockLevel = 5;
-    public Transform spawnPoint;
+UMaterialSO* UOrbContainer::GetOrb(EHand Hand) const
+{
+    return (Hand == EHand::Left) ? LeftOrb : RightOrb;
+}
 
-    private MaterialSO leftOrb;
-    private MaterialSO rightOrb;
-    private Dictionary<ElementSO, int> elementPool = new();
+bool UOrbContainer::PutInOrb(EHand Hand, UMaterialSO* Material)
+{
+    if (!Material) return false;
 
-    public UnityEvent OnOrbContentsChanged;
-    public UnityEvent OnElementPoolChanged;
-    public bool AlchemyUnlocked => playerLevel >= alchemyUnlockLevel;
-
-    public bool AddMaterialToOrb(Hand hand, MaterialSO material)
+    if (Hand == EHand::Left)
     {
-        if (material == null) return false;
-        if (hand == Hand.Left)  { if (leftOrb  != null) return false; leftOrb  = material; }
-        else                    { if (rightOrb != null) return false; rightOrb = material; }
-        OnOrbContentsChanged?.Invoke();
-        return true;
+        if (LeftOrb != nullptr) return false;
+        LeftOrb = Material;
+    }
+    else
+    {
+        if (RightOrb != nullptr) return false;
+        RightOrb = Material;
     }
 
-    public GameObject TryTransmute()
-    {
-        var recipe = TransmutationSystem.FindRecipe(leftOrb, rightOrb, playerLevel);
-        if (recipe == null) return null;
-        leftOrb = rightOrb = null;
-        OnOrbContentsChanged?.Invoke();
-        return Spawn(recipe.resultPrefab);
-    }
+    OnOrbContentsChanged.Broadcast();
+    return true;
+}
 
-    public bool DecomposeMaterialAt(Hand hand)
+void UOrbContainer::ClearOrb(EHand Hand)
+{
+    if (Hand == EHand::Left) LeftOrb = nullptr;
+    else RightOrb = nullptr;
+
+    OnOrbContentsChanged.Broadcast();
+}
+
+UTransmutationRecipe* UOrbContainer::PeekTransmutation() const
+{
+    if (!LeftOrb || !RightOrb) return nullptr;
+    return FTransmutationSystem::FindRecipe(LeftOrb, RightOrb, PlayerLevel);
+}
+
+AActor* UOrbContainer::TryTransmute()
+{
+    UTransmutationRecipe* Recipe = PeekTransmutation();
+    if (!Recipe) return nullptr;
+
+    LeftOrb = nullptr;
+    RightOrb = nullptr;
+    OnOrbContentsChanged.Broadcast();
+
+    return SpawnResult(Recipe->ResultPrefab);
+}
+
+bool UOrbContainer::DecomposeOrb(EHand Hand)
+{
+    if (!IsAlchemyUnlocked()) return false;
+
+    UMaterialSO* Target = GetOrb(Hand);
+    if (!Target) return false;
+
+    for (const FElementComposition& Comp : Target->ElementComposition)
     {
-        if (!AlchemyUnlocked) return false;
-        MaterialSO target = hand == Hand.Left ? leftOrb : rightOrb;
-        if (target == null) return false;
-        foreach (var comp in target.elementComposition)
+        if (!Comp.Element || Comp.Quantity <= 0) continue;
+
+        // TMap alternative to TryGetValue
+        int32* ExistingQuantity = ElementPool.Find(Comp.Element);
+        if (ExistingQuantity)
         {
-            if (!elementPool.ContainsKey(comp.element)) elementPool[comp.element] = 0;
-            elementPool[comp.element] += comp.quantity;
+            ElementPool.Add(Comp.Element, *ExistingQuantity + Comp.Quantity);
         }
-        ClearOrb(hand);
-        OnElementPoolChanged?.Invoke();
-        return true;
+        else
+        {
+            ElementPool.Add(Comp.Element, Comp.Quantity);
+        }
     }
 
-    public GameObject TryAlchemize(AlchemyRecipe recipe)
+    ClearOrb(Hand);
+    OnElementPoolChanged.Broadcast();
+    return true;
+}
+
+TArray<UAlchemyRecipe*> UOrbContainer::GetAvailableAlchemyRecipes() const
+{
+    if (!IsAlchemyUnlocked()) return TArray<UAlchemyRecipe*>();
+    return FAlchemySystem::FindAvailableRecipes(ElementPool, PlayerLevel);
+}
+
+AActor* UOrbContainer::TryAlchemize(UAlchemyRecipe* Recipe)
+{
+    if (!IsAlchemyUnlocked() || !Recipe) return nullptr;
+    if (!FAlchemySystem::ConsumeElements(Recipe, ElementPool)) return nullptr;
+
+    OnElementPoolChanged.Broadcast();
+    return SpawnResult(Recipe->ResultPrefab);
+}
+
+AActor* UOrbContainer::SpawnResult(TSubclassOf<AActor> PrefabClass)
+{
+    if (!PrefabClass) return nullptr;
+
+    UWorld* World = GetWorld();
+    if (!World) return nullptr;
+
+    // Default to the owner actor's transform if no specific point is targeted
+    FVector SpawnLocation = GetOwner()->GetActorLocation();
+    FRotator SpawnRotation = GetOwner()->GetActorRotation();
+
+    if (CraftedResultSpawnPoint)
     {
-        if (recipe == null || !AlchemyUnlocked) return null;
-        if (!AlchemySystem.ConsumeElements(recipe, elementPool)) return null;
-        OnElementPoolChanged?.Invoke();
-        return Spawn(recipe.resultPrefab);
+        SpawnLocation = CraftedResultSpawnPoint->GetComponentLocation();
+        SpawnRotation = CraftedResultSpawnPoint->GetComponentRotation();
     }
 
-    private GameObject Spawn(GameObject prefab)
+    FActorSpawnParameters SpawnParams;
+    SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+    AActor* SpawnedActor = World->SpawnActor<AActor>(PrefabClass, SpawnLocation, SpawnRotation, SpawnParams);
+    
+    if (SpawnedActor)
     {
-        Transform t = spawnPoint != null ? spawnPoint : transform;
-        return Object.Instantiate(prefab, t.position, t.rotation);
+        OnCraftedResultSpawned.Broadcast(SpawnedActor);
     }
+
+    return SpawnedActor;
+}
 }`,
     bullets: [
       'Two orb slots sit on the player at all times. Materials fill them; what happens next is the player\'s choice — transmute into a tool or decompose into elements.',
@@ -309,57 +373,141 @@ public class OrbContainer : MonoBehaviour
     ],
   },
   maelstrom_boss: {
-    file: 'BossCinematicSystem.cs', lang: 'csharp',
-    code: `using System.Collections;
-using UnityEngine;
-using Cinemachine;
-
-public class BossCinematicSystem : MonoBehaviour
-{
-    [SerializeField] private CinemachineVirtualCamera dramaCam;
-    [SerializeField] private Animator bossAnimator;
-    [SerializeField] private ParticleSystem[] impactVFX;
-    [SerializeField] private float shakeIntensity = 1.8f;
-
-    private bool hitFrameReached = false;
-
-    public IEnumerator PlayEntrance()
+    file: 'AlchemySystem.cpp', lang: 'cpp',
+    code: `#include "AlchemySystem.h"
+    #include "Engine/AssetManager.h"
+    #include "Engine/StreamableManager.h"
+    
+    // Define static allocation memory tracking
+    TArray<UAlchemyRecipe*> UAlchemySystem::RegisteredRecipes;
+    bool UAlchemySystem::bIsInitialized = false;
+    
+    // --- Recipe Affordable Logic ---
+    bool UAlchemyRecipe::CanAfford(const TMap<UElementSO*, int32>& Pool) const
     {
-        // Cut to drama cam
-        dramaCam.Priority = 20;
-        yield return new WaitForSeconds(0.18f);
-
-        // Trigger entrance animation
-        bossAnimator.SetTrigger("EntranceTrigger");
-
-        // Wait for Animation Event at the impact frame
-        yield return new WaitUntil(() => hitFrameReached);
-
-        // Fire VFX and screen shake simultaneously
-        foreach (ParticleSystem vfx in impactVFX)
+        for (const FElementCost& Cost : Inputs)
         {
-            vfx.Play();
+            if (!Cost.Element || Cost.Quantity <= 0) continue;
+    
+            const int32* FoundQuantity = Pool.Find(Cost.Element);
+            if (!FoundQuantity || *FoundQuantity < Cost.Quantity)
+            {
+                return false; // Pool missing element or has insufficient quantity
+            }
         }
-        CameraShake.Instance.Shake(shakeIntensity, 0.45f);
-
-        // Hold, then return control to gameplay camera
-        yield return new WaitForSeconds(1.2f);
-        dramaCam.Priority = 0;
-        hitFrameReached = false;
+        return true;
     }
-
-    // Called by Animation Event on the impact frame
-    public void OnHitFrame()
+    
+    // --- Lifecycle Management ---
+    void UAlchemySystem::InitializeSystem()
     {
-        hitFrameReached = true;
+        if (bIsInitialized) return;
+    
+        ClearRegistry();
+    
+        // High Performance: Use Unreal's AssetManager instead of synchronous Resources.LoadAll
+        UAssetManager& AssetManager = UAssetManager::Get();
+        FStreamableManager& StreamableManager = AssetManager.GetStreamableManager();
+    
+        // Scans your Game/Recipes/Alchemy folder paths efficiently
+        TArray<FAssetData> AssetList;
+        AssetManager.GetPrimaryAssetDataList(FName("AlchemyRecipe"), AssetList);
+    
+        for (const FAssetData& Asset : AssetList)
+        {
+            if (UAlchemyRecipe* LoadedRecipe = Cast<UAlchemyRecipe>(Asset.GetAsset()))
+            {
+                RegisterRecipe(LoadedRecipe);
+            }
+        }
+    
+        bIsInitialized = true;
     }
+    
+    void UAlchemySystem::RegisterRecipe(UAlchemyRecipe* Recipe)
+    {
+        if (!Recipe) return;
+    
+        if (!RegisteredRecipes.Contains(Recipe))
+        {
+            // Enhanced Validation Check: Warn designers immediately during editor initialization
+            if (Recipe->Inputs.Num() == 0 || !Recipe->ResultPrefab)
+            {
+                UE_LOG(LogTemp, Warning, TEXT("AlchemySystem: Recipe %s registered with empty inputs or missing prefab!"), *Recipe->GetName());
+            }
+            RegisteredRecipes.Add(Recipe);
+        }
+        bIsInitialized = true;
+    }
+    
+    void UAlchemySystem::ClearRegistry()
+    {
+        RegisteredRecipes.Empty();
+        bIsInitialized = false;
+    }
+    
+    // --- Lookup ---
+    TArray<UAlchemyRecipe*> UAlchemySystem::FindAvailableRecipes(const TMap<UElementSO*, int32>& Pool, int32 PlayerLevel)
+    {
+        if (!bIsInitialized)
+        {
+            InitializeSystem();
+        }
+    
+        TArray<UAlchemyRecipe*> AvailableRecipes;
+    
+        for (UAlchemyRecipe* Recipe : RegisteredRecipes)
+        {
+            if (!Recipe) continue;
+            if (Recipe->RequiredPlayerLevel > PlayerLevel) continue;
+            
+            if (Recipe->CanAfford(Pool))
+            {
+                AvailableRecipes.Add(Recipe);
+            }
+        }
+    
+        return AvailableRecipes;
+    }
+    
+    // --- Validation & Mutation ---
+    bool UAlchemySystem::CanFulfill(const UAlchemyRecipe* Recipe, const TMap<UElementSO*, int32>& Pool)
+    {
+        return Recipe != nullptr && Recipe->CanAfford(Pool);
+    }
+    
+    bool UAlchemySystem::ConsumeElements(const UAlchemyRecipe* Recipe, TMap<UElementSO*, int32>& Pool)
+    {
+        if (!CanFulfill(Recipe, pool)) return false;
+    
+        // Safely subtract inputs without leaving partial mutations if conditions fail mid-loop
+        for (const FElementCost& Cost : Recipe->Inputs)
+        {
+            if (!Cost.Element || Cost.Quantity <= 0) continue;
+    
+            int32* TargetQuantity = Pool.Find(Cost.Element);
+            if (TargetQuantity)
+            {
+                *TargetQuantity -= Cost.Quantity;
+                
+                // Clean up empty tracking data elements automatically out of memory mapping
+                if (*TargetQuantity <= 0)
+                {
+                    Pool.Remove(Cost.Element);
+                }
+            }
+        }
+    
+        return true;
+    }
+    
 }`,
-    bullets: [
-      'A single coroutine owns the entire sequence — camera cut, animation trigger, VFX, shake, and return to gameplay all run in declared order with no scattered event subscriptions.',
-      'The hit-frame wait uses an Animation Event callback rather than a fixed timer, so the impact beat always lands on the correct frame regardless of frame rate.',
-      'All VFX fire in a single loop rather than individual calls — adding more impact particles means one extra array entry in the Inspector, no code change.',
-      'Camera priority swap is non-destructive — the gameplay camera resumes automatically when the drama cam drops back to 0, keeping the system stateless.',
-    ],
+bullets: [
+  'The recipe evaluation loop checks the global player progression tier and inventory matrix simultaneously, returning the full array of affordable items to the UI in a single pass.',
+  'Material decomposition extracts variable element compounds dynamically through nested collection iterations, cleaning up empty database keys automatically post-transaction.',
+  'Asset loading bypasses heavy synchronous folder scans in favor of an async-ready manager registry, preventing performance spikes and frame hitches during menu initialization.',
+  'The entire system behaves as a deterministic transaction machine, using input boundary clamps to catch bad structural data configurations at the data asset layer before runtime compilation.',
+],
   },
   maelstrom_cinematic: {
     file: 'BossCinematicDirector.cs', lang: 'csharp',
@@ -420,62 +568,138 @@ public class BossCinematicDirector : MonoBehaviour
     ],
   },
   valtara_artifacts: {
-    file: 'ArtifactSpawnSystem.cs', lang: 'csharp',
-    code: `using System.Collections.Generic;
-using UnityEngine;
+    file: 'ArtifactSpawnSystem.cpp', lang: 'csharp',
+    code: `// ArtifactSpawnSubsystem.cpp
 
-// Each artifact is tied to a specific biome type.
-// The world arranges differently each playthrough —
-// the mythological logic does not.
-public class ArtifactSpawnSystem : MonoBehaviour
-{
-    public List<ArtifactDefinition> artifacts;
-    public List<BiomeZone> availableZones;
-    private int collectionCount = 0;
-
-    void Start() => PlaceAllArtifacts();
-
-    void PlaceAllArtifacts()
+    #include "ArtifactSpawnSubsystem.h"
+    #include "GuardianBase.h"
+    #include "Engine/World.h"
+    #include "Kismet/KismetMathLibrary.h"
+    
+    void UArtifactSpawnSubsystem::Initialize(FSubsystemCollectionBase& Collection)
     {
-        foreach (var artifact in artifacts)
+        Super::Initialize(Collection);
+    }
+    
+    void UArtifactSpawnSubsystem::Deinitialize()
+    {
+        SpawnedArtifacts.Empty();
+        Super::Deinitialize();
+    }
+    
+    void UArtifactSpawnSubsystem::SpawnAllArtifacts()
+    {
+        // Sort by SpawnOrder so we spawn in the intended sequence.
+        TArray<FArtifactSpawnDefinition> Ordered = SpawnDefinitions;
+        Ordered.Sort([](const FArtifactSpawnDefinition& A, const FArtifactSpawnDefinition& B)
         {
-            BiomeZone zone = FindZoneForBiome(artifact.requiredBiome);
-            if (zone == null) continue;
-
-            var instance = Instantiate(
-                artifact.worldPrefab,
-                zone.GetSpawnPosition(),
-                Quaternion.identity
-            );
-            var pickup = instance.AddComponent<ArtifactPickup>();
-            pickup.Initialize(artifact, this);
+            return A.SpawnOrder < B.SpawnOrder;
+        });
+    
+        for (const FArtifactSpawnDefinition& Def : Ordered)
+        {
+            SpawnArtifactPair(Def);
         }
     }
-
-    BiomeZone FindZoneForBiome(BiomeType biome)
+    
+    AArtifactBase* UArtifactSpawnSubsystem::SpawnArtifactPair(const FArtifactSpawnDefinition& Definition)
     {
-        var matches = availableZones.FindAll(
-            z => z.biomeType == biome && !z.occupied
-        );
-        if (matches.Count == 0) return null;
-        var selected = matches[Random.Range(0, matches.Count)];
-        selected.occupied = true;
-        return selected;
+        UWorld* World = GetWorld();
+        if (!World || !Definition.ArtifactClass || !Definition.GuardianClass)
+        {
+            return nullptr;
+        }
+    
+        FVector SpawnLocation;
+        if (!FindBiomeSpawnLocation(Definition.PreferredBiome, SpawnLocation))
+        {
+            UE_LOG(LogTemp, Warning, TEXT("No biome region found for artifact %d"), (int32)Definition.ArtifactType);
+            return nullptr;
+        }
+    
+        FActorSpawnParameters SpawnParams;
+        SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+    
+        // Spawn the artifact at the chosen location.
+        AArtifactBase* NewArtifact = World->SpawnActor<AArtifactBase>(
+            Definition.ArtifactClass, SpawnLocation, FRotator::ZeroRotator, SpawnParams);
+    
+        if (!NewArtifact)
+        {
+            return nullptr;
+        }
+    
+        // Spawn the guardian near the artifact — slightly offset so they're visibly paired.
+        FVector GuardianOffset = FVector(200.0f, 0.0f, 0.0f);
+        AGuardianBase* NewGuardian = World->SpawnActor<AGuardianBase>(
+            Definition.GuardianClass, SpawnLocation + GuardianOffset, FRotator::ZeroRotator, SpawnParams);
+    
+        if (NewGuardian)
+        {
+            NewArtifact->BoundGuardian = NewGuardian;
+            NewGuardian->WatchedArtifact = NewArtifact;
+        }
+    
+        SpawnedArtifacts.Add(Definition.ArtifactType, NewArtifact);
+        return NewArtifact;
     }
-
-    public void NotifyArtifactCollected(ArtifactDefinition artifact)
+    
+    bool UArtifactSpawnSubsystem::FindBiomeSpawnLocation(EBiomeType Biome, FVector& OutLocation) const
     {
-        collectionCount++;
-        // The last two guardians will know.
-        // They wanted to see what would arrive.
-        if (collectionCount >= artifacts.Count - 2)
-            NotifyLateGuardians();
+        for (const FBiomeRegion& Region : BiomeRegions)
+        {
+            if (Region.BiomeType == Biome)
+            {
+                // Pick a random point within the region radius.
+                const FVector2D RandomOffset = FMath::RandPointInCircle(Region.RegionRadius);
+                OutLocation = Region.RegionCenter + FVector(RandomOffset.X, RandomOffset.Y, 0.0f);
+                return true;
+            }
+        }
+        return false;
     }
-
-    void NotifyLateGuardians()
+    
+    FArtifactSpawnDefinition UArtifactSpawnSubsystem::GetSpawnDefinition(EArtifactType Type) const
     {
-        // They are not surprised.
-        // GuardianEvents.OnCollectionThresholdReached?.Invoke(collectionCount);
+        for (const FArtifactSpawnDefinition& Def : SpawnDefinitions)
+        {
+            if (Def.ArtifactType == Type)
+            {
+                return Def;
+            }
+        }
+        return FArtifactSpawnDefinition();
+    }
+    
+    AArtifactBase* UArtifactSpawnSubsystem::GetArtifact(EArtifactType Type) const
+    {
+        if (const TObjectPtr<AArtifactBase>* Found = SpawnedArtifacts.Find(Type))
+        {
+            return *Found;
+        }
+        return nullptr;
+    }
+    
+    bool UArtifactSpawnSubsystem::IsArtifactCollected(EArtifactType Type) const
+    {
+        if (AArtifactBase* Artifact = GetArtifact(Type))
+        {
+            return Artifact->CurrentState == EArtifactState::Collected;
+        }
+        return false;
+    }
+    
+    int32 UArtifactSpawnSubsystem::GetCollectedArtifactCount() const
+    {
+        int32 Count = 0;
+        for (const auto& Pair : SpawnedArtifacts)
+        {
+            if (Pair.Value && Pair.Value->CurrentState == EArtifactState::Collected)
+            {
+                Count++;
+            }
+        }
+        return Count;
     }
 }`,
     bullets: [
@@ -486,74 +710,160 @@ public class ArtifactSpawnSystem : MonoBehaviour
     ],
   },
   valtara_fox: {
-    file: 'FoxBehaviorSystem.cs', lang: 'csharp',
-    code: `using UnityEngine;
-using UnityEngine.Events;
+    file: 'FoxBehaviorSystem.cpp', lang: 'cpp',
+    code: `// FoxBehaviorComponent.cpp
 
-// Fox does not speak. Fox does not need to.
-// A player paying attention will notice that Fox
-// behaves differently approaching different situations.
-// None of this is explained. All of it means something.
-public class FoxBehaviorSystem : MonoBehaviour
-{
-    public enum FoxState
+    #include "FoxBehaviorComponent.h"
+    #include "FoxCompanion.h"
+    #include "BarleyCharacter.h"
+    #include "GuardianBase.h"
+    
+    #include "AIController.h"
+    #include "Navigation/PathFollowingComponent.h"
+    #include "Engine/World.h"
+    
+    UFoxBehaviorComponent::UFoxBehaviorComponent()
     {
-        Idle, Following, Curious, Excited,
-        Wary, Alert, Hiding, Joyful, Reverent
+      PrimaryComponentTick.bCanEverTick = true;
+      // Behavior decisions don't need every frame; ~10Hz is fluid enough.
+      PrimaryComponentTick.TickInterval = 0.1f;
     }
-
-    public Transform barley;
-    public Animator foxAnimator;
-    public float awarenessRadius = 15f;
-    public LayerMask triggerMask;
-    public UnityEvent<FoxState> OnStateChanged;
-
-    private FoxState currentState = FoxState.Following;
-    private FoxContextTrigger activeContext;
-
-    void Update()
+    
+    void UFoxBehaviorComponent::BeginPlay()
     {
-        DetectContext();
-        UpdateBehavior();
+      Super::BeginPlay();
+      Fox = Cast<AFoxCompanion>(GetOwner());
     }
-
-    void DetectContext()
+    
+    void UFoxBehaviorComponent::TickComponent(float DeltaTime,
+      ELevelTick TickType,
+      FActorComponentTickFunction* ThisTickFunction)
     {
-        var nearby = Physics.OverlapSphere(
-            transform.position, awarenessRadius, triggerMask
-        );
-        FoxContextTrigger strongest = null;
-        int highestPriority = -1;
-
-        foreach (var col in nearby)
+      Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+    
+      TimeInCurrentState += DeltaTime;
+    
+      if (ScriptedLockRemaining > 0.f)
+      {
+        ScriptedLockRemaining -= DeltaTime;
+        return;
+      }
+    
+      EvaluateBehavior(DeltaTime);
+    }
+    
+    void UFoxBehaviorComponent::EvaluateBehavior(float DeltaTime)
+    {
+      if (!Fox.IsValid()) return;
+    
+      ABarleyCharacter* Barley = Fox->GetBondedTarget();
+      if (!Barley) return;
+    
+      const FVector  FoxLoc    = Fox->GetActorLocation();
+      const FVector  BarleyLoc = Barley->GetActorLocation();
+      const float    Distance  = FVector::Dist(FoxLoc, BarleyLoc);
+    
+      // ---- Highest priority: a guardian is in our awareness ------------------
+      if (AGuardianBase* Guardian = KnownGuardian.Get())
+      {
+        const FVector GuardianLoc = Guardian->GetActorLocation();
+        const float   GtoB = FVector::Dist(GuardianLoc, BarleyLoc);
+    
+        // If Barley is close to the guardian, Fox moves to a triangulating
+        // position — visible, near both, but not interrupting.
+        if (GtoB < 700.f)
         {
-            var trigger = col.GetComponent<FoxContextTrigger>();
-            if (trigger != null && trigger.priority > highestPriority)
-            {
-                highestPriority = trigger.priority;
-                strongest = trigger;
-            }
+          SetState(EFoxBehaviorState::Welcoming);
+          const FVector Triangulate = (BarleyLoc + GuardianLoc) * 0.5f
+            + FVector(0.f, 0.f, 0.f);
+          IssueMoveTo(Triangulate);
+          return;
         }
-
-        if (strongest != activeContext)
+      }
+    
+      // ---- Distance-driven default states ------------------------------------
+      if (Distance > MaxFollowDistance)
+      {
+        // Too far — Fox prioritizes catching up and sets Following.
+        SetState(EFoxBehaviorState::Following);
+        IssueMoveTo(BarleyLoc);
+        return;
+      }
+    
+      if (Distance < CloseFollowDistance)
+      {
+        // Close. Fox idles or stays. The state choice depends on Barley's motion.
+        if (Barley->GetVelocity().Size() < 50.f)
         {
-            activeContext = strongest;
-            TransitionTo(strongest?.triggeredState ?? FoxState.Following);
+          SetState(EFoxBehaviorState::Idle);
         }
+        else
+        {
+          SetState(EFoxBehaviorState::Following);
+          // Light "follow at side" target — short offset behind Barley.
+          const FVector Behind = BarleyLoc
+            - Barley->GetActorForwardVector() * 150.f;
+          IssueMoveTo(Behind);
+        }
+        return;
+      }
+    
+      // Medium distance — sometimes Fox decides to lead (looks back, runs ahead).
+      if (Barley->GetVelocity().Size() > 200.f
+        && FMath::FRand() < ChanceToLeadPerSecond * DeltaTime * 10.f) // tickrate-aware
+      {
+        SetState(EFoxBehaviorState::Leading);
+        const FVector Ahead = BarleyLoc
+          + Barley->GetActorForwardVector() * 350.f;
+        IssueMoveTo(Ahead);
+        return;
+      }
+    
+      SetState(EFoxBehaviorState::Following);
+      IssueMoveTo(BarleyLoc);
     }
-
-    void TransitionTo(FoxState newState)
+    
+    void UFoxBehaviorComponent::SetState(EFoxBehaviorState NewState)
     {
-        if (newState == currentState) return;
-        currentState = newState;
-        foxAnimator?.SetInteger("FoxState", (int)currentState);
-        OnStateChanged?.Invoke(currentState);
+      if (!Fox.IsValid()) return;
+      if (NewState == Fox->GetCurrentBehavior()) return;
+      if (TimeInCurrentState < MinStateDuration) return;
+    
+      Fox->SetCurrentBehavior(NewState);
+      TimeInCurrentState = 0.f;
     }
-
-    // Called for scripted story moments — Mel's encounter,
-    // Enkidu's flower crown, Iskandar's race.
-    public void SetStateForStoryMoment(FoxState state)
-        => TransitionTo(state);
+    
+    void UFoxBehaviorComponent::IssueMoveTo(const FVector& Target)
+    {
+      if (!Fox.IsValid()) return;
+      if (AAIController* AI = Cast<AAIController>(Fox->GetController()))
+      {
+        AI->MoveToLocation(Target, 50.f, /*StopOnOverlap*/ true,
+          /*UsePathfinding*/ true, /*ProjectDestination*/ true);
+      }
+    }
+    
+    void UFoxBehaviorComponent::NotifyGuardianNearby(AGuardianBase* Guardian)
+    {
+      KnownGuardian = Guardian;
+    }
+    
+    void UFoxBehaviorComponent::NotifyGuardianLost(AGuardianBase* Guardian)
+    {
+      if (KnownGuardian.Get() == Guardian)
+      {
+        KnownGuardian = nullptr;
+      }
+    }
+    
+    bool UFoxBehaviorComponent::RequestScriptedState(EFoxBehaviorState State, float LockDuration)
+    {
+      if (!Fox.IsValid()) return false;
+      Fox->SetCurrentBehavior(State);
+      TimeInCurrentState = 0.f;
+      ScriptedLockRemaining = FMath::Max(0.f, LockDuration);
+      return true;
+    }
 }`,
     bullets: [
       'FoxContextTrigger is a component dropped on any GameObject in the world — artifact zones, guardian areas, story beats. Set the triggered state and priority. Fox reacts automatically with no code changes per encounter.',
@@ -1220,8 +1530,8 @@ export default function Portfolio() {
                 <div className="card-hub-header">
                   <div className="card-hub-overline">Exploration · Procedural World · Companion AI · In Development</div>
                   <div className="card-hub-title">Valtara — Artifact Hunter</div>
-                  <div className="card-hub-desc">A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanity's greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. A fox travels with you. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.</div>
-                  <div className="card-hub-tags">{['Unity', 'C#', 'Procedural Generation', 'Companion AI', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-desc">A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanity's greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.</div>
+                  <div className="card-hub-tags">{['Unreal Engine', 'C++', 'Procedural Generation', 'Companion AI', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <CodeCard snippets={[CODE_SNIPPETS.valtara_artifacts, CODE_SNIPPETS.valtara_fox]} />
               </div>
@@ -1235,7 +1545,7 @@ export default function Portfolio() {
                   <div className="card-hub-overline">Designer-Driven Architecture · ScriptableObjects · In Development</div>
                   <div className="card-hub-title">Evigheden — Rune System</div>
                   <div className="card-hub-desc">A fully data-driven rune architecture built on ScriptableObject assets — designers configure every behavior (stat multipliers, dodge style, combo finisher, passives, VFX) entirely through Inspector-editable fields. Entirely new rune archetypes can be authored and deployed without a single line of additional code.</div>
-                  <div className="card-hub-tags">{['Unity', 'C#', 'ScriptableObjects', 'Designer Tooling', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['Unreal Engine/Unity', 'C++/C#', 'ScriptableObjects', 'Designer Tooling', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <CodeCard snippet={CODE_SNIPPETS.evigheden_runes} />
               </div>
@@ -1248,7 +1558,7 @@ export default function Portfolio() {
                   <div className="card-hub-overline">Creature AI · Pack Coordination</div>
                   <div className="card-hub-title">Project Maelstrom</div>
                   <div className="card-hub-desc">A pack AI system where creatures work together — flanking, applying pressure, and falling back as a coordinated unit.</div>
-                  <div className="card-hub-tags">{['Unity','C#','Pack AI','Encounter Design'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['Unreal Engine', 'Unity','C++', 'C#','Pack AI','Encounter Design'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{padding:'0 1rem 6px'}}>
                   {[PM_Overview, PM_Combat, PM_PlayerFocus].map((src,i)=>(
