@@ -1309,7 +1309,7 @@ export default function Portfolio() {
         .card-hub-header { padding:1rem 1.2rem .6rem; }
         .card-hub-overline { font-family:'Cinzel',serif; font-size:.46rem; letter-spacing:.14em; text-transform:uppercase; color:var(--magenta); margin-bottom:.3rem; }
         .card-hub-title { font-family:'Cinzel',serif; font-size:.9rem; font-weight:600; color:var(--gold-hi); margin-bottom:.4rem; letter-spacing:.06em; }
-        .card-hub-desc { font-size:.88rem; color:rgba(255,255,255,.65); line-height:1.6; margin-bottom:.5rem; }
+        .card-hub-desc { font-size:1rem; color:rgba(255,255,255,.65); line-height:1.6; margin-bottom:.5rem; }
         .card-hub-tags { display:flex; flex-wrap:wrap; gap:.3rem; }
         .card-hub-tag { font-family:'Cinzel',serif; font-size:.42rem; letter-spacing:.08em; text-transform:uppercase; padding:.18rem .45rem; border-radius:3px; border:1px solid rgba(238,203,44,.25); color:rgba(238,203,44,.75); background:rgba(238,203,44,.04); }
 
@@ -1412,13 +1412,27 @@ export default function Portfolio() {
         ))}
       </div>
 
-      {/* ── TOP BAR ── */}
-      <div className={`top-bar ${activeSection ? 'visible' : ''}`}>
+{/* ── TOP BAR ── */}
+<div className={`top-bar ${activeSection ? 'visible' : ''}`}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+          {/* Your name stays permanently anchored */}
           <span className="top-bar-name">Michael Hammond</span>
-          <div style={{ width: 1, height: 14, background: 'rgba(238,203,44,.20)', margin: '0 .5rem' }} />
-          <span className="top-bar-title">Gameplay Engineer & Systems Engineer</span>
+          
+          {/* DYNAMIC BLOCK: Only renders the line and title if a section is active */}
+          {activeSection && (
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              animation: 'fadeIn .4s ease both' // Optional: Gives it a smooth transition in
+            }}>
+              <div style={{ width: 1, height: 14, background: 'rgba(238,203,44,.20)', margin: '0 .5rem' }} />
+              <span className="top-bar-title" style={{ color: 'var(--gold-hi)' }}>
+                Gameplay Engineer & Systems Designer
+              </span>
+            </div>
+          )}
         </div>
+        
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           {/* <a href={ResumePDF} download="MichaelHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"
            style={{
@@ -1750,7 +1764,7 @@ export default function Portfolio() {
                   "Architected a suite of custom Unity Inspector and Unreal Engine editor tools driven by decoupled ScriptableObject systems. This empowering design framework allowed non-technical content designers to rapidly author, iterate, and balance complex combat data and enemy variables safely in-editor, boosting production velocity by removing engineering dependencies."
                 ].map((bullet, idx) => (
                   <div key={idx} className="exp-bullet" style={{
-                    position: 'relative', paddingLeft: '1rem', lineHeight: '1.6', fontSize: '0.9rem',
+                    position: 'relative', paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
                     color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)',
                     boxShadow: 'inset 2px 0 0 rgba(204,0,238,0.1)'
                   }}>
@@ -1773,7 +1787,7 @@ export default function Portfolio() {
               <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>January 2021 — January 2022 · Remote</div>
 
               <div className="exp-bullet" style={{
-                paddingLeft: '1rem', lineHeight: '1.6', fontSize: '0.9rem',
+                paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
                 color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)'
               }}>
                 Architected and engineered an interactive VR hydroponic simulation platform deployed within a virtual reality-based educational curriculum. Focused on implementing physical-interaction mechanics, modular resource-tracking loops (water, light, nutrients), and realistic environmental reactions to maximize student immersion.
@@ -1795,7 +1809,7 @@ export default function Portfolio() {
                   "Authored optimized 3D environmental assets and technical rigs using Maya and Blender, while providing technical mentorship, codebase debugging support, and real-time engine orientation to students integrating assets into VR pipelines."
                 ].map((bullet, idx) => (
                   <div key={idx} className="exp-bullet" style={{
-                    paddingLeft: '1rem', lineHeight: '1.6', fontSize: '0.9rem',
+                    paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
                     color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)'
                   }}>
                     {bullet}
@@ -1909,17 +1923,17 @@ export default function Portfolio() {
                   transform: 'scale(1.25)', zIndex: 1
                 }} />
                 <img src={profileImage} alt="Michael Hammond" style={{
-                  width: 140, height: 140, borderRadius: '50%',
+                  width: 185, height: 185, borderRadius: '50%',
                   objectFit: 'cover', border: '2px solid rgba(238,203,44,.5)',
                   boxShadow: '0 0 24px rgba(238,203,44,.25)', position: 'relative', zIndex: 2
                 }} />
               </div>
 
               <div style={{ flex: 1, minWidth: 240 }}>
-                <p className="panel-text" style={{ lineHeight: '1.65', fontSize: '0.95rem', color: 'rgba(255,255,255,0.90)', marginBottom: '1rem' }}>
+                <p className="panel-text" style={{ lineHeight: '1.65', fontSize: '1.1rem', color: 'rgba(255,255,255,0.90)', marginBottom: '1rem' }}>
                   Gameplay Engineer & Systems Designer with 8+ years of experience architecting extensible interactive frameworks. I specialize in building data-driven player mechanics, synchronized multiplayer architecture, and custom developer tooling that accelerates team production velocity by keeping design teams close to the asset data.
                 </p>
-                <p className="panel-text" style={{ lineHeight: '1.65', fontSize: '0.95rem', color: 'rgba(255,255,255,0.90)' }}>
+                <p className="panel-text" style={{ lineHeight: '1.65', fontSize: '1.1rem', color: 'rgba(255,255,255,0.90)' }}>
                   The driving philosophy behind my work is bridging deep technical execution with systemic responsiveness. I focus on creating interconnected worlds where every combat encounter, AI decision, and environment interaction feels naturally responsive—designing robust architecture that scales smoothly while preserving the invisible nuances of great game feel.
                 </p>
               </div>
@@ -1969,7 +1983,7 @@ export default function Portfolio() {
               <div className="panel-title">Get in Touch</div>
             </div>
 
-            <p className="panel-text" style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.85)', marginBottom: '2rem' }}>
+            <p className="panel-text" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.85)', marginBottom: '2rem' }}>
               Available immediately for gameplay engineering, technical design, or systems architecture roles. Let’s connect via email, GitHub, or LinkedIn.
             </p>
 
