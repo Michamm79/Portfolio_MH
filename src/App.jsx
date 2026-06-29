@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, ExternalLink, Download, Eye } from 'lucide-react';
 
 import MoonEmblem from './assets/MoonV2.png';
-import profileImage from './assets/portfolio.JPG';
+import profileImage from './assets/ProfileV2.jpeg';
 import ComingSoon from './assets/ComingSoon.jpg';
 import mallCopMall from './assets/MallCop_Mall.jpg';
 import coreTwo from './assets/MallCop_MallCore2.jpg';
@@ -80,11 +80,11 @@ const PROJECTS = [
   {
     id: 3,
     title: 'Project Maelstrom',
-    category: 'Exploration RPG · Crafting Systems · Pack AI',
+    category: 'Exploration RPG · Crafting Systems · Coordinated Multi-Agent AI',
     color: 'pink',
     thumbnail: PM_Overview,
-    description: 'Original exploration RPG built around a signature two-orb crafting system. Players collect materials throughout the world and choose to transmute them directly into tools and weapons, or alchemically decompose them into elemental components for deeper crafting combinations. Coordinated pack AI governs enemy encounters as the world opens up.',
-    tags: ['Unreal Engine', 'C++', 'Blueprint', 'Crafting Systems', 'Pack AI', 'In Development'],
+    description: 'Original exploration RPG built around a signature two-orb crafting system. Players collect materials throughout the world and choose to transmute them directly into tools and weapons, or alchemically decompose them into elemental components for deeper crafting combinations. Coordinated Multi-Agent AI: governs enemy encounters as the world opens up.',
+    tags: ['Unreal Engine', 'C++', 'Blueprint', 'Crafting Systems', 'Coordinated Multi-Agent AI', 'In Development'],
     github: 'https://github.com/Michamm79/Project_Maelstrom',
     codeDownload: 'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
     media: [
@@ -139,11 +139,36 @@ const PROJECTS = [
 // HUB SECTIONS
 // ─────────────────────────────────────────────
 const SECTIONS = [
-  { id: 'work', label: 'Work', desc: 'Creature AI, GAS combat, VR multiplayer and sensor-driven worlds.' },
-  { id: 'experience', label: 'Exp', desc: '8+ years — King Crow Studios, OSU Kesterson VR Lab, and VedX Solutions. Shipped titles on Steam.' },
-  { id: 'skills', label: 'Skills', desc: 'C++, C#, GAS, Behavior Trees, multiplayer, 3D art, and more.' },
-  { id: 'about', label: 'About', desc: 'Background, education, and what drives the work.' },
-  { id: 'contact', label: 'Contact', desc: "Email, phone, GitHub, LinkedIn — let's connect." },
+  {
+    id: 'work',
+    label: 'Work',
+    hubDesc: 'Engineering and designing data-driven player mechanics, responsive AI frameworks, and scalable designer tooling.',
+    sectionDesc: 'Engineering and designing interconnected gameplay loops: specializing in data-driven player mechanics, responsive AI frameworks, and designer-facing architecture.'
+  },
+  {
+    id: 'experience',
+    label: 'Exp',
+    hubDesc: '8+ years engineering shipped Steam titles and co-building VR platforms for the USAF.',
+    sectionDesc: '8+ years bridging game design and production programming. Shipped commercial Steam titles and co-built whitepaper-certified VR platforms for the USAF.'
+  },
+  {
+    id: 'skills',
+    label: 'Skills',
+    hubDesc: 'Expert C++ & C# (Unreal/Unity). Specialized in AI, GAS combat, and network sync.',
+    sectionDesc: 'Expert C++ & C# (Unreal/Unity). Full-stack game development: from system architecture, GAS combat, and multiplayer syncing to rapid prototyping and mechanical balance.'
+  },
+  {
+    id: 'about',
+    label: 'About',
+    hubDesc: 'Translating high-level design concepts into optimized code and clean workflows.',
+    sectionDesc: 'Gameplay Engineer & Systems Designer with 8+ years of experience architecting extensible interactive frameworks. I specialize in building data-driven player mechanics, synchronized multiplayer architecture, and custom developer tooling that accelerates team production velocity by keeping design teams close to the asset data.\n\nThe driving philosophy behind my work is bridging deep technical execution with systemic responsiveness. I focus on creating interconnected worlds where every combat encounter, AI decision, and environment interaction feels naturally responsive—designing robust architecture that scales smoothly while preserving the invisible nuances of great game feel.'
+  },
+  {
+    id: 'contact',
+    label: 'Contact',
+    hubDesc: 'Available immediately for new roles. Let’s connect via email, GitHub, or LinkedIn.',
+    sectionDesc: 'Available immediately for gameplay engineering, technical design, or systems roles. Let’s connect via email, GitHub, or LinkedIn to build something exceptional together.'
+  },
 ];
 
 // ORBIT_ORDER: maps clock position → SECTIONS index
@@ -1392,7 +1417,7 @@ export default function Portfolio() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
           <span className="top-bar-name">Michael Hammond</span>
           <div style={{ width: 1, height: 14, background: 'rgba(238,203,44,.20)', margin: '0 .5rem' }} />
-          <span className="top-bar-title">Gameplay Engineer</span>
+          <span className="top-bar-title">Gameplay Engineer & Systems Engineer</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           {/* <a href={ResumePDF} download="MichaelHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"
@@ -1443,8 +1468,8 @@ export default function Portfolio() {
               filter: 'drop-shadow(0 0 10px rgba(238,203,44,.65)) drop-shadow(0 0 22px rgba(204,0,238,.50)) drop-shadow(0 0 40px rgba(204,0,238,.25))'
             }}>
               <div style={{
-                width: 'calc(var(--cs, 330px) * 0.36)',
-                height: 'calc(var(--cs, 330px) * 0.36)',
+                width: 'calc(var(--cs, 330px) * 0.35)',
+                height: 'calc(var(--cs, 330px) * 0.35)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -1453,7 +1478,7 @@ export default function Portfolio() {
                 <img
                   src={MoonEmblem}
                   alt="Moon Emblem"
-                  style={{ width: '115%', height: '115%', objectFit: 'contain', filter: 'invert(1)' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'invert(1)' }}
                 />
               </div>
             </div>
@@ -1471,41 +1496,37 @@ export default function Portfolio() {
               marginTop: 'calc(var(--cs, 330px) * 0.01)', textAlign: 'center',
               textShadow: '0 0 12px rgba(204,0,238,.60)'
             }}>
-              Gameplay Engineer
+              Gameplay Engineer <br></br>& Systems Designer
             </div>
-            {activeSec && (
-              <div style={{
-                marginTop: 'calc(var(--cs, 330px) * 0.025)',
-                padding: '.75rem .8rem', borderTop: '2px solid rgba(238,203,44,.28)',
-                textAlign: 'center', animation: 'label-in .3s ease both', width: '80%'
-              }}>
+            {(() => {
+              const currentSec = SECTIONS.find(sec => sec.id === activeSection);
+              if (!currentSec) return null;
+
+              return (
                 <div style={{
-                  fontFamily: "'Cinzel',serif",
-                  fontSize: 'calc(var(--cs, 330px) * 0.040)', fontWeight: 600,
-                  letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-hi)',
-                  marginBottom: '.25rem'
+                  marginTop: 'calc(var(--cs, 330px) * 0.025)',
+                  padding: '.75rem .8rem', borderTop: '2px solid rgba(238,203,44,.28)',
+                  textAlign: 'center', animation: 'label-in .3s ease both', width: '80%'
                 }}>
-                  {activeSec.label}
+                  <div style={{
+                    fontFamily: "'Cinzel',serif",
+                    fontSize: 'calc(var(--cs, 330px) * 0.040)', fontWeight: 600,
+                    letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-hi)',
+                    marginBottom: '.25rem'
+                  }}>
+                    {currentSec.label}
+                  </div>
+                  <div style={{
+                    fontSize: 'calc(var(--cs, 330px) * 0.036)',
+                    color: 'rgba(255,255,255,.80)', lineHeight: 1.5,
+                    maxWidth: 200, margin: '0 auto',
+                    textShadow: '0 0 6px rgba(255,255,255,.20)'
+                  }}>
+                    {currentSec.desc}
+                  </div>
                 </div>
-                <div style={{
-                  fontSize: 'calc(var(--cs, 330px) * 0.036)',
-                  color: 'rgba(255,255,255,.80)', lineHeight: 1.5,
-                  maxWidth: 200, margin: '0 auto',
-                  textShadow: '0 0 6px rgba(255,255,255,.20)'
-                }}>
-                  {activeSec.desc}
-                </div>
-              </div>
-            )}
-            {activeSection && (
-              <button onClick={resetHub} style={{
-                position: 'absolute', top: 10, right: 12, width: 22, height: 22,
-                borderRadius: '50%', background: 'rgba(0,0,0,.3)', border: '1px solid rgba(238,203,44,.3)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff',
-                zIndex: 30, fontSize: 10
-              }}>✕</button>
-            )}
-          </div>
+              );
+            })()}          </div>
 
           {/* bubbles */}
           {SECTIONS.map((sec, i) => (
@@ -1600,8 +1621,8 @@ export default function Portfolio() {
                 }}>                <div className="card-hub-header">
                   <div className="card-hub-overline">Creature AI · Pack Coordination</div>
                   <div className="card-hub-title">Project Maelstrom</div>
-                  <div className="card-hub-desc">A pack AI system where creatures work together — flanking, applying pressure, and falling back as a coordinated unit.</div>
-                  <div className="card-hub-tags">{['UE5', 'Unity', 'C++', 'C#', 'Pack AI', 'Encounter Design'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-desc">A Coordinated Multi-Agent AI system where creatures work together — flanking, applying pressure, and falling back as a coordinated unit.</div>
+                  <div className="card-hub-tags">{['UE5', 'Unity', 'C++', 'C#', 'Coordinated Multi-Agent AI', 'Encounter Design'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
                   {[PM_Overview, PM_Combat, PM_PlayerFocus].map((src, i) => (
@@ -1713,28 +1734,74 @@ export default function Portfolio() {
               <div className="panel-icon">{SECTION_ICONS.experience}</div>
               <div className="panel-title">Professional Experience</div>
             </div>
-            <div className="exp-entry">
-              <div className="exp-company">King Crow Studios</div>
-              <div className="exp-role">Gameplay Engineer & Systems Designer</div>
-              <div className="exp-dates">March 2022 — December 2025 · Remote</div>
-              <div className="exp-bullet">Co-built the USAF B-52 VR training platform in Unity and Unreal — recognized in an official USAF whitepaper (95% reduction in training time, 19% reduction in errors).</div>
-              <div className="exp-bullet">Built room-based multiplayer infrastructure on Photon PUN with RPC-driven state synchronization — engineered for stability under sustained live load across VR, desktop, and mobile simultaneously.</div>
-              <div className="exp-bullet">Built and integrated coordinated AI behavior systems — state-machine agents with role-based group tactics (flanking, support, pressure) driven by a higher-level coordinator, tunable by designers through a hybrid code/ScriptableObject architecture.</div>              <div className="exp-bullet">Contributed to <em>Necroball</em> (Oct 2021, 91% positive) and <em>Hive Slayer</em> (Oct 2020, 94% positive, Free-to-Play) — both shipped to Steam.</div>
-              <div className="exp-bullet">Built ScriptableObject-driven designer tooling allowing non-technical team members to author and tune gameplay content without engineering involvement.</div>
+
+            {/* KING CROW STUDIOS */}
+            <div className="exp-entry" style={{ marginBottom: '2.5rem' }}>
+              <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>King Crow Studios</div>
+              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Gameplay Engineer & Systems Designer</div>
+              <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>March 2022 — December 2025 · Remote</div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {[
+                  "Co-engineered a dual-engine VR flight training platform (Unity & Unreal Engine 5), architecting a data-driven checklist engine that dynamically verified procedural compliance. This direct technical implementation cut crew training cycle times by 95% and was officially recognized in a USAF Whitepaper for reducing human procedural errors by 19%.",
+                  "Designed and deployed a robust room-based multiplayer infrastructure utilizing Photon PUN. Engineered strict authoritative state synchronization and highly optimized RPC pipelines, ensuring rock-solid netcode stability and low-latency replication under sustained live concurrent player loads across VR, desktop, and mobile platforms simultaneously.",
+                  "Programmed an extensible Coordinated Multi-Agent AI system from scratch. Developed hierarchical finite state machines where individual agents execute role-based tactical behaviors (such as flanking, pressure allocation, and defensive retreats) dynamically orchestrated by a centralized high-level systemic manager.",
+                  "Contributed core gameplay engineering systems to shipped Steam titles Necroball (Oct 2021, 91% positive) and Hive Slayer (Oct 2020, 94% positive, Free-to-Play), focusing on performance optimization, responsive game feel, and stable build deployment pipelines.",
+                  "Architected a suite of custom Unity Inspector and Unreal Engine editor tools driven by decoupled ScriptableObject systems. This empowering design framework allowed non-technical content designers to rapidly author, iterate, and balance complex combat data and enemy variables safely in-editor, boosting production velocity by removing engineering dependencies."
+                ].map((bullet, idx) => (
+                  <div key={idx} className="exp-bullet" style={{
+                    position: 'relative', paddingLeft: '1rem', lineHeight: '1.6', fontSize: '0.9rem',
+                    color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)',
+                    boxShadow: 'inset 2px 0 0 rgba(204,0,238,0.1)'
+                  }}>
+                    {bullet.includes('Necroball') ? (
+                      <span>
+                        Contributed core gameplay engineering systems to shipped Steam titles <em>Necroball</em> (Oct 2021, 91% positive) and <em>Hive Slayer</em> (Oct 2020, 94% positive, Free-to-Play), focusing on performance optimization, responsive game feel, and stable build deployment pipelines.
+                      </span>
+                    ) : bullet}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="exp-entry">
-              <div className="exp-company">VedX Solutions</div>
-              <div className="exp-role">Game Development Intern — Remote</div>
-              <div className="exp-dates">January 2021 — January 2022</div>
-              <div className="exp-bullet">Designed and engineered VR hydroponic simulation to implement in a virtual reality-based education program.</div>
+
+            <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, rgba(238,203,44,0.15), transparent)', marginBottom: '2rem' }} />
+
+            {/* VEDX SOLUTIONS */}
+            <div className="exp-entry" style={{ marginBottom: '2.5rem' }}>
+              <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>VedX Solutions</div>
+              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Game Development Intern</div>
+              <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>January 2021 — January 2022 · Remote</div>
+
+              <div className="exp-bullet" style={{
+                paddingLeft: '1rem', lineHeight: '1.6', fontSize: '0.9rem',
+                color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)'
+              }}>
+                Architected and engineered an interactive VR hydroponic simulation platform deployed within a virtual reality-based educational curriculum. Focused on implementing physical-interaction mechanics, modular resource-tracking loops (water, light, nutrients), and realistic environmental reactions to maximize student immersion.
+              </div>
             </div>
+
+            <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, rgba(238,203,44,0.15), transparent)', marginBottom: '2rem' }} />
+
+            {/* OREGON STATE UNIVERSITY */}
             <div className="exp-entry">
-              <div className="exp-company">Oregon State University — Kesterson VR Immersion Lab</div>
-              <div className="exp-role">Virtual Reality Lab Technician</div>
-              <div className="exp-dates">September 2018 — June 2020</div>
-              <div className="exp-bullet">Built RPG prototypes with full creature systems, combat, and AI adversaries in both UE and Unity.</div>
-              <div className="exp-bullet">Led a drone R&D project integrating LiDAR, radar, and machine learning for real-time environmental mapping.</div>
-              <div className="exp-bullet">Created 3D assets in Maya and Blender, and mentored students in VR development.</div>
+              <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>Oregon State University — Kesterson VR Immersion Lab</div>
+              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Virtual Reality Lab Technician</div>
+              <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>September 2018 — June 2020</div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {[
+                  "Designed and prototyped functional 3D action-RPG frameworks within both Unreal Engine and Unity, developing modular player ability pipelines, responsive hit-registration mechanics, and state-machine-driven creature AI combat behaviors.",
+                  "Spearheaded a hardware-software drone integration R&D initiative, engineering a low-latency pipeline to pipe live spatial data feeds (LiDAR, radar, and thermal metrics) into an optimized interactive system for real-time procedural environmental mapping.",
+                  "Authored optimized 3D environmental assets and technical rigs using Maya and Blender, while providing technical mentorship, codebase debugging support, and real-time engine orientation to students integrating assets into VR pipelines."
+                ].map((bullet, idx) => (
+                  <div key={idx} className="exp-bullet" style={{
+                    paddingLeft: '1rem', lineHeight: '1.6', fontSize: '0.9rem',
+                    color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)'
+                  }}>
+                    {bullet}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -1744,20 +1811,83 @@ export default function Portfolio() {
               <div className="panel-icon">{SECTION_ICONS.skills}</div>
               <div className="panel-title">Technical Proficiencies</div>
             </div>
-            <div className="panel-grid">
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '1.25rem',
+              width: '100%'
+            }}>
               {[
-                ['AI & Creature Systems', 'Behavior Trees · Blackboards · Pack AI · State Machines · Engagement Slots · Adaptive Difficulty'],
-                ['Combat & Encounters', 'GAS · Combo Systems · Encounter Pacing · Boss Cinematics · Multiplayer Balancing'],
-                ['Languages', 'C++ (Expert) · C# (Expert) · Python · Blueprint · JavaScript · TypeScript · Lua'],
-                ['Engines & Tools', 'Unreal Engine 5 · Unity (8+ yrs) · Photon · Git · Plastic SCM · Visual Studio'],
-                ['Platforms', 'VR / AR / MR · Android · PC · Cross-Platform Multiplayer'],
-                ['3D & Art', 'Maya · Blender · Rigging · Animation · Environment Modeling · Krita'],
-                ['Web & Tools', 'React · HTML/CSS · JavaScript · Node.js · Vercel · SVG/CSS Animation'],
-                ['Collaboration', 'Cross-Discipline · Rapid Prototyping · Playtesting · Designer Tooling · Mentorship'],
+                ['Languages', 'C++ (Expert) · C# (Expert) · Blueprint · TypeScript · JavaScript · Python · Lua'],
+                ['Engines & Frameworks', 'Unreal Engine 5 · Unity (8+ yrs) · Gameplay Ability System (GAS) · Zenject / Vcontainment'],
+                ['Gameplay & Combat', 'Data-Driven Combat Frameworks · Combo Systems · Technical Pacing · Encounter Structure · Balance & Tuning'],
+                ['AI & Creature Systems', 'Coordinated Multi-Agent AI · Behavior Trees · Blackboards · State Machines · Engagement Slot Allocation'],
+                ['Architecture & Tooling', 'ScriptableObject Architecture · Custom Inspector Tooling · Extensible Developer Tooling · Modular State Machines'],
+                ['Networking & Platforms', 'Multiplayer Architecture · Authoritative State Sync (Photon) · VR / AR / XR · Cross-Platform Deployment'],
+                ['3D Art & Asset Pipelines', 'Maya · Blender · Rigging & Skinning · Animation Systems · Environment Modeling · Asset Optimization'],
+                ['Web & Infrastructure', 'React · Node.js · HTML/CSS · Vercel · SVG/CSS Motion Animation'],
+                ['Workflow & Versioning', 'Git · Plastic SCM · Perforce · Agile/Scrum Methodologies · Cross-Discipline Collaboration · Mentorship']
               ].map(([label, items]) => (
-                <div key={label} className="panel-card">
-                  <div className="skill-group-label">{label}</div>
-                  <div className="skill-group-items">{items}</div>
+                <div key={label} className="panel-card" style={{
+                  padding: '1.25rem',
+                  borderRadius: '4px',
+                  background: 'linear-gradient(135deg, rgba(20,10,40,0.35) 0%, rgba(5,2,15,0.55) 100%)',
+                  border: '1px solid rgba(238,203,44,0.12)',
+                  borderLeft: '3px solid var(--magenta)', // Sharp magenta indicator accent line
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.75rem',
+                  transition: 'all 0.25s ease'
+                }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(238,203,44,0.3)';
+                    e.currentTarget.style.boxShadow = '0 0 14px rgba(204,0,238,0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(238,203,44,0.12)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}>
+
+                  {/* Category Label */}
+                  <div className="skill-group-label" style={{
+                    fontFamily: "'Cinzel', serif",
+                    fontSize: '0.88rem',
+                    fontWeight: 700,
+                    color: 'var(--gold-hi)',
+                    letterSpacing: '.06em',
+                    textTransform: 'uppercase'
+                  }}>
+                    {label}
+                  </div>
+
+                  {/* Tag Container */}
+                  <div className="skill-group-items" style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0.4rem'
+                  }}>
+                    {items.split(' · ').map((item) => {
+                      // Highlights core expertise fields with a subtle background glow
+                      const isExpert = item.includes('(Expert)') || item.includes('5') || item.includes('8+ yrs') || item.includes('GAS');
+
+                      return (
+                        <span key={item} style={{
+                          fontSize: '0.78rem',
+                          padding: '0.2rem 0.5rem',
+                          borderRadius: '3px',
+                          background: isExpert ? 'rgba(204,0,238,0.12)' : 'rgba(255,255,255,0.03)',
+                          border: isExpert ? '1px solid rgba(204,0,238,0.25)' : '1px solid rgba(255,255,255,0.06)',
+                          color: isExpert ? '#fff' : 'rgba(255,255,255,0.8)',
+                          letterSpacing: '0.01em',
+                          whiteSpace: 'nowrap'
+                        }}>
+                          {item}
+                        </span>
+                      );
+                    })}
+                  </div>
+
                 </div>
               ))}
             </div>
@@ -1767,26 +1897,68 @@ export default function Portfolio() {
           <div className={`section-panel ${activeSection === 'about' ? 'active' : ''}`} data-section="about">
             <div className="panel-header">
               <div className="panel-icon">{SECTION_ICONS.about}</div>
-              <div className="panel-title">About</div>
+              <div className="panel-title">About Me</div>
             </div>
-            <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-              <img src={profileImage} alt="Michael Hammond" style={{
-                width: 140, height: 140, borderRadius: '50%',
-                objectFit: 'cover', border: '1px solid rgba(238,203,44,.4)',
-                boxShadow: '0 0 20px rgba(238,203,44,.20)', flexShrink: 0
-              }} />
+
+            <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+              <div style={{ position: 'relative', flexShrink: 0 }}>
+                {/* Glow effect behind profile picture */}
+                <div style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                  borderRadius: '50%', background: 'radial-gradient(circle, rgba(238,203,44,0.2) 0%, transparent 70%)',
+                  transform: 'scale(1.25)', zIndex: 1
+                }} />
+                <img src={profileImage} alt="Michael Hammond" style={{
+                  width: 140, height: 140, borderRadius: '50%',
+                  objectFit: 'cover', border: '2px solid rgba(238,203,44,.5)',
+                  boxShadow: '0 0 24px rgba(238,203,44,.25)', position: 'relative', zIndex: 2
+                }} />
+              </div>
+
               <div style={{ flex: 1, minWidth: 240 }}>
-                <p className="panel-text">Gameplay Engineer and Designer with 8+ years building complete interactive systems — synchronized multiplayer architecture, AI behaviors that make NPCs feel vibrant and alive, and tools that let design teams move fast without tedious back-and-forth.</p>
-                <p className="panel-text">The connecting thread has been a genuine interest in what makes a virtual world feel real — both functionally and in the essence of what makes them come alive and respond in ways players feel even when they can't articulate why.</p>
+                <p className="panel-text" style={{ lineHeight: '1.65', fontSize: '0.95rem', color: 'rgba(255,255,255,0.90)', marginBottom: '1rem' }}>
+                  Gameplay Engineer & Systems Designer with 8+ years of experience architecting extensible interactive frameworks. I specialize in building data-driven player mechanics, synchronized multiplayer architecture, and custom developer tooling that accelerates team production velocity by keeping design teams close to the asset data.
+                </p>
+                <p className="panel-text" style={{ lineHeight: '1.65', fontSize: '0.95rem', color: 'rgba(255,255,255,0.90)' }}>
+                  The driving philosophy behind my work is bridging deep technical execution with systemic responsiveness. I focus on creating interconnected worlds where every combat encounter, AI decision, and environment interaction feels naturally responsive—designing robust architecture that scales smoothly while preserving the invisible nuances of great game feel.
+                </p>
               </div>
             </div>
-            <div className="exp-entry" style={{ borderTop: '1px solid rgba(238,203,44,.10)', marginTop: '1.2rem' }}>
-              <div className="exp-company">Epic Games & Coursera — Game Design & Development with UE</div>
-              <div className="exp-role">Professional Certificate</div>
-            </div>
-            <div className="exp-entry">
-              <div className="exp-company">Oregon State University — B.A. Digital Communication Arts</div>
-              <div className="exp-role">Game Development Specialization · Minor: History & Education</div>
+
+            {/* CREDENTIALS SECTION */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', borderTop: '1px solid rgba(238,203,44,.15)', paddingTop: '2rem' }}>
+
+              {/* Epic Games Cert */}
+              <div style={{
+                padding: '1.2rem', borderRadius: '4px',
+                background: 'linear-gradient(135deg, rgba(20,10,40,0.4) 0%, rgba(5,2,15,0.6) 100%)',
+                border: '1px solid rgba(238,203,44,0.15)', borderLeft: '3px solid var(--gold-hi)'
+              }}>
+                <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.9rem', fontWeight: 700, color: '#fff', letterSpacing: '.04em', textTransform: 'uppercase' }}>
+                  Epic Games & Coursera
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem' }}>
+                  Game Design & Development with UE Professional Certificate
+                </div>
+              </div>
+
+              {/* Oregon State University */}
+              <div style={{
+                padding: '1.2rem', borderRadius: '4px',
+                background: 'linear-gradient(135deg, rgba(20,10,40,0.4) 0%, rgba(5,2,15,0.6) 100%)',
+                border: '1px solid rgba(238,203,44,0.15)', borderLeft: '3px solid var(--gold-hi)'
+              }}>
+                <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.9rem', fontWeight: 700, color: '#fff', letterSpacing: '.04em', textTransform: 'uppercase' }}>
+                  Oregon State University
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem' }}>
+                  B.A. Digital Communication Arts
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginTop: '0.3rem' }}>
+                  Game Development Specialization · Minor: History & Education
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -1796,34 +1968,45 @@ export default function Portfolio() {
               <div className="panel-icon">{SECTION_ICONS.contact}</div>
               <div className="panel-title">Get in Touch</div>
             </div>
-            <p className="panel-text">Actively looking for gameplay engineering roles. If you're building something with passion — AI that thinks, exhilarating combat, multiplayer built to last — I'd love to talk.</p>
-            <div className="contact-links">
-              <a href="mailto:hammondsk.09@gmail.com" className="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
-                hammondsk.09@gmail.com
-              </a>
-              <a href="tel:+15419731430" className="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 9.81 19.79 19.79 0 0 1 .1 1.18 2 2 0 0 1 2.09 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                (541) 973-1430
-              </a>
-              <a href="https://github.com/Michamm79" target="_blank" rel="noopener noreferrer" className="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
-                github.com/Michamm79
-              </a>
-              <a href="https://www.linkedin.com/in/michamm" target="_blank" rel="noopener noreferrer" className="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
-                LinkedIn
-              </a>
-              <a href="https://michaelhammond.vercel.app" target="_blank" rel="noopener noreferrer" className="contact-link">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
-                michaelhammond.vercel.app
-              </a>
-            </div>
-            <div style={{
-              fontFamily: "'Cinzel',serif", fontSize: '.76rem', color: '#fff', marginTop: '1.2rem',
-              letterSpacing: '.10em', textTransform: 'uppercase'
+
+            <p className="panel-text" style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.85)', marginBottom: '2rem' }}>
+              Available immediately for gameplay engineering, technical design, or systems architecture roles. Let’s connect via email, GitHub, or LinkedIn.
+            </p>
+
+            {/* Restructured Contact Links into a clean grid */}
+            <div className="contact-links" style={{
+              display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem'
             }}>
-              Oregon · Available Immediately · Remote
+              {[
+                { href: "mailto:hammondsk.09@gmail.com", label: "hammondsk.09@gmail.com", icon: <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />, extra: <polyline points="22,6 12,13 2,6" /> },
+                { href: "tel:+15419731430", label: "(541) 973-1430", icon: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 9.81 19.79 19.79 0 0 1 .1 1.18 2 2 0 0 1 2.09 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /> },
+                { href: "https://github.com/Michamm79", label: "github.com/Michamm79", icon: <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />, target: "_blank" },
+                { href: "https://www.linkedin.com/in/michamm", label: "LinkedIn Profile", icon: <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />, extra: <rect x="2" y="9" width="4" height="12" />, target: "_blank" }
+              ].map((link, idx) => (
+                <a key={idx} href={link.href} target={link.target} rel={link.target ? "noopener noreferrer" : undefined} style={{
+                  display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem',
+                  borderRadius: '4px', background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(238,203,44,0.1)', color: '#fff', textDecoration: 'none',
+                  fontSize: '0.9rem', transition: 'all 0.25s ease'
+                }}
+                  // Adds instant clean interactive states via basic inline JS fallbacks if you don't use global CSS hover styling
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(238,203,44,0.04)';
+                    e.currentTarget.style.borderColor = 'rgba(238,203,44,0.3)';
+                    e.currentTarget.style.boxShadow = '0 0 12px rgba(238,203,44,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
+                    e.currentTarget.style.borderColor = 'rgba(238,203,44,0.1)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--gold-hi)' }}>
+                    {link.icon}
+                    {link.extra}
+                  </svg>
+                  {link.label}
+                </a>
+              ))}
             </div>
           </div>
 
