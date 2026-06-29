@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { X, ExternalLink, Download, Eye } from 'lucide-react';
 
-import SunEmblem   from './assets/SunEmblem.png';
+import MoonEmblem from './assets/MoonV2.png';
 import profileImage from './assets/portfolio.JPG';
-import ComingSoon   from './assets/ComingSoon.jpg';
-import mallCopMall  from './assets/MallCop_Mall.jpg';
-import coreTwo      from './assets/MallCop_MallCore2.jpg';
-import coreEight    from './assets/MallCop_MallCore8.jpg';
-import lobbyFive    from './assets/MallCop_Lobby5.jpg';
-import menuTwo      from './assets/MallCop_MainMenu2.jpg';
-import B52_USAF          from './assets/B52training_immersion.jpg';
+import ComingSoon from './assets/ComingSoon.jpg';
+import mallCopMall from './assets/MallCop_Mall.jpg';
+import coreTwo from './assets/MallCop_MallCore2.jpg';
+import coreEight from './assets/MallCop_MallCore8.jpg';
+import lobbyFive from './assets/MallCop_Lobby5.jpg';
+import menuTwo from './assets/MallCop_MainMenu2.jpg';
+import B52_USAF from './assets/B52training_immersion.jpg';
 import B52_internaltraining from './assets/fs_remake.jpg';
-import sensorama         from './assets/sensorama_external.jpg';
+import sensorama from './assets/sensorama_external.jpg';
 import sensorama_Environment from './assets/Sensorama_ElephantPlush.jpg';
-import PM_Overview   from './assets/pm_overview.jpg';
+import PM_Overview from './assets/pm_overview.jpg';
 import PM_PlayerFocus from './assets/pm_tools.jpg';
-import PM_Combat     from './assets/pm_enemies-combat.jpg';
+import PM_Combat from './assets/pm_enemies-combat.jpg';
 
 // ─────────────────────────────────────────────
 // PROJECT DATA
@@ -28,10 +28,10 @@ const PROJECTS = [
     color: 'green',
     thumbnail: ComingSoon,
     description: 'A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanitys greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. A fox travels with you. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.',
-    tags: ['Unity','C#','Procedural Generation','Companion AI','ScriptableObjects','In Development'],
+    tags: ['Unreal Engine', 'C++', 'Procedural Generation', 'Companion AI', 'Blueprints', 'In Development'],
     github: 'https://github.com/Michamm79/Valtara',
     codeDownload: 'https://github.com/Michamm79/Valtara/archive/refs/heads/main.zip',
-    media: [{ type:'image', src: ComingSoon, label:'Barley and Fox — World Preview', system:'Exploration' }],
+    media: [{ type: 'image', src: ComingSoon, label: 'Barley and Fox — World Preview', system: 'Exploration' }],
     recruiterHighlights: [
       'Location-contextual artifact placement — each of seven curated artifacts is tied to a specific biome type. The procedural world arranges differently each playthrough, but the mythological logic always holds.',
       'Guardian gate system — artifacts are not found, they are given, eventually, by someone who needed to see something first. Each guardian has unique unlock conditions; the fox signals what kind of encounter is approaching.',
@@ -46,10 +46,10 @@ const PROJECTS = [
     color: 'blue',
     thumbnail: ComingSoon,
     description: 'A dark survival gauntlet built around a behavior-driven rune system. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed.',
-    tags: ['Unity','C#','ScriptableObjects','Behavior Classifier','Designer Tooling','PC','In Development'],
+    tags: ['Unity', 'C#', 'ScriptableObjects', 'Behavior Classifier', 'Designer Tooling', 'PC', 'In Development'],
     github: 'https://github.com/Michamm79/Evigheden',
     codeDownload: 'https://github.com/Michamm79/Evigheden/archive/refs/heads/main.zip',
-    media: [{ type:'image', src: ComingSoon, label:'Rune Authoring & Inspector Workflow', system:'Designer Tooling' }],
+    media: [{ type: 'image', src: ComingSoon, label: 'Rune Authoring & Inspector Workflow', system: 'Designer Tooling' }],
     recruiterHighlights: [
       'Behavior Classifier runs levels 3–5, tracking combat patterns across six dimensions — aggression, dodge frequency, stealth, defensive play, sprint momentum, and precision. At level 5 it surfaces the Specialized Rune that best reflects how the player actually fights.',
       'Six Specialized Rune archetypes (Berserker, Sentinel, Phantom, Duelist, Vanguard, Acrobat) plus a secret seventh with performance-gated unlock conditions. Each is defined entirely in a ScriptableObject asset — no code per archetype.',
@@ -58,18 +58,18 @@ const PROJECTS = [
     ],
   },
   {
-    id: 1,
+    id: 2,
     title: 'Mall Cop Madhouse',
     category: 'Asymmetric Multiplayer · Stealth / Chase',
     color: 'purple',
     thumbnail: mallCopMall,
     description: 'Asymmetric stealth-and-chase game: Hooligans complete disruptive tasks while a taser-wielding Mall Cop hunts them down and carries them to the jail zone.',
-    tags: ['Unity','C#','Photon Pun','Multiplayer','Asymmetric','UI/UX'],
+    tags: ['Unity', 'C#', 'Photon Pun', 'Multiplayer', 'Asymmetric', 'UI/UX'],
     media: [
-      { type:'image', src: coreTwo,   label:'Core Loop — Stealth + Task Timeline',      system:'Gameplay' },
-      { type:'image', src: lobbyFive, label:'Lobby + Role Selection UI',                system:'UI/UX' },
-      { type:'image', src: coreEight, label:'Level Layout — Navigation & Sightlines',   system:'Level Design' },
-      { type:'image', src: menuTwo,   label:'Match Setup — Player Onboarding & Controls',system:'UI/UX' },
+      { type: 'image', src: coreTwo, label: 'Core Loop — Stealth + Task Timeline', system: 'Gameplay' },
+      { type: 'image', src: lobbyFive, label: 'Lobby + Role Selection UI', system: 'UI/UX' },
+      { type: 'image', src: coreEight, label: 'Level Layout — Navigation & Sightlines', system: 'Level Design' },
+      { type: 'image', src: menuTwo, label: 'Match Setup — Player Onboarding & Controls', system: 'UI/UX' },
     ],
     recruiterHighlights: [
       'Asymmetric multiplayer loop (objectives vs hunter pressure) designed for readable decisions.',
@@ -78,18 +78,19 @@ const PROJECTS = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: 'Project Maelstrom',
     category: 'Exploration RPG · Crafting Systems · Pack AI',
     color: 'pink',
     thumbnail: PM_Overview,
     description: 'Original exploration RPG built around a signature two-orb crafting system. Players collect materials throughout the world and choose to transmute them directly into tools and weapons, or alchemically decompose them into elemental components for deeper crafting combinations. Coordinated pack AI governs enemy encounters as the world opens up.',
-    tags: ['Unity','C#','ScriptableObjects','Crafting Systems','Pack AI','In Development'],
+    tags: ['Unreal Engine', 'C++', 'Blueprint', 'Crafting Systems', 'Pack AI', 'In Development'],
     github: 'https://github.com/Michamm79/Project_Maelstrom',
     codeDownload: 'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
     media: [
-      { type:'image', src: PM_PlayerFocus, label:'Crafting Pipeline — Orb System Overview', system:'Crafting' },
-      { type:'image', src: PM_Combat,      label:'Enemy Encounters — Pack Behavior',        system:'Combat' },
+      { type: 'image', src: PM_Overview, label: 'Project Overview', system: 'Overview' },
+      { type: 'image', src: PM_Combat, label: 'Enemy Encounters — Pack Behavior', system: 'Combat' },
+      { type: 'image', src: PM_PlayerFocus, label: 'Crafting Pipeline — Orb System Overview', system: 'Crafting' },
     ],
     recruiterHighlights: [
       'Two-orb crafting pipeline: transmutation pairs materials into tools and weapons; alchemy decomposes materials into elements for deeper combinations — all data-driven on ScriptableObject assets.',
@@ -99,32 +100,34 @@ const PROJECTS = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     title: 'B-52 Training Suite — USAF',
     category: 'VR Training · Multiplayer · USAF',
     color: 'blue',
     thumbnail: B52_USAF,
     description: 'Large-scale dual-engine VR training platform — built simultaneously in Unity and Unreal — that cut B-52 crew training time by 95%, recognized in an official USAF whitepaper.',
-    tags: ['Unity','UE5','VR','Photon','XR Training','Checklist Systems'],
+    tags: ['Unity', 'UE5', 'VR', 'Photon', 'XR Training', 'Checklist Systems'],
     media: [
-      { type:'youtube', src:'https://youtu.be/yfuFpTZCy2g?si=TgEWj1p08yPcPYMQ', poster: B52_USAF,            label:'Training Cockpit (In-Engine)', system:'Multiplayer' },
-      { type:'youtube', src:'https://youtu.be/RwfVfCtx3-M?si=CVPqiLuieOj_MsIj', poster: B52_internaltraining, label:'XR Training Highlights',       system:'Multiplayer' },
+      { type: 'youtube', src: 'https://youtu.be/yfuFpTZCy2g?si=TgEWj1p08yPcPYMQ', poster: B52_USAF, label: 'Training Cockpit (In-Engine)', system: 'Multiplayer' },
+      { type: 'youtube', src: 'https://youtu.be/RwfVfCtx3-M?si=CVPqiLuieOj_MsIj', poster: B52_internaltraining, label: 'XR Training Highlights', system: 'Multiplayer' },
     ],
     recruiterHighlights: [
       'Inspector-serialized ChecklistManager: each step owns its own verification type (Audio / Confirm / Interact), target object ID, and interaction mode.',
       'Multi-trainee Photon networking with synchronized session state and master-client authority.',
-      '95% reduction in training time — up to 75% increase in crew retention — 19% fewer procedural errors.',    ],
+      '95% reduction in training time — up to 75% increase in crew retention — 19% fewer procedural errors.',],
   },
   {
-    id: 4,
+    id: 5,
     title: 'Sensorama R&D',
     category: 'VR · Sensor Integration · Environmental AI',
     color: 'purple',
     thumbnail: sensorama,
     description: 'Research project that piped live sensor data (LiDAR, radar, heat signature) from physical hardware into a game world, making AI creatures react to real space in real time.',
-    tags: ['Unity','C#','LiDAR','Environmental AI','OSU VR Lab','Experimental'],
-    media: [{ type:'image', src: sensorama_Environment, label:'Gameplay Mechanics / Environment', system:'Research & Development' }],
-    recruiterHighlights: [
+    tags: ['Unity', 'C#', 'LiDAR', 'Environmental AI', 'OSU VR Lab', 'Experimental'],
+    media: [
+      { type: 'image', src: sensorama, label: 'Sensorama Hardware Setup', system: 'R&D' },
+      { type: 'image', src: sensorama_Environment, label: 'Gameplay Mechanics / Environment', system: 'Research & Development' }
+    ], recruiterHighlights: [
       'Buffered point-cloud ingestion with a fixed 64-point-per-frame cap to prevent hitches.',
       'Sphere-overlap alerts decouple sensor data from AI behavior — creatures decide independently.',
       'Cross-disciplinary R&D bridging hardware constraints and real-time game design.',
@@ -136,11 +139,11 @@ const PROJECTS = [
 // HUB SECTIONS
 // ─────────────────────────────────────────────
 const SECTIONS = [
-  { id:'work',       label:'Work',    desc:'Creature AI, GAS combat, VR multiplayer and sensor-driven worlds.' },
-  { id:'experience', label:'Exp', desc:'8+ years — King Crow Studios, OSU Kesterson VR Lab, and VedX Solutions. Shipped titles on Steam.' },
-  { id:'skills',     label:'Skills',  desc:'C++, C#, GAS, Behavior Trees, multiplayer, 3D art, and more.' },
-  { id:'about',      label:'About',   desc:'Background, education, and what drives the work.' },
-  { id:'contact',    label:'Contact', desc:"Email, phone, GitHub, LinkedIn — let's connect." },
+  { id: 'work', label: 'Work', desc: 'Creature AI, GAS combat, VR multiplayer and sensor-driven worlds.' },
+  { id: 'experience', label: 'Exp', desc: '8+ years — King Crow Studios, OSU Kesterson VR Lab, and VedX Solutions. Shipped titles on Steam.' },
+  { id: 'skills', label: 'Skills', desc: 'C++, C#, GAS, Behavior Trees, multiplayer, 3D art, and more.' },
+  { id: 'about', label: 'About', desc: 'Background, education, and what drives the work.' },
+  { id: 'contact', label: 'Contact', desc: "Email, phone, GitHub, LinkedIn — let's connect." },
 ];
 
 // ORBIT_ORDER: maps clock position → SECTIONS index
@@ -149,11 +152,11 @@ const SECTIONS = [
 const ORBIT_ORDER = [0, 1, 4, 3, 2];
 
 const SECTION_ICONS = {
-  work:       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
-  experience: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>,
-  skills:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>,
-  about:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
-  contact:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+  work: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>,
+  experience: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>,
+  skills: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>,
+  about: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>,
+  contact: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>,
 };
 
 // Code snippets for Work cards
@@ -502,12 +505,12 @@ AActor* UOrbContainer::SpawnResult(TSubclassOf<AActor> PrefabClass)
     }
     
 }`,
-bullets: [
-  'The recipe evaluation loop checks the global player progression tier and inventory matrix simultaneously, returning the full array of affordable items to the UI in a single pass.',
-  'Material decomposition extracts variable element compounds dynamically through nested collection iterations, cleaning up empty database keys automatically post-transaction.',
-  'Asset loading bypasses heavy synchronous folder scans in favor of an async-ready manager registry, preventing performance spikes and frame hitches during menu initialization.',
-  'The entire system behaves as a deterministic transaction machine, using input boundary clamps to catch bad structural data configurations at the data asset layer before runtime compilation.',
-],
+    bullets: [
+      'The recipe evaluation loop checks the global player progression tier and inventory matrix simultaneously, returning the full array of affordable items to the UI in a single pass.',
+      'Material decomposition extracts variable element compounds dynamically through nested collection iterations, cleaning up empty database keys automatically post-transaction.',
+      'Asset loading bypasses heavy synchronous folder scans in favor of an async-ready manager registry, preventing performance spikes and frame hitches during menu initialization.',
+      'The entire system behaves as a deterministic transaction machine, using input boundary clamps to catch bad structural data configurations at the data asset layer before runtime compilation.',
+    ],
   },
   maelstrom_cinematic: {
     file: 'BossCinematicDirector.cs', lang: 'csharp',
@@ -568,7 +571,7 @@ public class BossCinematicDirector : MonoBehaviour
     ],
   },
   valtara_artifacts: {
-    file: 'ArtifactSpawnSystem.cpp', lang: 'csharp',
+    file: 'ArtifactSpawnSystem.cpp', lang: 'cpp',
     code: `// ArtifactSpawnSubsystem.cpp
 
     #include "ArtifactSpawnSubsystem.h"
@@ -755,7 +758,7 @@ public class BossCinematicDirector : MonoBehaviour
     void UFoxBehaviorComponent::EvaluateBehavior(float DeltaTime)
     {
       if (!Fox.IsValid()) return;
-    
+    f
       ABarleyCharacter* Barley = Fox->GetBondedTarget();
       if (!Barley) return;
     
@@ -1060,12 +1063,12 @@ export class GameStateManager {
     this.phase.set(next);
   }
 }`,
-  bullets: [
-    'Observable<T> is generic — the same class handles a GamePhase, score, player list, anything. TypeScript enforces correctness at compile time.',
-    'subscribe() returns its own unsubscribe function — callers clean up with one call, no manual listener tracking needed.',
-    'transitionTo() validates against an allowed-moves map — illegal state transitions are silently rejected, the game can never reach an undefined phase.',
-    'Lazy singleton via nullish coalescing assignment (??=) — one instance, created only when first needed, no boilerplate.',
-  ],
+    bullets: [
+      'Observable<T> is generic — the same class handles a GamePhase, score, player list, anything. TypeScript enforces correctness at compile time.',
+      'subscribe() returns its own unsubscribe function — callers clean up with one call, no manual listener tracking needed.',
+      'transitionTo() validates against an allowed-moves map — illegal state transitions are silently rejected, the game can never reach an undefined phase.',
+      'Lazy singleton via nullish coalescing assignment (??=) — one instance, created only when first needed, no boilerplate.',
+    ],
   },
 
 };
@@ -1089,12 +1092,12 @@ function getYouTubeId(url) {
 const STARS = Array.from({ length: 200 }, (_, i) => {
   const rr = Math.random();
   let color, shadow;
-  if      (rr < .06) { color = '#f7eb63'; shadow = '0 0 6px rgba(238,203,44,.9)'; }
+  if (rr < .06) { color = '#f7eb63'; shadow = '0 0 6px rgba(238,203,44,.9)'; }
   else if (rr < .11) { color = '#b7edff'; shadow = '0 0 5px rgba(183,237,255,.7)'; }
   else if (rr < .16) { color = '#cc00ee'; shadow = '0 0 5px rgba(204,0,238,.7)'; }
-  else               { color = '#ffffff'; shadow = 'none'; }
-  const sz = rr < .04 ? 2.4+Math.random()*.8 : rr < .10 ? 1.4+Math.random()*.6 : .4+Math.random()*.9;
-  return { id: i, left: Math.random()*100, top: Math.random()*100, size: sz, opacity: .14+Math.random()*.76, color, shadow };
+  else { color = '#ffffff'; shadow = 'none'; }
+  const sz = rr < .04 ? 2.4 + Math.random() * .8 : rr < .10 ? 1.4 + Math.random() * .6 : .4 + Math.random() * .9;
+  return { id: i, left: Math.random() * 100, top: Math.random() * 100, size: sz, opacity: .14 + Math.random() * .76, color, shadow };
 });
 
 // ─────────────────────────────────────────────
@@ -1103,14 +1106,14 @@ const STARS = Array.from({ length: 200 }, (_, i) => {
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState('work');
   const [selectedMedia, setSelectedMedia] = useState(null);
-  const hubWrapRef  = useRef(null);
-  const centerRef   = useRef(null);
-  const bubblesRef  = useRef([]);
+  const hubWrapRef = useRef(null);
+  const centerRef = useRef(null);
+  const bubblesRef = useRef([]);
 
   // ── sizing helpers ──
-  const hubSize    = useCallback(() => Math.min(680, Math.max(320, window.innerWidth * 0.62)), []);
+  const hubSize = useCallback(() => Math.min(680, Math.max(320, window.innerWidth * 0.62)), []);
   const bubbleSize = useCallback(() => Math.max(58, Math.round(88 * hubSize() / 680)), [hubSize]);
-  const orbitR     = useCallback(() => Math.round(248 * hubSize() / 680), [hubSize]);
+  const orbitR = useCallback(() => Math.round(248 * hubSize() / 680), [hubSize]);
 
   function orbitPos(clockIdx) {
     const hs = hubSize(), cx = hs / 2, r = orbitR(), bs = bubbleSize();
@@ -1121,41 +1124,41 @@ export default function Portfolio() {
   function railPos(sectionIdx) {
     const hs = hubSize(), bs = bubbleSize();
     const railRight = hs - bs - 12;
-    const totalH    = SECTIONS.length * bs + (SECTIONS.length - 1) * 8;
-    const startY    = (hs - totalH) / 2;
+    const totalH = SECTIONS.length * bs + (SECTIONS.length - 1) * 8;
+    const startY = (hs - totalH) / 2;
     return { left: railRight, top: Math.round(startY + sectionIdx * (bs + 8)) };
   }
 
   // ── apply sizes ──
   const applyLayout = useCallback((toRail) => {
-    const hs    = hubSize();
+    const hs = hubSize();
     const scale = hs / 680;
-    const bs    = bubbleSize();
-    const cs    = Math.max(260, Math.round(400 * scale));
+    const bs = bubbleSize();
+    const cs = Math.max(260, Math.round(400 * scale));
 
     if (hubWrapRef.current) {
-      hubWrapRef.current.style.width  = hs + 'px';
+      hubWrapRef.current.style.width = hs + 'px';
       hubWrapRef.current.style.height = hs + 'px';
-      const ring1   = hubWrapRef.current.querySelector('.hub-ring-1');
-      const ring2   = hubWrapRef.current.querySelector('.hub-ring-2');
-      const ringTech= hubWrapRef.current.querySelector('.hub-ring-tech');
-      if (ring1)    { ring1.style.width    = ring1.style.height    = Math.round(500*scale)+'px'; }
-      if (ring2)    { ring2.style.width    = ring2.style.height    = Math.round(548*scale)+'px'; }
-      if (ringTech) { ringTech.style.width = ringTech.style.height = Math.round(368*scale)+'px'; }
+      const ring1 = hubWrapRef.current.querySelector('.hub-ring-1');
+      const ring2 = hubWrapRef.current.querySelector('.hub-ring-2');
+      const ringTech = hubWrapRef.current.querySelector('.hub-ring-tech');
+      if (ring1) { ring1.style.width = ring1.style.height = Math.round(500 * scale) + 'px'; }
+      if (ring2) { ring2.style.width = ring2.style.height = Math.round(548 * scale) + 'px'; }
+      if (ringTech) { ringTech.style.width = ringTech.style.height = Math.round(368 * scale) + 'px'; }
     }
     if (centerRef.current) {
-      centerRef.current.style.width  = cs + 'px';
+      centerRef.current.style.width = cs + 'px';
       centerRef.current.style.height = cs + 'px';
       // expose circle size as CSS var so inner content can scale
       centerRef.current.style.setProperty('--cs', cs + 'px');
     }
     bubblesRef.current.forEach((b, i) => {
       if (!b) return;
-      b.style.width  = bs + 'px';
+      b.style.width = bs + 'px';
       b.style.height = bs + 'px';
       const pos = orbitPos(ORBIT_ORDER.indexOf(i));
       b.style.left = pos.left + 'px';
-      b.style.top  = pos.top  + 'px';
+      b.style.top = pos.top + 'px';
     });
   }, [hubSize, bubbleSize, orbitR]);
 
@@ -1184,7 +1187,7 @@ export default function Portfolio() {
   const openMedia = (project, mediaIndex = 0) => setSelectedMedia({ project, mediaIndex });
 
   return (
-    <div style={{ minHeight:'100vh', background:'#000', color:'#fff', fontFamily:"'EB Garamond', serif", overflowX:'hidden' }}>
+    <div style={{ minHeight: '100vh', background: '#000', color: '#fff', fontFamily: "'EB Garamond', serif", overflowX: 'hidden' }}>
 
       {/* ── FONTS ── */}
       <style>{`
@@ -1361,34 +1364,38 @@ export default function Portfolio() {
       `}</style>
 
       {/* ── BACKGROUND ── */}
-      <div style={{ position:'fixed', inset:0, background:'radial-gradient(ellipse 90% 70% at 50% 44%,#0e0828 0%,#060418 40%,#030210 70%,#000 100%)', zIndex:0 }} />
-      <div style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:1 }}>
+      <div style={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse 90% 70% at 50% 44%,#0e0828 0%,#060418 40%,#030210 70%,#000 100%)', zIndex: 0 }} />
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
         {/* nebulae */}
         {[
-          {x:18,y:22,s:520,c:'rgba(30,10,120,.40)',r:-18},{x:75,y:65,s:480,c:'rgba(60,0,140,.32)',r:16},
-          {x:50,y:14,s:420,c:'rgba(238,203,44,.09)',r:0}, {x:82,y:78,s:460,c:'rgba(204,0,238,.18)',r:30},
-          {x:50,y:50,s:600,c:'rgba(40,8,100,.22)',r:0},
-        ].map((n,i) => (
-          <div key={i} style={{ position:'fixed', borderRadius:'50%', filter:'blur(70px)',
-            width:n.s, height:Math.round(n.s*.54), left:`${n.x}%`, top:`${n.y}%`,
-            background:`radial-gradient(ellipse,${n.c} 0%,transparent 70%)`,
-            transform:`translate(-50%,-50%) rotate(${n.r}deg)` }} />
+          { x: 18, y: 22, s: 520, c: 'rgba(30,10,120,.40)', r: -18 }, { x: 75, y: 65, s: 480, c: 'rgba(60,0,140,.32)', r: 16 },
+          { x: 50, y: 14, s: 420, c: 'rgba(238,203,44,.09)', r: 0 }, { x: 82, y: 78, s: 460, c: 'rgba(204,0,238,.18)', r: 30 },
+          { x: 50, y: 50, s: 600, c: 'rgba(40,8,100,.22)', r: 0 },
+        ].map((n, i) => (
+          <div key={i} style={{
+            position: 'fixed', borderRadius: '50%', filter: 'blur(70px)',
+            width: n.s, height: Math.round(n.s * .54), left: `${n.x}%`, top: `${n.y}%`,
+            background: `radial-gradient(ellipse,${n.c} 0%,transparent 70%)`,
+            transform: `translate(-50%,-50%) rotate(${n.r}deg)`
+          }} />
         ))}
         {STARS.map(s => (
-          <div key={s.id} style={{ position:'fixed', borderRadius:'50%', width:s.size, height:s.size,
-            left:`${s.left}%`, top:`${s.top}%`, background:s.color, opacity:s.opacity, boxShadow:s.shadow }} />
+          <div key={s.id} style={{
+            position: 'fixed', borderRadius: '50%', width: s.size, height: s.size,
+            left: `${s.left}%`, top: `${s.top}%`, background: s.color, opacity: s.opacity, boxShadow: s.shadow
+          }} />
         ))}
       </div>
-      
+
       {/* ── TOP BAR ── */}
       <div className={`top-bar ${activeSection ? 'visible' : ''}`}>
-        <div style={{ display:'flex', alignItems:'center', gap:'.6rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
           <span className="top-bar-name">Michael Hammond</span>
-          <div style={{ width:1, height:14, background:'rgba(238,203,44,.20)', margin:'0 .5rem' }} />
+          <div style={{ width: 1, height: 14, background: 'rgba(238,203,44,.20)', margin: '0 .5rem' }} />
           <span className="top-bar-title">Gameplay Engineer</span>
         </div>
-        <div style={{ display:'flex', alignItems:'center', gap:'1rem' }}>
-        {/* <a href={ResumePDF} download="MichaelHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {/* <a href={ResumePDF} download="MichaelHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"
            style={{
               fontFamily:"'Cinzel',serif", fontSize:'.62rem', letterSpacing:'.14em',
               textTransform:'uppercase', color:'var(--gold)', textDecoration:'none',
@@ -1402,86 +1409,101 @@ export default function Portfolio() {
           </a> */}
           <button className="top-bar-close" onClick={resetHub}><X size={12} /></button>
         </div>
-      </div>        
+      </div>
       {/* ── HUB PAGE ── */}
-      <div style={{ position:'relative', zIndex:10, display:'flex', flexDirection:'column', alignItems:'center',
-        paddingTop: activeSection ? 'calc(52px + 4vh)' : '6vh', paddingBottom:'3rem',
-        transition:'padding-top .45s cubic-bezier(.4,0,.2,1)' }}>
+      <div style={{
+        position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center',
+        paddingTop: activeSection ? 'calc(52px + 4vh)' : '6vh', paddingBottom: '3rem',
+        transition: 'padding-top .45s cubic-bezier(.4,0,.2,1)'
+      }}>
 
         {/* HUB WRAP */}
         <div ref={hubWrapRef} className={activeSection ? 'section-active-hub' : ''}
-          style={{ position:'relative', width:680, height:680, flexShrink:0 }}>
+          style={{ position: 'relative', width: 680, height: 680, flexShrink: 0 }}>
 
           {/* rings */}
-          <div className="hub-ring hub-ring-1" style={{ width:500, height:500 }} />
-          <div className="hub-ring hub-ring-2" style={{ width:548, height:548 }} />
-          <div className="hub-ring hub-ring-tech" style={{ width:368, height:368 }} />
+          <div className="hub-ring hub-ring-1" style={{ width: 500, height: 500 }} />
+          <div className="hub-ring hub-ring-2" style={{ width: 548, height: 548 }} />
+          <div className="hub-ring hub-ring-tech" style={{ width: 368, height: 368 }} />
 
           {/* center circle */}
           <div ref={centerRef} style={{
-            position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)',
-            width:330, height:330, borderRadius:'50%', '--cs':'330px',
-            background:'radial-gradient(circle at 38% 36%,rgba(20,10,50,.96) 0%,rgba(4,2,14,.98) 100%)',
-            border:'1px solid rgba(238,203,44,.8)',
-            boxShadow:'0 0 36px rgba(238,203,44,.46),0 0 80px rgba(204,0,238,.52),inset 0 0 24px rgba(204,0,238,.2)',
-            display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-            overflow:'hidden', zIndex:10,
+            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
+            width: 330, height: 330, borderRadius: '50%', '--cs': '330px',
+            background: 'radial-gradient(circle at 38% 36%,rgba(20,10,50,.96) 0%,rgba(4,2,14,.98) 100%)',
+            border: '1px solid rgba(238,203,44,.8)',
+            boxShadow: '0 0 36px rgba(238,203,44,.46),0 0 80px rgba(204,0,238,.52),inset 0 0 24px rgba(204,0,238,.2)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            overflow: 'hidden', zIndex: 10,
           }}>
-{/* emblem — original inline SVG, scales with circle via --cs */}
-<div style={{ width:'calc(var(--cs, 330px) * 0.36)', height:'calc(var(--cs, 330px) * 0.36)',
-              display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0,
-              filter:'drop-shadow(0 0 10px rgba(238,203,44,.65)) drop-shadow(0 0 22px rgba(204,0,238,.50)) drop-shadow(0 0 40px rgba(204,0,238,.25))' }}>
-              <svg viewBox="0 0 100 100" style={{ width:'100%', height:'100%' }}>
-                <circle cx="50" cy="50" r="13" fill="none" stroke="#eecb2c" strokeWidth="2.5" />
-                <circle cx="50" cy="50" r="5" fill="#f7eb63" />
-                <g stroke="#eecb2c" strokeWidth="2.5" strokeLinecap="round">
-                  <line x1="50" y1="4"  x2="50" y2="24" />
-                  <line x1="50" y1="76" x2="50" y2="96" />
-                  <line x1="4"  y1="50" x2="24" y2="50" />
-                  <line x1="76" y1="50" x2="96" y2="50" />
-                </g>
-                <g stroke="#cc00ee" strokeWidth="1.6" strokeLinecap="round" opacity="0.85">
-                  <line x1="22" y1="22" x2="34" y2="34" />
-                  <line x1="78" y1="22" x2="66" y2="34" />
-                  <line x1="22" y1="78" x2="34" y2="66" />
-                  <line x1="78" y1="78" x2="66" y2="66" />
-                </g>
-              </svg>
-            </div>            <div style={{ fontFamily:"'Cinzel',serif",
-              fontSize:'calc(var(--cs, 330px) * 0.058)', fontWeight:700, letterSpacing:'.10em',
-              color:'#fff', textShadow:'0 0 24px rgba(247,235,99,.42)', lineHeight:1.2, textTransform:'uppercase',
-              textAlign:'center', marginTop:'calc(var(--cs, 330px) * 0.02)' }}>
-              Michael<br/>Hammond
+            {/* emblem — original inline SVG, scales with circle via --cs */}
+            <div style={{
+              width: 'calc(var(--cs, 330px) * 0.36)', height: 'calc(var(--cs, 330px) * 0.36)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+              filter: 'drop-shadow(0 0 10px rgba(238,203,44,.65)) drop-shadow(0 0 22px rgba(204,0,238,.50)) drop-shadow(0 0 40px rgba(204,0,238,.25))'
+            }}>
+              <div style={{
+                width: 'calc(var(--cs, 330px) * 0.36)',
+                height: 'calc(var(--cs, 330px) * 0.36)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <img
+                  src={MoonEmblem}
+                  alt="Moon Emblem"
+                  style={{ width: '115%', height: '115%', objectFit: 'contain', filter: 'invert(1)' }}
+                />
+              </div>
             </div>
-            <div style={{ fontSize:'calc(var(--cs, 330px) * 0.040)', letterSpacing:'.16em',
-              color:'var(--magenta)', textTransform:'uppercase',
-              marginTop:'calc(var(--cs, 330px) * 0.01)', textAlign:'center',
-              textShadow:'0 0 12px rgba(204,0,238,.60)' }}>
+            <div style={{
+              fontFamily: "'Cinzel',serif",
+              fontSize: 'calc(var(--cs, 330px) * 0.058)', fontWeight: 700, letterSpacing: '.10em',
+              color: '#fff', textShadow: '0 0 24px rgba(247,235,99,.42)', lineHeight: 1.2, textTransform: 'uppercase',
+              textAlign: 'center', marginTop: 'calc(var(--cs, 330px) * 0.02)'
+            }}>
+              Michael<br />Hammond
+            </div>
+            <div style={{
+              fontSize: 'calc(var(--cs, 330px) * 0.040)', letterSpacing: '.16em',
+              color: 'var(--magenta)', textTransform: 'uppercase',
+              marginTop: 'calc(var(--cs, 330px) * 0.01)', textAlign: 'center',
+              textShadow: '0 0 12px rgba(204,0,238,.60)'
+            }}>
               Gameplay Engineer
             </div>
             {activeSec && (
-              <div style={{ marginTop:'calc(var(--cs, 330px) * 0.025)',
-                padding:'.75rem .8rem', borderTop:'2px solid rgba(238,203,44,.28)',
-                textAlign:'center', animation:'label-in .3s ease both', width:'80%' }}>
-                <div style={{ fontFamily:"'Cinzel',serif",
-                  fontSize:'calc(var(--cs, 330px) * 0.040)', fontWeight:600,
-                  letterSpacing:'.14em', textTransform:'uppercase', color:'var(--gold-hi)',
-                  marginBottom:'.25rem' }}>
+              <div style={{
+                marginTop: 'calc(var(--cs, 330px) * 0.025)',
+                padding: '.75rem .8rem', borderTop: '2px solid rgba(238,203,44,.28)',
+                textAlign: 'center', animation: 'label-in .3s ease both', width: '80%'
+              }}>
+                <div style={{
+                  fontFamily: "'Cinzel',serif",
+                  fontSize: 'calc(var(--cs, 330px) * 0.040)', fontWeight: 600,
+                  letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-hi)',
+                  marginBottom: '.25rem'
+                }}>
                   {activeSec.label}
                 </div>
-                <div style={{ fontSize:'calc(var(--cs, 330px) * 0.036)',
-                  color:'rgba(255,255,255,.80)', lineHeight:1.5,
-                  maxWidth:200, margin:'0 auto',
-                  textShadow:'0 0 6px rgba(255,255,255,.20)' }}>
+                <div style={{
+                  fontSize: 'calc(var(--cs, 330px) * 0.036)',
+                  color: 'rgba(255,255,255,.80)', lineHeight: 1.5,
+                  maxWidth: 200, margin: '0 auto',
+                  textShadow: '0 0 6px rgba(255,255,255,.20)'
+                }}>
                   {activeSec.desc}
                 </div>
               </div>
             )}
             {activeSection && (
-              <button onClick={resetHub} style={{ position:'absolute', top:10, right:12, width:22, height:22,
-                borderRadius:'50%', background:'rgba(0,0,0,.3)', border:'1px solid rgba(238,203,44,.3)',
-                display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', color:'#fff',
-                zIndex:30, fontSize:10 }}>✕</button>
+              <button onClick={resetHub} style={{
+                position: 'absolute', top: 10, right: 12, width: 22, height: 22,
+                borderRadius: '50%', background: 'rgba(0,0,0,.3)', border: '1px solid rgba(238,203,44,.3)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff',
+                zIndex: 30, fontSize: 10
+              }}>✕</button>
             )}
           </div>
 
@@ -1490,7 +1512,7 @@ export default function Portfolio() {
             <div key={sec.id}
               ref={el => bubblesRef.current[i] = el}
               className={`hub-bubble ${activeSection === sec.id ? 'active' : ''}`}
-              style={{ width:88, height:88}}
+              style={{ width: 88, height: 88 }}
               onClick={() => toggleSection(sec.id)}>
               <div className="bubble-icon">{SECTION_ICONS[sec.id]}</div>
               <div className="bubble-label">{sec.label}</div>
@@ -1500,9 +1522,9 @@ export default function Portfolio() {
 
         {/* scroll indicator */}
         <div className={`scroll-indicator ${activeSection ? 'visible' : ''}`}
-          onClick={() => document.getElementById('sectionDropdown')?.scrollIntoView({ behavior:'smooth', block:'start' })}>
+          onClick={() => document.getElementById('sectionDropdown')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
           <span className="scroll-indicator-text">Scroll for details</span>
-          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9" /></svg>
         </div>
 
         {/* gold divider */}
@@ -1512,7 +1534,7 @@ export default function Portfolio() {
 
         {/* ── SECTION CONTENT ── */}
         <div id="sectionDropdown" className={`section-dropdown ${activeSection ? 'open' : ''}`}
-          style={{ width:'100%', maxWidth:920 }}>
+          style={{ width: '100%', maxWidth: 920 }}>
 
           {/* WORK */}
           <div className={`section-panel ${activeSection === 'work' ? 'active' : ''}`} data-section="work">
@@ -1523,109 +1545,158 @@ export default function Portfolio() {
             <div className="panel-grid">
 
               {/* Valtara */}
-              <div className="project-card-hub" onClick={(e) => {
-  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-  e.currentTarget.querySelector('.media-open-btn')?.click();
-}}>
+              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.currentTarget.click(); // Fires your existing click behavior
+                  }
+                }}
+                onClick={(e) => {
+                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
+                  e.currentTarget.querySelector('.media-open-btn')?.click();
+                }}>
                 <div className="card-hub-header">
                   <div className="card-hub-overline">Exploration · Procedural World · Companion AI · In Development</div>
                   <div className="card-hub-title">Valtara — Artifact Hunter</div>
                   <div className="card-hub-desc">A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanity's greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.</div>
-                  <div className="card-hub-tags">{['Unreal Engine', 'C++', 'Procedural Generation', 'Companion AI', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['UE5', 'C++', 'Procedural Generation', 'Companion AI', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <CodeCard snippets={[CODE_SNIPPETS.valtara_artifacts, CODE_SNIPPETS.valtara_fox]} />
               </div>
 
               {/* Evigheden — Rune Architecture */}
-              <div className="project-card-hub" onClick={(e) => {
-  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-  e.currentTarget.querySelector('.media-open-btn')?.click();
-}}>
+              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.currentTarget.click(); // Fires your existing click behavior
+                  }
+                }}
+                onClick={(e) => {
+                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
+                  e.currentTarget.querySelector('.media-open-btn')?.click();
+                }}>
                 <div className="card-hub-header">
                   <div className="card-hub-overline">Designer-Driven Architecture · ScriptableObjects · In Development</div>
                   <div className="card-hub-title">Evigheden — Rune System</div>
                   <div className="card-hub-desc">A fully data-driven rune architecture built on ScriptableObject assets — designers configure every behavior (stat multipliers, dodge style, combo finisher, passives, VFX) entirely through Inspector-editable fields. Entirely new rune archetypes can be authored and deployed without a single line of additional code.</div>
-                  <div className="card-hub-tags">{['Unreal Engine/Unity', 'C++/C#', 'ScriptableObjects', 'Designer Tooling', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['UE5/Unity', 'C++/C#', 'ScriptableObjects', 'Designer Tooling', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <CodeCard snippet={CODE_SNIPPETS.evigheden_runes} />
               </div>
 
               {/* Project Maelstrom */}
-              <div className="project-card-hub" onClick={(e) => {
-  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-  e.currentTarget.querySelector('.media-open-btn')?.click();
-}}>                <div className="card-hub-header">
+              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.currentTarget.click(); // Fires your existing click behavior
+                  }
+                }}
+                onClick={(e) => {
+                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
+                  e.currentTarget.querySelector('.media-open-btn')?.click();
+                }}>                <div className="card-hub-header">
                   <div className="card-hub-overline">Creature AI · Pack Coordination</div>
                   <div className="card-hub-title">Project Maelstrom</div>
                   <div className="card-hub-desc">A pack AI system where creatures work together — flanking, applying pressure, and falling back as a coordinated unit.</div>
-                  <div className="card-hub-tags">{['Unreal Engine', 'Unity','C++', 'C#','Pack AI','Encounter Design'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['UE5', 'Unity', 'C++', 'C#', 'Pack AI', 'Encounter Design'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
-                <div className="card-images-strip" style={{padding:'0 1rem 6px'}}>
-                  {[PM_Overview, PM_Combat, PM_PlayerFocus].map((src,i)=>(
-                    <img key={i} src={src} alt="Project Maelstrom" onClick={()=>openMedia(PROJECTS[2], i===2?1:i)} />
+                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
+                  {[PM_Overview, PM_Combat, PM_PlayerFocus].map((src, i) => (
+                    <img key={i} src={src} alt="Project Maelstrom" loading="lazy" onClick={() => openMedia(PROJECTS[3], i)} />
                   ))}
                 </div>
                 <CodeCard snippets={[CODE_SNIPPETS.maelstrom, CODE_SNIPPETS.maelstrom_boss, CODE_SNIPPETS.maelstrom_cinematic]} />
               </div>
 
               {/* Mall Cop Madhouse */}
-              <div className="project-card-hub" onClick={(e) => {
-  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-  e.currentTarget.querySelector('.media-open-btn')?.click();
-}}>                <div className="card-hub-header">
+              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.currentTarget.click(); // Fires your existing click behavior
+                  }
+                }}
+                onClick={(e) => {
+                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
+                  e.currentTarget.querySelector('.media-open-btn')?.click();
+                }}>                <div className="card-hub-header">
                   <div className="card-hub-overline">Asymmetric Multiplayer · Capture Mechanics · Photon PUN</div>
 
                   <div className="card-hub-title">Mall Cop Madhouse</div>
                   <div className="card-hub-desc">Asymmetric stealth-and-chase: Hooligans complete disruptive tasks while the taser-wielding Mall Cop hunts, carries, and books them into jail to score.</div>
-                  <div className="card-hub-tags">{['Unity','C#','Photon Pun','Asymmetric','Multiplayer'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['Unity', 'C#', 'Photon Pun', 'Asymmetric', 'Multiplayer'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
-                <div className="card-images-strip" style={{padding:'0 1rem 6px'}}>
-                  {[coreEight, lobbyFive, coreTwo].map((src,i)=>(
-                    <img key={i} src={src} alt="Mall Cop Madhouse" onClick={()=>openMedia(PROJECTS[1], i===0?2:i===1?1:0)} />
+                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
+                  {[coreEight, lobbyFive, coreTwo].map((src, i) => (
+                    <img key={i} src={src} alt="Mall Cop Madhouse" loading="lazy" onClick={() => openMedia(PROJECTS[2], i === 0 ? 2 : i === 1 ? 1 : 0)} />
                   ))}
                 </div>
                 <CodeCard snippet={CODE_SNIPPETS.mallcop} />
               </div>
 
               {/* B-52 */}
-              <div className="project-card-hub" onClick={(e) => {
-  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-  e.currentTarget.querySelector('.media-open-btn')?.click();
-}}>                <div className="card-hub-header">
+              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.currentTarget.click(); // Fires your existing click behavior
+                  }
+                }}
+                onClick={(e) => {
+                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
+                  e.currentTarget.querySelector('.media-open-btn')?.click();
+                }}>                <div className="card-hub-header">
                   <div className="card-hub-overline">VR Training · Multiplayer · USAF Whitepaper</div>
                   <div className="card-hub-title">B-52 Training Suite — USAF</div>
                   <div className="card-hub-desc">Dual-engine VR training platform (Unity + UE5) that cut B-52 crew training time by 95%, with a data-driven checklist system for procedural verification.</div>
-                  <div className="card-hub-tags">{['Unity + UE5','Photon','VR','Checklist Systems'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['Unity + UE5', 'Photon', 'VR', 'Checklist Systems'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
-                <div className="card-images-strip" style={{padding:'0 1rem 6px'}}>
-                  <img src={B52_USAF} alt="B-52 cockpit" onClick={()=>openMedia(PROJECTS[3],0)} />
-                  <img src={B52_internaltraining} alt="B-52 training" onClick={()=>openMedia(PROJECTS[3],1)} />
+                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
+                  <img src={B52_USAF} alt="B-52 cockpit" onClick={() => openMedia(PROJECTS[4], 0)} />
+                  <img src={B52_internaltraining} alt="B-52 training" loading="lazy" onClick={() => openMedia(PROJECTS[4], 1)} />
                 </div>
                 <CodeCard snippet={CODE_SNIPPETS.b52} />
               </div>
 
               {/* Sensorama */}
-              <div className="project-card-hub" onClick={(e) => {
-  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-  e.currentTarget.querySelector('.media-open-btn')?.click();
-}}>                <div className="card-hub-header">
+              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.currentTarget.click(); // Fires your existing click behavior
+                  }
+                }}
+                onClick={(e) => {
+                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
+                  e.currentTarget.querySelector('.media-open-btn')?.click();
+                }}>                <div className="card-hub-header">
                   <div className="card-hub-overline">Sensor Integration · Environmental AI · OSU VR Lab</div>
                   <div className="card-hub-title">Sensorama R&D</div>
                   <div className="card-hub-desc">Research project piping live LiDAR, radar, and heat signature data into a game world — AI creatures react to real physical space in real time.</div>
-                  <div className="card-hub-tags">{['Unity','LiDAR','Environmental AI','OSU VR Lab'].map(t=><span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['Unity', 'LiDAR', 'Environmental AI', 'OSU VR Lab'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
-                <div className="card-images-strip" style={{padding:'0 1rem 6px'}}>
-                  <img src={sensorama} alt="Sensorama" onClick={()=>openMedia(PROJECTS[4],0)} />
-                  <img src={sensorama_Environment} alt="Sensorama environment" onClick={()=>openMedia(PROJECTS[4],0)} />
-                </div>
-                <CodeCard snippet={CODE_SNIPPETS.sensorama} />
+                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
+                  <img src={sensorama} alt="Sensorama" loading="lazy" onClick={() => openMedia(PROJECTS[5], 0)} />
+                  <img src={sensorama_Environment} alt="Sensorama environment" onClick={() => openMedia(PROJECTS[5], 1)} />
+                </div>                <CodeCard snippet={CODE_SNIPPETS.sensorama} />
               </div>
 
               {/* TypeScript — Game State Manager */}
-              <div className="project-card-hub" onClick={(e) => {
-  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-  e.currentTarget.querySelector('.media-open-btn')?.click();
-}}>                <div className="card-hub-header">
+              <div className="project-card-hub"
+                tabIndex={0} // Makes it focusable via Tab key
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.currentTarget.click(); // Fires your existing click behavior
+                  }
+                }}
+                onClick={(e) => {
+                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
+                  e.currentTarget.querySelector('.media-open-btn')?.click();
+                }}>                <div className="card-hub-header">
                   <div className="card-hub-overline">TypeScript · OOP · Design Patterns</div>
                   <div className="card-hub-title">Game State Manager</div>
                   <div className="card-hub-desc">A typed, reactive state system with a validated phase machine — each transition checks against an allowed-moves map, so the game can never enter an illegal state.</div>
@@ -1675,14 +1746,14 @@ export default function Portfolio() {
             </div>
             <div className="panel-grid">
               {[
-                ['AI & Creature Systems',  'Behavior Trees · Blackboards · Pack AI · State Machines · Engagement Slots · Adaptive Difficulty'],
-                ['Combat & Encounters',    'GAS · Combo Systems · Encounter Pacing · Boss Cinematics · Multiplayer Balancing'],
-                ['Languages',              'C++ (Expert) · C# (Expert) · Python · Blueprint · JavaScript · TypeScript · Lua'],
-                ['Engines & Tools',        'Unreal Engine 5 · Unity (8+ yrs) · Photon · Git · Plastic SCM · Visual Studio'],
-                ['Platforms',              'VR / AR / MR · Android · PC · Cross-Platform Multiplayer'],
-                ['3D & Art',               'Maya · Blender · Rigging · Animation · Environment Modeling · Krita'],
-                ['Web & Tools',            'React · HTML/CSS · JavaScript · Node.js · Vercel · SVG/CSS Animation'],
-                ['Collaboration',          'Cross-Discipline · Rapid Prototyping · Playtesting · Designer Tooling · Mentorship'],
+                ['AI & Creature Systems', 'Behavior Trees · Blackboards · Pack AI · State Machines · Engagement Slots · Adaptive Difficulty'],
+                ['Combat & Encounters', 'GAS · Combo Systems · Encounter Pacing · Boss Cinematics · Multiplayer Balancing'],
+                ['Languages', 'C++ (Expert) · C# (Expert) · Python · Blueprint · JavaScript · TypeScript · Lua'],
+                ['Engines & Tools', 'Unreal Engine 5 · Unity (8+ yrs) · Photon · Git · Plastic SCM · Visual Studio'],
+                ['Platforms', 'VR / AR / MR · Android · PC · Cross-Platform Multiplayer'],
+                ['3D & Art', 'Maya · Blender · Rigging · Animation · Environment Modeling · Krita'],
+                ['Web & Tools', 'React · HTML/CSS · JavaScript · Node.js · Vercel · SVG/CSS Animation'],
+                ['Collaboration', 'Cross-Discipline · Rapid Prototyping · Playtesting · Designer Tooling · Mentorship'],
               ].map(([label, items]) => (
                 <div key={label} className="panel-card">
                   <div className="skill-group-label">{label}</div>
@@ -1698,16 +1769,18 @@ export default function Portfolio() {
               <div className="panel-icon">{SECTION_ICONS.about}</div>
               <div className="panel-title">About</div>
             </div>
-            <div style={{ display:'flex', gap:'2rem', alignItems:'flex-start', flexWrap:'wrap' }}>
-              <img src={profileImage} alt="Michael Hammond" style={{ width:140, height:140, borderRadius:'50%',
-                objectFit:'cover', border:'1px solid rgba(238,203,44,.4)',
-                boxShadow:'0 0 20px rgba(238,203,44,.20)', flexShrink:0 }} />
-              <div style={{ flex:1, minWidth:240 }}>
+            <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+              <img src={profileImage} alt="Michael Hammond" style={{
+                width: 140, height: 140, borderRadius: '50%',
+                objectFit: 'cover', border: '1px solid rgba(238,203,44,.4)',
+                boxShadow: '0 0 20px rgba(238,203,44,.20)', flexShrink: 0
+              }} />
+              <div style={{ flex: 1, minWidth: 240 }}>
                 <p className="panel-text">Gameplay Engineer and Designer with 8+ years building complete interactive systems — synchronized multiplayer architecture, AI behaviors that make NPCs feel vibrant and alive, and tools that let design teams move fast without tedious back-and-forth.</p>
                 <p className="panel-text">The connecting thread has been a genuine interest in what makes a virtual world feel real — both functionally and in the essence of what makes them come alive and respond in ways players feel even when they can't articulate why.</p>
               </div>
             </div>
-            <div className="exp-entry" style={{ borderTop:'1px solid rgba(238,203,44,.10)', marginTop:'1.2rem' }}>
+            <div className="exp-entry" style={{ borderTop: '1px solid rgba(238,203,44,.10)', marginTop: '1.2rem' }}>
               <div className="exp-company">Epic Games & Coursera — Game Design & Development with UE</div>
               <div className="exp-role">Professional Certificate</div>
             </div>
@@ -1726,28 +1799,30 @@ export default function Portfolio() {
             <p className="panel-text">Actively looking for gameplay engineering roles. If you're building something with passion — AI that thinks, exhilarating combat, multiplayer built to last — I'd love to talk.</p>
             <div className="contact-links">
               <a href="mailto:hammondsk.09@gmail.com" className="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
                 hammondsk.09@gmail.com
               </a>
               <a href="tel:+15419731430" className="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 9.81 19.79 19.79 0 0 1 .1 1.18 2 2 0 0 1 2.09 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 9.81 19.79 19.79 0 0 1 .1 1.18 2 2 0 0 1 2.09 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                 (541) 973-1430
               </a>
               <a href="https://github.com/Michamm79" target="_blank" rel="noopener noreferrer" className="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>
                 github.com/Michamm79
               </a>
               <a href="https://www.linkedin.com/in/michamm" target="_blank" rel="noopener noreferrer" className="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
                 LinkedIn
               </a>
               <a href="https://michaelhammond.vercel.app" target="_blank" rel="noopener noreferrer" className="contact-link">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
                 michaelhammond.vercel.app
               </a>
             </div>
-            <div style={{ fontFamily:"'Cinzel',serif", fontSize:'.76rem', color:'#fff', marginTop:'1.2rem',
-              letterSpacing:'.10em', textTransform:'uppercase' }}>
+            <div style={{
+              fontFamily: "'Cinzel',serif", fontSize: '.76rem', color: '#fff', marginTop: '1.2rem',
+              letterSpacing: '.10em', textTransform: 'uppercase'
+            }}>
               Oregon · Available Immediately · Remote
             </div>
           </div>
@@ -1771,7 +1846,7 @@ export default function Portfolio() {
                   {project.recruiterHighlights?.length > 0 && (
                     <div className="recruiter-box">
                       <div className="recruiter-box-title">✦ Recruiter Highlights ✦</div>
-                      <ul>{project.recruiterHighlights.map((h,i) => <li key={i}>{h}</li>)}</ul>
+                      <ul>{project.recruiterHighlights.map((h, i) => <li key={i}>{h}</li>)}</ul>
                     </div>
                   )}
                   {m && (m.type === 'image' || m.type === 'gif') ? (
@@ -1781,21 +1856,21 @@ export default function Portfolio() {
                       const id = getYouTubeId(m.src);
                       return id
                         ? <iframe className="modal-media" src={`https://www.youtube.com/embed/${id}`}
-                            title={m.label || 'YouTube'} allowFullScreen
-                            allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" />
-                        : <div style={{textAlign:'center',opacity:.7}}>Couldn't parse YouTube link.</div>;
+                          title={m.label || 'YouTube'} allowFullScreen
+                          allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" />
+                        : <div style={{ textAlign: 'center', opacity: .7 }}>Couldn't parse YouTube link.</div>;
                     })()
                   ) : m ? (
                     <video className="modal-media" controls autoPlay playsInline poster={m.poster || project.thumbnail} src={m.src} />
                   ) : null}
-                  <div style={{ display:'flex', gap:'1rem', justifyContent:'center', flexWrap:'wrap', marginTop:'.5rem' }}>
+                  <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '.5rem' }}>
                     {project.github && (
-                      <a className="code-btn-modal" href={project.github} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}>
+                      <a className="code-btn-modal" href={project.github} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
                         <ExternalLink size={14} /> View GitHub
                       </a>
                     )}
                     {project.codeDownload && (
-                      <a className="code-btn-modal" href={project.codeDownload} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}>
+                      <a className="code-btn-modal" href={project.codeDownload} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
                         <Download size={14} /> Download Code
                       </a>
                     )}
@@ -1833,16 +1908,16 @@ function CodeCard({ snippet, snippets }) {
         <Eye size={12} /> {open ? 'Hide Code' : 'View Code & Details'}
       </button>
       {open && (
-        <div style={{ animation:'card-in .25s ease both' }}>
+        <div style={{ animation: 'card-in .25s ease both' }}>
           {list.length > 1 && (
-            <div style={{ display:'flex', gap:0, borderBottom:'1px solid rgba(238,203,44,.12)', marginBottom:0 }}>
+            <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid rgba(238,203,44,.12)', marginBottom: 0 }}>
               {list.map((s, i) => (
                 <button key={i} onClick={(e) => { e.stopPropagation(); setTab(i); }} style={{
-                  padding:'.3rem .85rem', background: tab===i ? 'rgba(238,203,44,.10)' : 'transparent',
-                  border:'none', borderBottom: tab===i ? '2px solid var(--gold)' : '2px solid transparent',
-                  color: tab===i ? 'var(--gold-hi)' : 'rgba(255,255,255,.45)',
-                  fontFamily:"'JetBrains Mono',monospace", fontSize:'.55rem',
-                  cursor:'pointer', transition:'all .18s', letterSpacing:'.04em',
+                  padding: '.3rem .85rem', background: tab === i ? 'rgba(238,203,44,.10)' : 'transparent',
+                  border: 'none', borderBottom: tab === i ? '2px solid var(--gold)' : '2px solid transparent',
+                  color: tab === i ? 'var(--gold-hi)' : 'rgba(255,255,255,.45)',
+                  fontFamily: "'JetBrains Mono',monospace", fontSize: '.55rem',
+                  cursor: 'pointer', transition: 'all .18s', letterSpacing: '.04em',
                 }}>
                   {s.file}
                 </button>
@@ -1852,14 +1927,14 @@ function CodeCard({ snippet, snippets }) {
           <div className="card-body-hub">
             <div className="card-code-col">
               <div className="code-file-tab">
-              <div className={`code-lang-dot ${active.lang === 'cpp' ? 'cpp' : active.lang === 'typescript' ? 'typescript' : 'csharp'}`} />
+                <div className={`code-lang-dot ${active.lang === 'cpp' ? 'cpp' : active.lang === 'typescript' ? 'typescript' : 'csharp'}`} />
                 <span className="code-file-name">{active.file}</span>
               </div>
               <pre className="card-code-pre" dangerouslySetInnerHTML={{ __html: highlight(active.code) }} />
             </div>
             <div className="card-detail-col">
               <div className="card-detail-title">What's going on here</div>
-              {active.bullets.map((b,i) => <div key={i} className="card-detail-item">{b}</div>)}
+              {active.bullets.map((b, i) => <div key={i} className="card-detail-item">{b}</div>)}
             </div>
           </div>
         </div>
