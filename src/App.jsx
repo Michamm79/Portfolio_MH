@@ -41,11 +41,29 @@ const PROJECTS = [
   },
   {
     id: 1,
+    title: "Witch's Brew",
+    category: 'Discovery Mixing · Procedural Pixel Art · Phaser 3',
+    color: 'purple',
+    thumbnail: ComingSoon,
+    description: '2.5D handheld-style & PC pixel game in the visual tradition of The Legend of Zelda: The Minish Cap. A witch in a small medieval town collects ingredients and mixes up to three at a cauldron to brew potions requested by townspeople — but the recipes are hidden, discovered only by trying combinations. A correct mix records the recipe in a journal and adds the potion to inventory; a wrong mix triggers a harmless, cartoonish cauldron explosion. Every sprite and tile is generated at startup from hand-authored pixel grids in code — no image files in the project.',
+    tags: ['Phaser 3', 'TypeScript', 'Vite', 'Procedural Pixel Art', 'Discovery Mechanic', 'In Development'],
+    github: 'https://github.com/Michamm79/WitchsBrew',
+    codeDownload: 'https://github.com/Michamm79/WitchsBrew/archive/refs/heads/main.zip',
+    media: [{ type: 'image', src: ComingSoon, label: 'Town, Cauldron & Cauldron Panel', system: 'Core Loop' }],
+    recruiterHighlights: [
+      'Order-independent recipe system supports 1–3 ingredient combinations with a hidden lookup table (findRecipe()) — first-time matches write to the journal automatically.',
+      'Fully data-driven content: ingredients, potions, recipes, villagers, and the town map live in flat data files, so adding a new potion or villager is a data-only change with no engine code touched.',
+      'Every sprite, tile, and UI icon is procedurally rasterized at boot from character-grid definitions via a shared PixelGrid helper — zero binary art assets in the project.',
+      'Event-driven GameState (extends Phaser EventEmitter) drives all three UI panels — inventory, journal, and cauldron — so HUD elements stay in sync without manual refresh calls or polling.',
+    ],
+  },
+  {
+    id: 2,
     title: "Evigheden",
     category: 'Designer-Driven Architecture · ScriptableObjects',
     color: 'blue',
     thumbnail: ComingSoon,
-    description: 'A dark survival gauntlet built around a behavior-driven rune system. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed.',
+    description: 'A six-dimension behavior classifier that assigns players one of six personalized combat archetypes from how they actually play, plus a ScriptableObject-based authoring tool for rapid iteration on archetype balance. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed.',
     tags: ['Unity', 'C#', 'ScriptableObjects', 'Behavior Classifier', 'Designer Tooling', 'PC', 'In Development'],
     github: 'https://github.com/Michamm79/Evigheden',
     codeDownload: 'https://github.com/Michamm79/Evigheden/archive/refs/heads/main.zip',
@@ -58,7 +76,7 @@ const PROJECTS = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: 'Mall Cop Madhouse',
     category: 'Asymmetric Multiplayer · Stealth / Chase',
     color: 'purple',
@@ -78,12 +96,12 @@ const PROJECTS = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     title: 'Project Maelstrom',
     category: 'Exploration RPG · Crafting Systems · Coordinated Multi-Agent AI',
     color: 'pink',
     thumbnail: PM_Overview,
-    description: 'Original exploration RPG built around a signature two-orb crafting system. Players collect materials throughout the world and choose to transmute them directly into tools and weapons, or alchemically decompose them into elemental components for deeper crafting combinations. Coordinated Multi-Agent AI: governs enemy encounters as the world opens up.',
+    description: 'A mystery/exploration game set in a corporate-dystopian world, where the amnesiac player navigates five natural environment biomes (desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm) facing intermittent enemy encounters modeled as corporate virus/defense mechanisms. Built the inventory, crafting, and alchemy systems and a biome-driven environment framework with randomized player start; enemy-encounter and companion-NPC systems in active development.',
     tags: ['Unreal Engine', 'C++', 'Blueprint', 'Crafting Systems', 'Coordinated Multi-Agent AI', 'In Development'],
     github: 'https://github.com/Michamm79/Project_Maelstrom',
     codeDownload: 'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
@@ -100,7 +118,7 @@ const PROJECTS = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     title: 'B-52 Training Suite — USAF',
     category: 'VR Training · Multiplayer · USAF',
     color: 'blue',
@@ -117,7 +135,7 @@ const PROJECTS = [
       '95% reduction in training time — up to 75% increase in crew retention — 19% fewer procedural errors.',],
   },
   {
-    id: 5,
+    id: 6,
     title: 'Sensorama R&D',
     category: 'VR · Sensor Integration · Environmental AI',
     color: 'purple',
@@ -161,7 +179,7 @@ const SECTIONS = [
     id: 'about',
     label: 'About',
     hubDesc: 'Translating high-level design concepts into optimized code and clean workflows.',
-    sectionDesc: 'Gameplay Engineer & Systems Designer with 8+ years of experience architecting extensible interactive frameworks. I specialize in building data-driven player mechanics, synchronized multiplayer architecture, and custom developer tooling that accelerates team production velocity by keeping design teams close to the asset data.\n\nThe driving philosophy behind my work is bridging deep technical execution with systemic responsiveness. I focus on creating interconnected worlds where every combat encounter, AI decision, and environment interaction feels naturally responsive—designing robust architecture that scales smoothly while preserving the invisible nuances of great game feel.'
+    sectionDesc: 'Gameplay Engineer with 8+ years of experience architecting extensible interactive frameworks. I specialize in building data-driven player mechanics, synchronized multiplayer architecture, AI & Behavior systems, and custom developer tooling that accelerates team production velocity by keeping design teams close to the asset data.\n\nThe driving philosophy behind my work is bridging deep technical execution with systemic responsiveness. I focus on creating interconnected worlds where every combat encounter, AI decision, and environment interaction feels naturally responsive—designing robust architecture that scales smoothly while preserving the invisible nuances of great game feel.'
   },
   {
     id: 'contact',
@@ -186,6 +204,47 @@ const SECTION_ICONS = {
 
 // Code snippets for Work cards
 const CODE_SNIPPETS = {
+  witchs_brew: {
+    file: 'recipes.ts', lang: 'typescript',
+    code: `// Order-independent recipe lookup —
+// A+B matches the same recipe as B+A
+export function findRecipe(
+  ingredients: IngredientId[]
+): PotionId | null {
+  const key = [...ingredients].sort().join('+');
+
+  for (const recipe of RECIPES) {
+    const recipeKey = [...recipe.ingredients]
+      .sort()
+      .join('+');
+    if (recipeKey === key) return recipe.potion;
+  }
+  return null;
+}
+
+// Called from CauldronPanel on "Mix!"
+export function mix(
+  slots: IngredientId[],
+  state: GameState
+): MixResult {
+  const potion = findRecipe(slots);
+  slots.forEach(id => state.removeIngredient(id));
+
+  if (!potion) return { success: false };
+
+  const firstDiscovery = !state.hasRecipe(potion);
+  state.addPotion(potion);
+  if (firstDiscovery) state.recordRecipe(potion, slots);
+
+  return { success: true, potion, firstDiscovery };
+}`,
+    bullets: [
+      'Recipes are order-independent — ingredients are sorted before comparison, so [FireCap, DewRoot] and [DewRoot, FireCap] resolve to the same match.',
+      'Ingredients are consumed on both success and failure — mixing has a real cost, which is what makes the discovery mechanic meaningful rather than free trial-and-error.',
+      'firstDiscovery gates the journal write — a potion can be re-brewed freely once known, but the recipe is only recorded into GameState the first time it is found.',
+      'mix() is the single choke point between UI and state: CauldronPanel never touches GameState directly, it just calls mix() and reacts to the returned MixResult.',
+    ],
+  },
   evigheden_runes: {
     file: 'RuneData.cs', lang: 'csharp',
     code: `using UnityEngine;
@@ -1416,7 +1475,7 @@ export default function Portfolio() {
 <div className={`top-bar ${activeSection ? 'visible' : ''}`}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
           {/* Your name stays permanently anchored */}
-          <span className="top-bar-name">Michael Hammond</span>
+          <span className="top-bar-name">Grayson Hammond</span>
           
           {/* DYNAMIC BLOCK: Only renders the line and title if a section is active */}
           {activeSection && (
@@ -1427,7 +1486,7 @@ export default function Portfolio() {
             }}>
               <div style={{ width: 1, height: 14, background: 'rgba(238,203,44,.20)', margin: '0 .5rem' }} />
               <span className="top-bar-title" style={{ color: 'var(--gold-hi)' }}>
-                Gameplay Engineer & Systems Designer
+                Gameplay Engineer
               </span>
             </div>
           )}
@@ -1502,7 +1561,7 @@ export default function Portfolio() {
               color: '#fff', textShadow: '0 0 24px rgba(247,235,99,.42)', lineHeight: 1.2, textTransform: 'uppercase',
               textAlign: 'center', marginTop: 'calc(var(--cs, 330px) * 0.02)'
             }}>
-              Michael<br />Hammond
+              Grayson<br />Hammond
             </div>
             <div style={{
               fontSize: 'calc(var(--cs, 330px) * 0.040)', letterSpacing: '.16em',
@@ -1510,7 +1569,7 @@ export default function Portfolio() {
               marginTop: 'calc(var(--cs, 330px) * 0.01)', textAlign: 'center',
               textShadow: '0 0 12px rgba(204,0,238,.60)'
             }}>
-              Gameplay Engineer <br></br>& Systems Designer
+              Gameplay Engineer
             </div>
             {(() => {
               const currentSec = SECTIONS.find(sec => sec.id === activeSection);
@@ -1600,6 +1659,27 @@ export default function Portfolio() {
                 <CodeCard snippets={[CODE_SNIPPETS.valtara_artifacts, CODE_SNIPPETS.valtara_fox]} />
               </div>
 
+              {/* Witch's Brew — Discovery Mixing */}
+              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.currentTarget.click(); // Fires your existing click behavior
+                  }
+                }}
+                onClick={(e) => {
+                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
+                  e.currentTarget.querySelector('.media-open-btn')?.click();
+                }}>
+                <div className="card-hub-header">
+                  <div className="card-hub-overline">Discovery Mixing · Procedural Pixel Art · In Development</div>
+                  <div className="card-hub-title">Witch's Brew</div>
+                  <div className="card-hub-desc">2.5D handheld-style pixel game in the visual tradition of The Legend of Zelda: The Minish Cap. A witch in a small medieval town collects ingredients and mixes up to three at a cauldron to brew potions requested by townspeople — recipes are hidden and discovered only by trying combinations. Every sprite and tile is generated at startup from hand-authored pixel grids in code, with zero binary art assets.</div>
+                  <div className="card-hub-tags">{['Phaser 3', 'TypeScript', 'Vite', 'Procedural Pixel Art', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                </div>
+                <CodeCard snippet={CODE_SNIPPETS.witchs_brew} />
+              </div>
+
               {/* Evigheden — Rune Architecture */}
               <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
                 onKeyDown={(e) => {
@@ -1615,7 +1695,7 @@ export default function Portfolio() {
                 <div className="card-hub-header">
                   <div className="card-hub-overline">Designer-Driven Architecture · ScriptableObjects · In Development</div>
                   <div className="card-hub-title">Evigheden — Rune System</div>
-                  <div className="card-hub-desc">A fully data-driven rune architecture built on ScriptableObject assets — designers configure every behavior (stat multipliers, dodge style, combo finisher, passives, VFX) entirely through Inspector-editable fields. Entirely new rune archetypes can be authored and deployed without a single line of additional code.</div>
+                  <div className="card-hub-desc">A six-dimension behavior classifier that assigns players one of six personalized combat archetypes from how they actually play, plus a ScriptableObject-based authoring tool for rapid iteration on archetype balance. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed. Combat AI built with IK Rig animation retargeting, Animation Blueprints, and montages.</div>
                   <div className="card-hub-tags">{['UE5/Unity', 'C++/C#', 'ScriptableObjects', 'Designer Tooling', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <CodeCard snippet={CODE_SNIPPETS.evigheden_runes} />
@@ -1635,12 +1715,12 @@ export default function Portfolio() {
                 }}>                <div className="card-hub-header">
                   <div className="card-hub-overline">Creature AI · Pack Coordination</div>
                   <div className="card-hub-title">Project Maelstrom</div>
-                  <div className="card-hub-desc">A Coordinated Multi-Agent AI system where creatures work together — flanking, applying pressure, and falling back as a coordinated unit.</div>
+                  <div className="card-hub-desc">A mystery/exploration game set in a corporate-dystopian world, where the amnesiac player navigates five natural environment biomes (desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm) facing intermittent enemy encounters modeled as corporate virus/defense mechanisms. Built the inventory, crafting, and alchemy systems and a biome-driven environment framework with randomized player start; enemy-encounter and companion-NPC systems in active development.</div>
                   <div className="card-hub-tags">{['UE5', 'Unity', 'C++', 'C#', 'Coordinated Multi-Agent AI', 'Encounter Design'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
                   {[PM_Overview, PM_Combat, PM_PlayerFocus].map((src, i) => (
-                    <img key={i} src={src} alt="Project Maelstrom" loading="lazy" onClick={() => openMedia(PROJECTS[3], i)} />
+                    <img key={i} src={src} alt="Project Maelstrom" loading="lazy" onClick={() => openMedia(PROJECTS[4], i)} />
                   ))}
                 </div>
                 <CodeCard snippets={[CODE_SNIPPETS.maelstrom, CODE_SNIPPETS.maelstrom_boss, CODE_SNIPPETS.maelstrom_cinematic]} />
@@ -1662,14 +1742,14 @@ export default function Portfolio() {
 
                   <div className="card-hub-title">Mall Cop Madhouse</div>
                   <div className="card-hub-desc">Asymmetric stealth-and-chase: Hooligans complete disruptive tasks while the taser-wielding Mall Cop hunts, carries, and books them into jail to score.</div>
-                  <div className="card-hub-tags">{['Unity', 'C#', 'Photon Pun', 'Asymmetric', 'Multiplayer'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['Unity', 'C#', 'Photon Pun', 'Asymmetric', 'Multiplayer', 'TypeScript'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
                   {[coreEight, lobbyFive, coreTwo].map((src, i) => (
-                    <img key={i} src={src} alt="Mall Cop Madhouse" loading="lazy" onClick={() => openMedia(PROJECTS[2], i === 0 ? 2 : i === 1 ? 1 : 0)} />
+                    <img key={i} src={src} alt="Mall Cop Madhouse" loading="lazy" onClick={() => openMedia(PROJECTS[3], i === 0 ? 2 : i === 1 ? 1 : 0)} />
                   ))}
                 </div>
-                <CodeCard snippet={CODE_SNIPPETS.mallcop} />
+                <CodeCard snippets={[CODE_SNIPPETS.mallcop, CODE_SNIPPETS.typescript_state]} />
               </div>
 
               {/* B-52 */}
@@ -1690,8 +1770,8 @@ export default function Portfolio() {
                   <div className="card-hub-tags">{['Unity + UE5', 'Photon', 'VR', 'Checklist Systems'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
-                  <img src={B52_USAF} alt="B-52 cockpit" onClick={() => openMedia(PROJECTS[4], 0)} />
-                  <img src={B52_internaltraining} alt="B-52 training" loading="lazy" onClick={() => openMedia(PROJECTS[4], 1)} />
+                  <img src={B52_USAF} alt="B-52 cockpit" onClick={() => openMedia(PROJECTS[5], 0)} />
+                  <img src={B52_internaltraining} alt="B-52 training" loading="lazy" onClick={() => openMedia(PROJECTS[5], 1)} />
                 </div>
                 <CodeCard snippet={CODE_SNIPPETS.b52} />
               </div>
@@ -1714,31 +1794,11 @@ export default function Portfolio() {
                   <div className="card-hub-tags">{['Unity', 'LiDAR', 'Environmental AI', 'OSU VR Lab'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
-                  <img src={sensorama} alt="Sensorama" loading="lazy" onClick={() => openMedia(PROJECTS[5], 0)} />
-                  <img src={sensorama_Environment} alt="Sensorama environment" onClick={() => openMedia(PROJECTS[5], 1)} />
+                  <img src={sensorama} alt="Sensorama" loading="lazy" onClick={() => openMedia(PROJECTS[6], 0)} />
+                  <img src={sensorama_Environment} alt="Sensorama environment" onClick={() => openMedia(PROJECTS[6], 1)} />
                 </div>                <CodeCard snippet={CODE_SNIPPETS.sensorama} />
               </div>
 
-              {/* TypeScript — Game State Manager */}
-              <div className="project-card-hub"
-                tabIndex={0} // Makes it focusable via Tab key
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.currentTarget.click(); // Fires your existing click behavior
-                  }
-                }}
-                onClick={(e) => {
-                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-                  e.currentTarget.querySelector('.media-open-btn')?.click();
-                }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">TypeScript · OOP · Design Patterns</div>
-                  <div className="card-hub-title">Game State Manager</div>
-                  <div className="card-hub-desc">A typed, reactive state system with a validated phase machine — each transition checks against an allowed-moves map, so the game can never enter an illegal state.</div>
-                  <div className="card-hub-tags">{['TypeScript', 'OOP', 'Observer', 'State Machine'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <CodeCard snippet={CODE_SNIPPETS.typescript_state} />
-              </div>
             </div>
           </div>
 
@@ -1752,7 +1812,7 @@ export default function Portfolio() {
             {/* KING CROW STUDIOS */}
             <div className="exp-entry" style={{ marginBottom: '2.5rem' }}>
               <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>King Crow Studios</div>
-              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Gameplay Engineer & Systems Designer</div>
+              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Gameplay Engineer</div>
               <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>March 2022 — December 2025 · Remote</div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -1760,7 +1820,7 @@ export default function Portfolio() {
                   "Co-engineered a dual-engine VR flight training platform (Unity & Unreal Engine 5), architecting a data-driven checklist engine that dynamically verified procedural compliance. This direct technical implementation cut crew training cycle times by 95% and was officially recognized in a USAF Whitepaper for reducing human procedural errors by 19%.",
                   "Designed and deployed a robust room-based multiplayer infrastructure utilizing Photon PUN. Engineered strict authoritative state synchronization and highly optimized RPC pipelines, ensuring rock-solid netcode stability and low-latency replication under sustained live concurrent player loads across VR, desktop, and mobile platforms simultaneously.",
                   "Programmed an extensible Coordinated Multi-Agent AI system from scratch. Developed hierarchical finite state machines where individual agents execute role-based tactical behaviors (such as flanking, pressure allocation, and defensive retreats) dynamically orchestrated by a centralized high-level systemic manager.",
-                  "Contributed core gameplay engineering systems to shipped Steam titles Necroball (Oct 2021, 91% positive) and Hive Slayer (Oct 2020, 94% positive, Free-to-Play), focusing on performance optimization, responsive game feel, and stable build deployment pipelines.",
+                  "Contributed core gameplay engineering systems post-release to shipped Steam titles Necroball (Oct 2021, 91% positive) and Hive Slayer (Oct 2020, 94% positive, Free-to-Play), focusing on performance optimization, responsive game feel, and stable build deployment pipelines.",
                   "Architected a suite of custom Unity Inspector and Unreal Engine editor tools driven by decoupled ScriptableObject systems. This empowering design framework allowed non-technical content designers to rapidly author, iterate, and balance complex combat data and enemy variables safely in-editor, boosting production velocity by removing engineering dependencies."
                 ].map((bullet, idx) => (
                   <div key={idx} className="exp-bullet" style={{
