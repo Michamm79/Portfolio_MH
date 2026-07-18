@@ -16,6 +16,7 @@ import sensorama_Environment from './assets/Sensorama_ElephantPlush.jpg';
 import PM_Overview from './assets/pm_overview.jpg';
 import PM_PlayerFocus from './assets/pm_tools.jpg';
 import PM_Combat from './assets/pm_enemies-combat.jpg';
+import Valtara_Visual from './assets/Valtara_Visual.png'
 
 // ─────────────────────────────────────────────
 // PROJECT DATA
@@ -26,12 +27,12 @@ const PROJECTS = [
     title: 'Valtara',
     category: 'Exploration · Procedural World · Companion AI',
     color: 'green',
-    thumbnail: ComingSoon,
+    thumbnail: Valtara_Visual,
     description: 'A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanitys greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. A fox travels with you. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.',
     tags: ['Unreal Engine', 'C++', 'Procedural Generation', 'Companion AI', 'Blueprints', 'In Development'],
     github: 'https://github.com/Michamm79/Valtara',
     codeDownload: 'https://github.com/Michamm79/Valtara/archive/refs/heads/main.zip',
-    media: [{ type: 'image', src: ComingSoon, label: 'Barley and Fox — World Preview', system: 'Exploration' }],
+    media: [{ type: 'image', src: Valtara_Visual, label: 'World Preview - Concept Art', system: 'Exploration' }],
     recruiterHighlights: [
       'Location-contextual artifact placement — each of seven curated artifacts is tied to a specific biome type. The procedural world arranges differently each playthrough, but the mythological logic always holds.',
       'Guardian gate system — artifacts are not found, they are given, eventually, by someone who needed to see something first. Each guardian has unique unlock conditions; the fox signals what kind of encounter is approaching.',
@@ -1655,6 +1656,11 @@ export default function Portfolio() {
                   <div className="card-hub-title">Valtara — Artifact Hunter</div>
                   <div className="card-hub-desc">A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanity's greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.</div>
                   <div className="card-hub-tags">{['UE5', 'C++', 'Procedural Generation', 'Companion AI', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                </div>
+                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
+                  {[Valtara_Visual].map((src, i) => (
+                    <img key={i} src={src} alt="Valtara_Visual" loading="lazy" onClick={() => openMedia(PROJECTS[0], i)} />
+                  ))}
                 </div>
                 <CodeCard snippets={[CODE_SNIPPETS.valtara_artifacts, CODE_SNIPPETS.valtara_fox]} />
               </div>
