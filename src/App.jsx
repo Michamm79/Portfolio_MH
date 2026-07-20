@@ -16,7 +16,8 @@ import sensorama_Environment from './assets/Sensorama_ElephantPlush.jpg';
 import PM_Overview from './assets/pm_overview.jpg';
 import PM_PlayerFocus from './assets/pm_tools.jpg';
 import PM_Combat from './assets/pm_enemies-combat.jpg';
-import Valtara_Visual from './assets/Valtara_Visual.png'
+import Valtara_Visual from './assets/ValtaraVisual_Upgrade.png'
+import WitchsBrew_Visual from './assets/WitchsBrew_Visual.jpg'
 
 // ─────────────────────────────────────────────
 // PROJECT DATA
@@ -28,7 +29,7 @@ const PROJECTS = [
     category: 'Exploration · Procedural World · Companion AI',
     color: 'green',
     thumbnail: Valtara_Visual,
-    description: 'A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanitys greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. A fox travels with you. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.',
+    description: 'Welcome to Valtara! Introducing a post-apocalyptic exploration game where players take on the role of a robot named b4r13Y (Barley). In this unique world, seven artifacts representing humanity/s greatest myths are scattered throughout a procedurally generated landscape. Each artifact is guarded by a distinct guardian, each with their own personality and conditions. As nature revives and thrives, some of the worlds greatest mysteries and treasures are reintroduced to bring magic and wonder back.',
     tags: ['Unreal Engine', 'C++', 'Procedural Generation', 'Companion AI', 'Blueprints', 'In Development'],
     github: 'https://github.com/Michamm79/Valtara',
     codeDownload: 'https://github.com/Michamm79/Valtara/archive/refs/heads/main.zip',
@@ -45,12 +46,12 @@ const PROJECTS = [
     title: "Witch's Brew",
     category: 'Discovery Mixing · Procedural Pixel Art · Phaser 3',
     color: 'purple',
-    thumbnail: ComingSoon,
+    thumbnail: WitchsBrew_Visual,
     description: '2.5D handheld-style & PC pixel game in the visual tradition of The Legend of Zelda: The Minish Cap. A witch in a small medieval town collects ingredients and mixes up to three at a cauldron to brew potions requested by townspeople — but the recipes are hidden, discovered only by trying combinations. A correct mix records the recipe in a journal and adds the potion to inventory; a wrong mix triggers a harmless, cartoonish cauldron explosion. Every sprite and tile is generated at startup from hand-authored pixel grids in code — no image files in the project.',
     tags: ['Phaser 3', 'TypeScript', 'Vite', 'Procedural Pixel Art', 'Discovery Mechanic', 'In Development'],
     github: 'https://github.com/Michamm79/WitchsBrew',
     codeDownload: 'https://github.com/Michamm79/WitchsBrew/archive/refs/heads/main.zip',
-    media: [{ type: 'image', src: ComingSoon, label: 'Town, Cauldron & Cauldron Panel', system: 'Core Loop' }],
+    media: [{ type: 'image', src: WitchsBrew_Visual, label: 'Town, Cauldron & Cauldron Panel', system: 'Core Loop' }],
     recruiterHighlights: [
       'Order-independent recipe system supports 1–3 ingredient combinations with a hidden lookup table (findRecipe()) — first-time matches write to the journal automatically.',
       'Fully data-driven content: ingredients, potions, recipes, villagers, and the town map live in flat data files, so adding a new potion or villager is a data-only change with no engine code touched.',
@@ -99,11 +100,11 @@ const PROJECTS = [
   {
     id: 4,
     title: 'Project Maelstrom',
-    category: 'Exploration RPG · Crafting Systems · Coordinated Multi-Agent AI',
+    category: 'Systems RPG · Crafting & Alchemy · Reactive Narrative',
     color: 'pink',
     thumbnail: PM_Overview,
-    description: 'A mystery/exploration game set in a corporate-dystopian world, where the amnesiac player navigates five natural environment biomes (desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm) facing intermittent enemy encounters modeled as corporate virus/defense mechanisms. Built the inventory, crafting, and alchemy systems and a biome-driven environment framework with randomized player start; enemy-encounter and companion-NPC systems in active development.',
-    tags: ['Unreal Engine', 'C++', 'Blueprint', 'Crafting Systems', 'Coordinated Multi-Agent AI', 'In Development'],
+    description: 'A systems-driven RPG set in a corporate-dystopian world where corporations control the flow of information as tightly as they control power. The amnesiac player wakes inside a maze-like containment structure and must navigate five natural biomes — desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm — facing enemy encounters modeled as corporate virus and defense mechanisms rather than traditional monsters. Full inventory, crafting, and alchemy systems let players gather materials and craft what they need to progress. Underneath that sits a reactive narrative system: how a player engages — favoring direct confrontation with enemies versus deliberate exploration — shapes the accuracy of the information they piece together about the world\'s central conflict, which in turn affects how skeptical or trusting late-game NPCs are and what outcomes are available, regardless of which side the player ultimately chooses to support.',
+    tags: ['Unreal Engine 5', 'C++', 'Systems Design', 'Crafting & Alchemy', 'Reactive Narrative', 'In Development'],
     github: 'https://github.com/Michamm79/Project_Maelstrom',
     codeDownload: 'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
     media: [
@@ -116,6 +117,8 @@ const PROJECTS = [
       'Element pool architecture aggregates quantities across decomposed materials; alchemy is gated behind player progression and unlocks a second crafting layer.',
       'Weighted randomized item spawn system within designer-defined collider zones, with minimum separation validation and graceful falloff when space runs out.',
       'Special items gated behind dual conditions — player level and active quest — neither alone sufficient to reveal the item.',
+      'Designed and coded an information-integrity system where playstyle (combat-focused vs. exploration-focused) determines the accuracy of information the player uncovers about the central conflict, shaping late-game NPC trust and available outcomes independent of faction choice. Integration into the current build is in progress.',
+      'Built a pack-coordination AI system for enemy encounters: agents share environmental and positional awareness to surround the player, execute full-frontal assaults, or attack in coordinated patterns, dynamically choosing tactics based on the player\'s positioning.',
     ],
   },
   {
@@ -124,7 +127,7 @@ const PROJECTS = [
     category: 'VR Training · Multiplayer · USAF',
     color: 'blue',
     thumbnail: B52_USAF,
-    description: 'Large-scale dual-engine VR training platform — built simultaneously in Unity and Unreal — that cut B-52 crew training time by 95%, recognized in an official USAF whitepaper.',
+    description: 'Large-scale VR training platform (Unity) that cut B-52 crew training time by 95%, recognized in an official USAF whitepaper.',
     tags: ['Unity', 'UE5', 'VR', 'Photon', 'XR Training', 'Checklist Systems'],
     media: [
       { type: 'youtube', src: 'https://youtu.be/yfuFpTZCy2g?si=TgEWj1p08yPcPYMQ', poster: B52_USAF, label: 'Training Cockpit (In-Engine)', system: 'Multiplayer' },
@@ -133,7 +136,7 @@ const PROJECTS = [
     recruiterHighlights: [
       'Inspector-serialized ChecklistManager: each step owns its own verification type (Audio / Confirm / Interact), target object ID, and interaction mode.',
       'Multi-trainee Photon networking with synchronized session state and master-client authority.',
-      '95% reduction in training time — up to 75% increase in crew retention — 19% fewer procedural errors.',],
+      '95% reduction in training time and 19% fewer procedural errors, per official USAF whitepaper; up to 75% increase in crew retention, per company-reported figures.',],
   },
   {
     id: 6,
@@ -1472,17 +1475,17 @@ export default function Portfolio() {
         ))}
       </div>
 
-{/* ── TOP BAR ── */}
-<div className={`top-bar ${activeSection ? 'visible' : ''}`}>
+      {/* ── TOP BAR ── */}
+      <div className={`top-bar ${activeSection ? 'visible' : ''}`}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
           {/* Your name stays permanently anchored */}
           <span className="top-bar-name">Grayson Hammond</span>
-          
+
           {/* DYNAMIC BLOCK: Only renders the line and title if a section is active */}
           {activeSection && (
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
               animation: 'fadeIn .4s ease both' // Optional: Gives it a smooth transition in
             }}>
               <div style={{ width: 1, height: 14, background: 'rgba(238,203,44,.20)', margin: '0 .5rem' }} />
@@ -1492,9 +1495,9 @@ export default function Portfolio() {
             </div>
           )}
         </div>
-        
+
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          {/* <a href={ResumePDF} download="MichaelHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"
+          {/* <a href={ResumePDF} download="GraysonHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"
            style={{
               fontFamily:"'Cinzel',serif", fontSize:'.62rem', letterSpacing:'.14em',
               textTransform:'uppercase', color:'var(--gold)', textDecoration:'none',
@@ -1654,7 +1657,8 @@ export default function Portfolio() {
                 <div className="card-hub-header">
                   <div className="card-hub-overline">Exploration · Procedural World · Companion AI · In Development</div>
                   <div className="card-hub-title">Valtara — Artifact Hunter</div>
-                  <div className="card-hub-desc">A post-apocalyptic exploration game. You are a robot named Barley. Seven artifacts of humanity's greatest myths are scattered across a procedurally generated world, each watched over by a guardian with their own conditions. Location-contextual artifact placement, guardian gate system, and a companion whose behavior tells you everything if you are paying attention.</div>
+                  <div className="card-hub-desc">Welcome to Valtara!
+                    Introducing a post-apocalyptic exploration game where players take on the role of a robot named b4r13Y (Barley). In this unique world, seven artifacts representing humanity's greatest myths are scattered throughout a procedurally generated landscape. Each artifact is guarded by a distinct guardian, each with their own personality and conditions. As nature revives and thrives, some of the world's greatest mysteries and treasures are reintroduced to bring magic and wonder back.</div>
                   <div className="card-hub-tags">{['UE5', 'C++', 'Procedural Generation', 'Companion AI', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
@@ -1682,6 +1686,11 @@ export default function Portfolio() {
                   <div className="card-hub-title">Witch's Brew</div>
                   <div className="card-hub-desc">2.5D handheld-style pixel game in the visual tradition of The Legend of Zelda: The Minish Cap. A witch in a small medieval town collects ingredients and mixes up to three at a cauldron to brew potions requested by townspeople — recipes are hidden and discovered only by trying combinations. Every sprite and tile is generated at startup from hand-authored pixel grids in code, with zero binary art assets.</div>
                   <div className="card-hub-tags">{['Phaser 3', 'TypeScript', 'Vite', 'Procedural Pixel Art', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                </div>
+                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
+                  {[WitchsBrew_Visual].map((src, i) => (
+                    <img key={i} src={src} alt="Witch's Brew" loading="lazy" onClick={() => openMedia(PROJECTS[1], i)} />
+                  ))}
                 </div>
                 <CodeCard snippet={CODE_SNIPPETS.witchs_brew} />
               </div>
@@ -1719,10 +1728,10 @@ export default function Portfolio() {
                   if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
                   e.currentTarget.querySelector('.media-open-btn')?.click();
                 }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Creature AI · Pack Coordination</div>
+                  <div className="card-hub-overline">Systems RPG · Crafting & Alchemy · Reactive Narrative</div>
                   <div className="card-hub-title">Project Maelstrom</div>
-                  <div className="card-hub-desc">A mystery/exploration game set in a corporate-dystopian world, where the amnesiac player navigates five natural environment biomes (desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm) facing intermittent enemy encounters modeled as corporate virus/defense mechanisms. Built the inventory, crafting, and alchemy systems and a biome-driven environment framework with randomized player start; enemy-encounter and companion-NPC systems in active development.</div>
-                  <div className="card-hub-tags">{['UE5', 'Unity', 'C++', 'C#', 'Coordinated Multi-Agent AI', 'Encounter Design'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-desc">A systems-driven RPG set in a corporate-dystopian world where corporations control the flow of information as tightly as they control power. The amnesiac player wakes inside a maze-like containment structure and must navigate five natural biomes — desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm — facing enemy encounters modeled as corporate virus and defense mechanisms rather than traditional monsters. Full inventory, crafting, and alchemy systems let players gather materials and craft what they need to progress, while a reactive narrative system ties information accuracy — and late-game NPC trust — to how the player chooses to engage.</div>
+                  <div className="card-hub-tags">{['UE5', 'C++', 'Systems Design', 'Crafting & Alchemy', 'Reactive Narrative', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
                   {[PM_Overview, PM_Combat, PM_PlayerFocus].map((src, i) => (
@@ -1772,8 +1781,8 @@ export default function Portfolio() {
                 }}>                <div className="card-hub-header">
                   <div className="card-hub-overline">VR Training · Multiplayer · USAF Whitepaper</div>
                   <div className="card-hub-title">B-52 Training Suite — USAF</div>
-                  <div className="card-hub-desc">Dual-engine VR training platform (Unity + UE5) that cut B-52 crew training time by 95%, with a data-driven checklist system for procedural verification.</div>
-                  <div className="card-hub-tags">{['Unity + UE5', 'Photon', 'VR', 'Checklist Systems'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-desc">VR training platform (Unity) that cut B-52 crew training time by 95%, with a data-driven checklist system for procedural verification.</div>
+                  <div className="card-hub-tags">{['Unity', 'Photon', 'VR', 'Checklist Systems'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
                   <img src={B52_USAF} alt="B-52 cockpit" onClick={() => openMedia(PROJECTS[5], 0)} />
@@ -1823,9 +1832,8 @@ export default function Portfolio() {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {[
-                  "Co-engineered a dual-engine VR flight training platform (Unity & Unreal Engine 5), architecting a data-driven checklist engine that dynamically verified procedural compliance. This direct technical implementation cut crew training cycle times by 95% and was officially recognized in a USAF Whitepaper for reducing human procedural errors by 19%.",
-                  "Designed and deployed a robust room-based multiplayer infrastructure utilizing Photon PUN. Engineered strict authoritative state synchronization and highly optimized RPC pipelines, ensuring rock-solid netcode stability and low-latency replication under sustained live concurrent player loads across VR, desktop, and mobile platforms simultaneously.",
-                  "Programmed an extensible Coordinated Multi-Agent AI system from scratch. Developed hierarchical finite state machines where individual agents execute role-based tactical behaviors (such as flanking, pressure allocation, and defensive retreats) dynamically orchestrated by a centralized high-level systemic manager.",
+                  "Architected a data-driven checklist engine that dynamically verified procedural compliance for a real-time, multi-user VR training platform (Unity). This direct technical implementation cut crew training cycle times by 95% and was officially recognized in a USAF Whitepaper for reducing human procedural errors by 19%.",
+                  "Designed and deployed session/room-based multiplayer infrastructure utilizing Photon PUN across multiple client training programs, engineering strict authoritative state synchronization and optimized RPC pipelines for stable, low-latency replication under concurrent live loads across VR, desktop, and mobile platforms simultaneously.",
                   "Contributed core gameplay engineering systems post-release to shipped Steam titles Necroball (Oct 2021, 91% positive) and Hive Slayer (Oct 2020, 94% positive, Free-to-Play), focusing on performance optimization, responsive game feel, and stable build deployment pipelines.",
                   "Architected a suite of custom Unity Inspector and Unreal Engine editor tools driven by decoupled ScriptableObject systems. This empowering design framework allowed non-technical content designers to rapidly author, iterate, and balance complex combat data and enemy variables safely in-editor, boosting production velocity by removing engineering dependencies."
                 ].map((bullet, idx) => (
@@ -1852,11 +1860,18 @@ export default function Portfolio() {
               <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Game Development Intern</div>
               <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>January 2021 — January 2022 · Remote</div>
 
-              <div className="exp-bullet" style={{
-                paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
-                color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)'
-              }}>
-                Architected and engineered an interactive VR hydroponic simulation platform deployed within a virtual reality-based educational curriculum. Focused on implementing physical-interaction mechanics, modular resource-tracking loops (water, light, nutrients), and realistic environmental reactions to maximize student immersion.
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {[
+                  "Architected real-time VR simulations and interactive software (Unity, C#) for research clients, engineering a reusable component-based interaction framework — grab, socket, and multi-axis mechanical constraints — grounded in 3D spatial math.",
+                  "Designed and implemented a combat system for a VR prototype, including a timing-based sliding parry requiring precise real-time input handling."
+                ].map((bullet, idx) => (
+                  <div key={idx} className="exp-bullet" style={{
+                    paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
+                    color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)'
+                  }}>
+                    {bullet}
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -1865,14 +1880,14 @@ export default function Portfolio() {
             {/* OREGON STATE UNIVERSITY */}
             <div className="exp-entry">
               <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>Oregon State University — Kesterson VR Immersion Lab</div>
-              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Virtual Reality Lab Technician</div>
+              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Lab Technician</div>
               <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>September 2018 — June 2020</div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {[
+                  "Led development of Sensorama, a cross-institutional R&D capstone collaboration with the University of Stuttgart's robotics program: engineered a simulated real-time sensor-fusion pipeline (LiDAR, radar, and thermal data patterns) driving systemic AI creature behavior within a game environment.",
                   "Designed and prototyped functional 3D action-RPG frameworks within both Unreal Engine and Unity, developing modular player ability pipelines, responsive hit-registration mechanics, and state-machine-driven creature AI combat behaviors.",
-                  "Spearheaded a hardware-software drone integration R&D initiative, engineering a low-latency pipeline to pipe live spatial data feeds (LiDAR, radar, and thermal metrics) into an optimized interactive system for real-time procedural environmental mapping.",
-                  "Authored optimized 3D environmental assets and technical rigs using Maya and Blender, while providing technical mentorship, codebase debugging support, and real-time engine orientation to students integrating assets into VR pipelines."
+                  "Modeled 3D environmental assets and props in Maya and Blender, while providing technical mentorship, code review, and real-time engine orientation to students integrating assets into VR pipelines."
                 ].map((bullet, idx) => (
                   <div key={idx} className="exp-bullet" style={{
                     paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
@@ -1899,15 +1914,15 @@ export default function Portfolio() {
               width: '100%'
             }}>
               {[
-                ['Languages', 'C++ (Expert) · C# (Expert) · Blueprint · TypeScript · JavaScript · Python · Lua'],
+                ['Languages', 'C++ (Expert) · C# (Expert) · Blueprint · TypeScript · JavaScript · Lua · Python (Beginner)'],
                 ['Engines & Frameworks', 'Unreal Engine 5 · Unity (8+ yrs) · Gameplay Ability System (GAS) · Zenject / Vcontainment'],
                 ['Gameplay & Combat', 'Data-Driven Combat Frameworks · Combo Systems · Technical Pacing · Encounter Structure · Balance & Tuning'],
                 ['AI & Creature Systems', 'Coordinated Multi-Agent AI · Behavior Trees · Blackboards · State Machines · Engagement Slot Allocation'],
                 ['Architecture & Tooling', 'ScriptableObject Architecture · Custom Inspector Tooling · Extensible Developer Tooling · Modular State Machines'],
                 ['Networking & Platforms', 'Multiplayer Architecture · Authoritative State Sync (Photon) · VR / AR / XR · Cross-Platform Deployment'],
-                ['3D Art & Asset Pipelines', 'Maya · Blender · Rigging & Skinning · Animation Systems · Environment Modeling · Asset Optimization'],
+                ['3D Art & Asset Pipelines', 'Maya · Blender · Animation Systems · Environment Modeling · Asset Optimization'],
                 ['Web & Infrastructure', 'React · Node.js · HTML/CSS · Vercel · SVG/CSS Motion Animation'],
-                ['Workflow & Versioning', 'Git · Plastic SCM · Perforce · Agile/Scrum Methodologies · Cross-Discipline Collaboration · Mentorship']
+                ['Workflow & Versioning', 'Git · Plastic SCM · Perforce · Agile/Scrum Methodologies · Cross-Discipline Collaboration · Mentorship (Sensorama Team Lead, Lab Assistant Instructor)']
               ].map(([label, items]) => (
                 <div key={label} className="panel-card" style={{
                   padding: '1.25rem',
@@ -1988,7 +2003,7 @@ export default function Portfolio() {
                   borderRadius: '50%', background: 'radial-gradient(circle, rgba(238,203,44,0.2) 0%, transparent 70%)',
                   transform: 'scale(1.25)', zIndex: 1
                 }} />
-                <img src={profileImage} alt="Michael Hammond" style={{
+                <img src={profileImage} alt="Grayson Hammond" style={{
                   width: 185, height: 185, borderRadius: '50%',
                   objectFit: 'cover', border: '2px solid rgba(238,203,44,.5)',
                   boxShadow: '0 0 24px rgba(238,203,44,.25)', position: 'relative', zIndex: 2
