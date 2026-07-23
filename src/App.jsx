@@ -16,7 +16,7 @@ import sensorama_Environment from './assets/Sensorama_ElephantPlush.jpg';
 import PM_Overview from './assets/pm_overview.jpg';
 import PM_PlayerFocus from './assets/pm_tools.jpg';
 import PM_Combat from './assets/pm_enemies-combat.jpg';
-import Valtara_Visual from './assets/ValtaraVisual_Upgrade.png'
+import Valtara_Visual from './assets/Valtara_Visual.jpg'
 import WitchsBrew_Visual from './assets/WitchsBrew_Visual.jpg'
 
 // ─────────────────────────────────────────────
@@ -51,7 +51,7 @@ const PROJECTS = [
     tags: ['Phaser 3', 'TypeScript', 'Vite', 'Procedural Pixel Art', 'Discovery Mechanic', 'In Development'],
     github: 'https://github.com/Michamm79/WitchsBrew',
     codeDownload: 'https://github.com/Michamm79/WitchsBrew/archive/refs/heads/main.zip',
-    media: [{ type: 'image', src: WitchsBrew_Visual, label: 'Town, Cauldron & Cauldron Panel', system: 'Core Loop' }],
+    media: [{ type: 'image', src: WitchsBrew_Visual, label: 'World Preview - Concept Art', system: 'Exploration' }],
     recruiterHighlights: [
       'Order-independent recipe system supports 1–3 ingredient combinations with a hidden lookup table (findRecipe()) — first-time matches write to the journal automatically.',
       'Fully data-driven content: ingredients, potions, recipes, villagers, and the town map live in flat data files, so adding a new potion or villager is a data-only change with no engine code touched.',
@@ -1689,7 +1689,7 @@ export default function Portfolio() {
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
                   {[WitchsBrew_Visual].map((src, i) => (
-                    <img key={i} src={src} alt="Witch's Brew" loading="lazy" onClick={() => openMedia(PROJECTS[1], i)} />
+                    <img key={i} src={src} alt="{[WitchsBrew_Visual].map((src, i) => ("loading="lazy" onClick={() => openMedia(PROJECTS[1], i)} />
                   ))}
                 </div>
                 <CodeCard snippet={CODE_SNIPPETS.witchs_brew} />
