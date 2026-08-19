@@ -26,19 +26,25 @@ const PROJECTS = [
   {
     id: 0,
     title: 'Valtara',
-    category: 'Exploration · Procedural World · Companion AI',
+    category: 'Exploration · Procedural World · Playable Slice',
     color: 'green',
     thumbnail: Valtara_Visual,
-    description: 'Welcome to Valtara! Introducing a post-apocalyptic exploration game where players take on the role of a robot named b4r13Y (Barley). In this unique world, seven artifacts representing humanity/s greatest myths are scattered throughout a procedurally generated landscape. Each artifact is guarded by a distinct guardian, each with their own personality and conditions. As nature revives and thrives, some of the worlds greatest mysteries and treasures are reintroduced to bring magic and wonder back.',
-    tags: ['Unreal Engine', 'C++', 'Procedural Generation', 'Companion AI', 'Blueprints', 'In Development'],
+    description: 'You wake in darkness. Someone is waiting. Valtara is a third-person exploration game set in a world after its collapse — seven artifacts scattered across a landscape that assembles itself differently every time you play, each one watched over by a guardian with its own terms. Only when the opening conversation with Enkidu ends does the world resolve into being: biomes settle across the terrain, artifacts find their places, guardians take their posts, and beams of light rise from everything still within reach. A sabertooth travels alongside you throughout — catching up when outpaced, wandering nearby when not. Built solo in Unreal Engine 5.8 on a custom C++ gameplay framework with procedural world generation and PCG-driven vegetation.',
+    tags: ['Unreal Engine 5.8', 'C++', 'Procedural Generation', 'PCG', 'Companion AI', 'Playable Vertical Slice'],
     github: 'https://github.com/Michamm79/Valtara',
-    codeDownload: 'https://github.com/Michamm79/Valtara/archive/refs/heads/main.zip',
+    codeDownload: 'https://graysongamedev.itch.io/valtara',
     media: [{ type: 'image', src: Valtara_Visual, label: 'World Preview - Concept Art', system: 'Exploration' }],
     recruiterHighlights: [
-      'Location-contextual artifact placement — each of seven curated artifacts is tied to a specific biome type. The procedural world arranges differently each playthrough, but the mythological logic always holds.',
-      'Guardian gate system — artifacts are not found, they are given, eventually, by someone who needed to see something first. Each guardian has unique unlock conditions; the fox signals what kind of encounter is approaching.',
-      'Fox behavioral state system driven by proximity triggers — tail movement, ear position, distance from Barley, and movement direction all reflect the situation without UI indicators. Observation is the mechanic.',
-      'World state memory tracks collection count and notifies late guardians when the threshold is reached. They are not surprised.',
+      'Playable vertical slice — roughly 15–20 minutes, packaged for Windows, built solo in Unreal Engine 5.8.',
+      'Procedural world generation with seeded rejection sampling and ground-coverage validation, so biomes never land on terrain that cannot support them. A fixed seed reproduces a layout exactly; changing it reshapes the world.',
+      'C++/Blueprint hybrid architecture — rules, state, and systems in C++; art, VFX, and per-asset behavior in Blueprint. Content is added without recompiling.',
+      'Interface-driven interaction: a single input drives artifacts, guardians, and NPCs polymorphically through one C++ interface, resolved by sphere trace.',
+      'Data-driven content — a DataTable defines every artifact, its biome, and its guardian. Adding an eighth is a spreadsheet edit, not a code change.',
+      'Designer-overridable gating: guardians expose their unlock condition as a BlueprintNativeEvent, so each requirement is authored in Blueprint rather than hardcoded.',
+      'PCG vegetation generated per biome at correct bounds once each region is established.',
+      'Persistent progression on a custom Game Instance that survives level transitions, broadcasting to UI and game mode via delegates.',
+      'Companion AI — navigation-driven follow behavior that sprints to close distance and wanders when nearby, with speed-blended locomotion.',
+      'Scale: ~1,100 lines of gameplay C++ across 9 classes; 8 procedurally placed biomes, 7 artifacts, 7 guardians.',
     ],
   },
   {
@@ -62,19 +68,20 @@ const PROJECTS = [
   {
     id: 2,
     title: "Evigheden",
-    category: 'Designer-Driven Architecture · ScriptableObjects',
+    category: 'Behavior Classification · Gameplay Ability System',
     color: 'blue',
     thumbnail: ComingSoon,
-    description: 'A six-dimension behavior classifier that assigns players one of six personalized combat archetypes from how they actually play, plus a ScriptableObject-based authoring tool for rapid iteration on archetype balance. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed.',
-    tags: ['Unity', 'C#', 'ScriptableObjects', 'Behavior Classifier', 'Designer Tooling', 'PC', 'In Development'],
+    description: 'A six-dimension behavior classifier that assigns players one of six personalized combat archetypes from how they actually play, plus a ScriptableObject-based authoring tool for rapid iteration on archetype balance. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed. Rebuilt in Unreal Engine 5, with archetype abilities and modifiers authored in the Gameplay Ability System.',
+    tags: ['Unreal Engine 5', 'C++', 'Gameplay Ability System', 'GameplayTags', 'Behavior Classifier', 'In Development'],
     github: 'https://github.com/Michamm79/Evigheden',
     codeDownload: 'https://github.com/Michamm79/Evigheden/archive/refs/heads/main.zip',
     media: [{ type: 'image', src: ComingSoon, label: 'Rune Authoring & Inspector Workflow', system: 'Designer Tooling' }],
     recruiterHighlights: [
       'Behavior Classifier runs levels 3–5, tracking combat patterns across six dimensions — aggression, dodge frequency, stealth, defensive play, sprint momentum, and precision. At level 5 it surfaces the Specialized Rune that best reflects how the player actually fights.',
-      'Six Specialized Rune archetypes (Berserker, Sentinel, Phantom, Duelist, Vanguard, Acrobat) plus a secret seventh with performance-gated unlock conditions. Each is defined entirely in a ScriptableObject asset — no code per archetype.',
+      'Six Specialized Rune archetypes (Berserker, Sentinel, Phantom, Duelist, Vanguard, Acrobat) plus a secret seventh with performance-gated unlock conditions, authored as layered abilities and modifiers in the Gameplay Ability System.',
       'Two-tier rune economy: Specialized Runes are granted once and tied to identity; Standard Runes are found in the world, losable, and transferable between players.',
       'Reevaluation system allows archetype switching with a difficulty-scaled penalty — free on Easy/Medium, punishing on Hard, locked entirely in Regressor\'s Endgame.',
+      'Rebuilt from an earlier Unity implementation; the UE5 version is where the design ships properly.',
     ],
   },
   {
@@ -100,11 +107,11 @@ const PROJECTS = [
   {
     id: 4,
     title: 'Project Maelstrom',
-    category: 'Systems RPG · Crafting & Alchemy · Reactive Narrative',
+    category: 'Systems RPG · Pack AI · Reactive Narrative',
     color: 'pink',
     thumbnail: PM_Overview,
     description: 'A systems-driven RPG set in a corporate-dystopian world where corporations control the flow of information as tightly as they control power. The amnesiac player wakes inside a maze-like containment structure and must navigate five natural biomes — desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm — facing enemy encounters modeled as corporate virus and defense mechanisms rather than traditional monsters. Full inventory, crafting, and alchemy systems let players gather materials and craft what they need to progress. Underneath that sits a reactive narrative system: how a player engages — favoring direct confrontation with enemies versus deliberate exploration — shapes the accuracy of the information they piece together about the world\'s central conflict, which in turn affects how skeptical or trusting late-game NPCs are and what outcomes are available, regardless of which side the player ultimately chooses to support.',
-    tags: ['Unreal Engine 5', 'C++', 'Systems Design', 'Crafting & Alchemy', 'Reactive Narrative', 'In Development'],
+    tags: ['Unreal Engine 5', 'C++', 'Pack AI', 'Systems Design', 'Reactive Narrative', 'In Development'],
     github: 'https://github.com/Michamm79/Project_Maelstrom',
     codeDownload: 'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
     media: [
@@ -113,12 +120,12 @@ const PROJECTS = [
       { type: 'image', src: PM_PlayerFocus, label: 'Crafting Pipeline — Orb System Overview', system: 'Crafting' },
     ],
     recruiterHighlights: [
-      'Two-orb crafting pipeline: transmutation pairs materials into tools and weapons; alchemy decomposes materials into elements for deeper combinations — all data-driven on ScriptableObject assets.',
+      'Built a pack-coordination AI system for enemy encounters: agents share environmental and positional awareness to surround the player, execute full-frontal assaults, or attack in coordinated patterns, dynamically choosing tactics based on the player\'s positioning. Individual agents run their own state machines while a higher-level layer allocates roles across the group, so encounters escalate and relent rather than swarming.',
+      'Two-orb crafting pipeline: transmutation pairs materials into tools and weapons; alchemy decomposes materials into elements for deeper combinations — all data-driven on asset definitions.',
       'Element pool architecture aggregates quantities across decomposed materials; alchemy is gated behind player progression and unlocks a second crafting layer.',
       'Weighted randomized item spawn system within designer-defined collider zones, with minimum separation validation and graceful falloff when space runs out.',
       'Special items gated behind dual conditions — player level and active quest — neither alone sufficient to reveal the item.',
       'Designed and coded an information-integrity system where playstyle (combat-focused vs. exploration-focused) determines the accuracy of information the player uncovers about the central conflict, shaping late-game NPC trust and available outcomes independent of faction choice. Integration into the current build is in progress.',
-      'Built a pack-coordination AI system for enemy encounters: agents share environmental and positional awareness to surround the player, execute full-frontal assaults, or attack in coordinated patterns, dynamically choosing tactics based on the player\'s positioning.',
     ],
   },
   {
@@ -141,17 +148,19 @@ const PROJECTS = [
   {
     id: 6,
     title: 'Sensorama R&D',
-    category: 'VR · Sensor Integration · Environmental AI',
+    category: 'VR · Sensor-Driven AI · Adversary Design',
     color: 'purple',
     thumbnail: sensorama,
     description: 'Research project that piped live sensor data (LiDAR, radar, heat signature) from physical hardware into a game world, making AI creatures react to real space in real time.',
-    tags: ['Unity', 'C#', 'LiDAR', 'Environmental AI', 'OSU VR Lab', 'Experimental'],
+    tags: ['Unity', 'C#', 'LiDAR', 'Sensor-Driven AI', 'Stealth', 'OSU VR Lab'],
     media: [
       { type: 'image', src: sensorama, label: 'Sensorama Hardware Setup', system: 'R&D' },
       { type: 'image', src: sensorama_Environment, label: 'Gameplay Mechanics / Environment', system: 'Research & Development' }
     ], recruiterHighlights: [
       'Buffered point-cloud ingestion with a fixed 64-point-per-frame cap to prevent hitches.',
       'Sphere-overlap alerts decouple sensor data from AI behavior — creatures decide independently.',
+      'Layered detection with distinct tells: players learn each sensor type before meeting the next, so the threat is legible before it becomes difficult.',
+      'Escalation tied to progress rather than to alerts — most stealth games ratchet on failure; this one ratchets on success, so the pressure of nearly winning is the tensest moment in the run.',
       'Cross-disciplinary R&D bridging hardware constraints and real-time game design.',
     ],
   },
@@ -569,7 +578,7 @@ AActor* UOrbContainer::SpawnResult(TSubclassOf<AActor> PrefabClass)
     
     bool UAlchemySystem::ConsumeElements(const UAlchemyRecipe* Recipe, TMap<UElementSO*, int32>& Pool)
     {
-        if (!CanFulfill(Recipe, pool)) return false;
+        if (!CanFulfill(Recipe, Pool)) return false;
     
         // Safely subtract inputs without leaving partial mutations if conditions fail mid-loop
         for (const FElementCost& Cost : Recipe->Inputs)
@@ -800,8 +809,8 @@ public class BossCinematicDirector : MonoBehaviour
       'ArtifactPickup is attached at runtime rather than baked into the prefab, keeping the prefab clean and the collection logic centralized.',
     ],
   },
-  valtara_fox: {
-    file: 'FoxBehaviorSystem.cpp', lang: 'cpp',
+  valtara_companion: {
+    file: 'CompanionBehaviorSystem.cpp', lang: 'cpp',
     code: `// FoxBehaviorComponent.cpp
 
     #include "FoxBehaviorComponent.h"
@@ -846,7 +855,7 @@ public class BossCinematicDirector : MonoBehaviour
     void UFoxBehaviorComponent::EvaluateBehavior(float DeltaTime)
     {
       if (!Fox.IsValid()) return;
-    f
+
       ABarleyCharacter* Barley = Fox->GetBondedTarget();
       if (!Barley) return;
     
@@ -1252,8 +1261,11 @@ export default function Portfolio() {
 
   // ── init & resize ──
   useEffect(() => {
-    applyLayout(false);
-  }, []);
+    applyLayout(!!activeSection);
+    const onResize = () => applyLayout(!!activeSection);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [applyLayout, activeSection]);
 
   // ── section toggle ──
   const selectSection = (id) => {
@@ -1599,7 +1611,7 @@ export default function Portfolio() {
                     maxWidth: 200, margin: '0 auto',
                     textShadow: '0 0 6px rgba(255,255,255,.20)'
                   }}>
-                    {currentSec.desc}
+                    {currentSec.hubDesc}
                   </div>
                 </div>
               );
@@ -1655,18 +1667,17 @@ export default function Portfolio() {
                   e.currentTarget.querySelector('.media-open-btn')?.click();
                 }}>
                 <div className="card-hub-header">
-                  <div className="card-hub-overline">Exploration · Procedural World · Companion AI · In Development</div>
-                  <div className="card-hub-title">Valtara — Artifact Hunter</div>
-                  <div className="card-hub-desc">Welcome to Valtara!
-                    Introducing a post-apocalyptic exploration game where players take on the role of a robot named b4r13Y (Barley). In this unique world, seven artifacts representing humanity's greatest myths are scattered throughout a procedurally generated landscape. Each artifact is guarded by a distinct guardian, each with their own personality and conditions. As nature revives and thrives, some of the world's greatest mysteries and treasures are reintroduced to bring magic and wonder back.</div>
-                  <div className="card-hub-tags">{['UE5', 'C++', 'Procedural Generation', 'Companion AI', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-overline">Exploration · Procedural World · Playable Vertical Slice</div>
+                  <div className="card-hub-title">Valtara</div>
+                  <div className="card-hub-desc">A third-person exploration game set in a world after its collapse — seven artifacts scattered across a landscape that assembles itself differently every time you play, each watched over by a guardian with its own terms. Only when the opening conversation with Enkidu ends does the world resolve into being: biomes settle, artifacts find their places, and beams of light rise from everything still within reach. A sabertooth travels alongside you throughout. Built solo in Unreal Engine 5.8 on a custom C++ gameplay framework with procedural world generation and PCG-driven vegetation.</div>
+                  <div className="card-hub-tags">{['UE 5.8', 'C++', 'Procedural Generation', 'PCG', 'Companion AI', 'Playable Slice'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
                   {[Valtara_Visual].map((src, i) => (
                     <img key={i} src={src} alt="Valtara_Visual" loading="lazy" onClick={() => openMedia(PROJECTS[0], i)} />
                   ))}
                 </div>
-                <CodeCard snippets={[CODE_SNIPPETS.valtara_artifacts, CODE_SNIPPETS.valtara_fox]} />
+                <CodeCard snippets={[CODE_SNIPPETS.valtara_artifacts, CODE_SNIPPETS.valtara_companion]} github={PROJECTS[0].github} codeDownload={PROJECTS[0].codeDownload} />
               </div>
 
               {/* Witch's Brew — Discovery Mixing */}
@@ -1689,10 +1700,10 @@ export default function Portfolio() {
                 </div>
                 <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
                   {[WitchsBrew_Visual].map((src, i) => (
-                    <img key={i} src={src} alt="{[WitchsBrew_Visual].map((src, i) => ("loading="lazy" onClick={() => openMedia(PROJECTS[1], i)} />
+                    <img key={i} src={src} alt="Witch's Brew" loading="lazy" onClick={() => openMedia(PROJECTS[1], i)} />
                   ))}
                 </div>
-                <CodeCard snippet={CODE_SNIPPETS.witchs_brew} />
+                <CodeCard snippet={CODE_SNIPPETS.witchs_brew} github={PROJECTS[1].github} codeDownload={PROJECTS[1].codeDownload} />
               </div>
 
               {/* Evigheden — Rune Architecture */}
@@ -1708,12 +1719,12 @@ export default function Portfolio() {
                   e.currentTarget.querySelector('.media-open-btn')?.click();
                 }}>
                 <div className="card-hub-header">
-                  <div className="card-hub-overline">Designer-Driven Architecture · ScriptableObjects · In Development</div>
+                  <div className="card-hub-overline">Behavior Classification · Gameplay Ability System · In Development</div>
                   <div className="card-hub-title">Evigheden — Rune System</div>
                   <div className="card-hub-desc">A six-dimension behavior classifier that assigns players one of six personalized combat archetypes from how they actually play, plus a ScriptableObject-based authoring tool for rapid iteration on archetype balance. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed. Combat AI built with IK Rig animation retargeting, Animation Blueprints, and montages.</div>
-                  <div className="card-hub-tags">{['UE5/Unity', 'C++/C#', 'ScriptableObjects', 'Designer Tooling', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
+                  <div className="card-hub-tags">{['UE5', 'C++', 'Gameplay Ability System', 'Behavior Classifier', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
                 </div>
-                <CodeCard snippet={CODE_SNIPPETS.evigheden_runes} />
+                <CodeCard snippet={CODE_SNIPPETS.evigheden_runes} github={PROJECTS[2].github} codeDownload={PROJECTS[2].codeDownload} />
               </div>
 
               {/* Project Maelstrom */}
@@ -1728,7 +1739,7 @@ export default function Portfolio() {
                   if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
                   e.currentTarget.querySelector('.media-open-btn')?.click();
                 }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Systems RPG · Crafting & Alchemy · Reactive Narrative</div>
+                  <div className="card-hub-overline">Systems RPG · Pack AI · Reactive Narrative</div>
                   <div className="card-hub-title">Project Maelstrom</div>
                   <div className="card-hub-desc">A systems-driven RPG set in a corporate-dystopian world where corporations control the flow of information as tightly as they control power. The amnesiac player wakes inside a maze-like containment structure and must navigate five natural biomes — desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm — facing enemy encounters modeled as corporate virus and defense mechanisms rather than traditional monsters. Full inventory, crafting, and alchemy systems let players gather materials and craft what they need to progress, while a reactive narrative system ties information accuracy — and late-game NPC trust — to how the player chooses to engage.</div>
                   <div className="card-hub-tags">{['UE5', 'C++', 'Systems Design', 'Crafting & Alchemy', 'Reactive Narrative', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
@@ -1803,7 +1814,7 @@ export default function Portfolio() {
                   if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
                   e.currentTarget.querySelector('.media-open-btn')?.click();
                 }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Sensor Integration · Environmental AI · OSU VR Lab</div>
+                  <div className="card-hub-overline">Sensor-Driven AI · Adversary Design · OSU VR Lab</div>
                   <div className="card-hub-title">Sensorama R&D</div>
                   <div className="card-hub-desc">Research project piping live LiDAR, radar, and heat signature data into a game world — AI creatures react to real physical space in real time.</div>
                   <div className="card-hub-tags">{['Unity', 'LiDAR', 'Environmental AI', 'OSU VR Lab'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
@@ -1828,7 +1839,7 @@ export default function Portfolio() {
             <div className="exp-entry" style={{ marginBottom: '2.5rem' }}>
               <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>King Crow Studios</div>
               <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Gameplay Engineer</div>
-              <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>March 2022 — December 2025 · Remote</div>
+              <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>March 2022 — January 2026 · Remote</div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {[
@@ -1857,7 +1868,7 @@ export default function Portfolio() {
             {/* VEDX SOLUTIONS */}
             <div className="exp-entry" style={{ marginBottom: '2.5rem' }}>
               <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>VedX Solutions</div>
-              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Game Development Intern</div>
+              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>VR Experience Developer</div>
               <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>January 2021 — January 2022 · Remote</div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -2166,7 +2177,7 @@ export default function Portfolio() {
 // ─────────────────────────────────────────────
 // CODE CARD sub-component
 // ─────────────────────────────────────────────
-function CodeCard({ snippet, snippets }) {
+function CodeCard({ snippet, snippets, github, codeDownload }) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState(0);
   // Accept either a single snippet or an array
@@ -2182,9 +2193,21 @@ function CodeCard({ snippet, snippets }) {
 
   return (
     <div>
-      <button className="media-open-btn" onClick={() => setOpen(v => !v)}>
-        <Eye size={12} /> {open ? 'Hide Code' : 'View Code & Details'}
-      </button>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem' }}>
+        <button className="media-open-btn" onClick={() => setOpen(v => !v)}>
+          <Eye size={12} /> {open ? 'Hide Code' : 'View Code & Details'}
+        </button>
+        {github && (
+          <a className="media-open-btn" href={github} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+            <ExternalLink size={12} /> GitHub
+          </a>
+        )}
+        {codeDownload && (
+          <a className="media-open-btn" href={codeDownload} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+            <Download size={12} /> Download
+          </a>
+        )}
+      </div>
       {open && (
         <div style={{ animation: 'card-in .25s ease both' }}>
           {list.length > 1 && (
