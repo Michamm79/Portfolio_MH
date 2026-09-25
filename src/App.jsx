@@ -1,2245 +1,761 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { X, ExternalLink, Download, Eye } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, ExternalLink, Eye, Mail, Phone, Github, Linkedin } from 'lucide-react';
 
 import MoonEmblem from './assets/MoonV2.png';
 import profileImage from './assets/ProfileV2.jpeg';
 import ComingSoon from './assets/ComingSoon.jpg';
 import mallCopMall from './assets/MallCop_Mall.jpg';
-import coreTwo from './assets/MallCop_MallCore2.jpg';
-import coreEight from './assets/MallCop_MallCore8.jpg';
-import lobbyFive from './assets/MallCop_Lobby5.jpg';
-import menuTwo from './assets/MallCop_MainMenu2.jpg';
 import B52_USAF from './assets/B52training_immersion.jpg';
-import B52_internaltraining from './assets/fs_remake.jpg';
 import sensorama from './assets/sensorama_external.jpg';
-import sensorama_Environment from './assets/Sensorama_ElephantPlush.jpg';
 import PM_Overview from './assets/pm_overview.jpg';
-import PM_PlayerFocus from './assets/pm_tools.jpg';
-import PM_Combat from './assets/pm_enemies-combat.jpg';
-import Valtara_Visual from './assets/Valtara_Visual.jpg'
-import WitchsBrew_Visual from './assets/WitchsBrew_Visual.jpg'
+import Valtara_Visual from './assets/Valtara_Visual.jpg';
+import WitchsBrew_Visual from './assets/WitchsBrew_Visual.jpg';
+import MobilePrototypes_Visual from './assets/MobilePrototypes_Visual.jpg';
+import Velthiros_Visual from './assets/Velthiros_Visual.jpg'
 
 // ─────────────────────────────────────────────
-// PROJECT DATA
+// PROJECT DATA — "Projects" column (in-progress + past dev work)
 // ─────────────────────────────────────────────
 const PROJECTS = [
   {
     id: 0,
-    title: 'Valtara',
-    category: 'Exploration · Procedural World · Playable Slice',
-    color: 'green',
-    thumbnail: Valtara_Visual,
-    description: 'You wake in darkness. Someone is waiting. Valtara is a third-person exploration game set in a world after its collapse — seven artifacts scattered across a landscape that assembles itself differently every time you play, each one watched over by a guardian with its own terms. Only when the opening conversation with Enkidu ends does the world resolve into being: biomes settle across the terrain, artifacts find their places, guardians take their posts, and beams of light rise from everything still within reach. A sabertooth travels alongside you throughout — catching up when outpaced, wandering nearby when not. Built solo in Unreal Engine 5.8 on a custom C++ gameplay framework with procedural world generation and PCG-driven vegetation.',
-    tags: ['Unreal Engine 5.8', 'C++', 'Procedural Generation', 'PCG', 'Companion AI', 'Playable Vertical Slice'],
-    github: 'https://github.com/Michamm79/Valtara',
-    codeDownload: 'https://graysongamedev.itch.io/valtara',
-    media: [{ type: 'image', src: Valtara_Visual, label: 'World Preview - Concept Art', system: 'Exploration' }],
+    title: 'Project Maelstrom',
+    overline: 'Systems RPG · Pack AI',
+    inDevelopment: true,
+    thumbnail: PM_Overview,
+    description: 'A systems-driven RPG set in a corporate-dystopian world. The amnesiac player navigates five biomes, facing enemies modeled as corporate virus and defense mechanisms. Full crafting and alchemy systems, plus a reactive narrative system tying information accuracy to how the player engages.',
+    tags: ['UE5', 'C++', 'Pack AI', 'Crafting'],
+    github: 'https://github.com/Michamm79/Project_Maelstrom',
     recruiterHighlights: [
-      'Playable vertical slice — roughly 15–20 minutes, packaged for Windows, built solo in Unreal Engine 5.8.',
-      'Procedural world generation with seeded rejection sampling and ground-coverage validation, so biomes never land on terrain that cannot support them. A fixed seed reproduces a layout exactly; changing it reshapes the world.',
-      'C++/Blueprint hybrid architecture — rules, state, and systems in C++; art, VFX, and per-asset behavior in Blueprint. Content is added without recompiling.',
-      'Interface-driven interaction: a single input drives artifacts, guardians, and NPCs polymorphically through one C++ interface, resolved by sphere trace.',
-      'Data-driven content — a DataTable defines every artifact, its biome, and its guardian. Adding an eighth is a spreadsheet edit, not a code change.',
-      'Designer-overridable gating: guardians expose their unlock condition as a BlueprintNativeEvent, so each requirement is authored in Blueprint rather than hardcoded.',
-      'PCG vegetation generated per biome at correct bounds once each region is established.',
-      'Persistent progression on a custom Game Instance that survives level transitions, broadcasting to UI and game mode via delegates.',
-      'Companion AI — navigation-driven follow behavior that sprints to close distance and wanders when nearby, with speed-blended locomotion.',
-      'Scale: ~1,100 lines of gameplay C++ across 9 classes; 8 procedurally placed biomes, 7 artifacts, 7 guardians.',
+      'Pack-coordination AI: agents share positional awareness to surround, assault, or flank based on player positioning — individual state machines under a higher-level role-allocation layer.',
+      'Two-orb crafting pipeline: transmutation pairs materials into tools/weapons; alchemy decomposes materials into elements for deeper combinations.',
+      'Information-integrity system: playstyle (combat vs. exploration) determines the accuracy of information uncovered, shaping late-game NPC trust independent of faction choice.',
     ],
   },
   {
     id: 1,
-    title: "Witch's Brew",
-    category: 'Discovery Mixing · Procedural Pixel Art · Phaser 3',
-    color: 'purple',
-    thumbnail: WitchsBrew_Visual,
-    description: '2.5D handheld-style & PC pixel game in the visual tradition of The Legend of Zelda: The Minish Cap. A witch in a small medieval town collects ingredients and mixes up to three at a cauldron to brew potions requested by townspeople — but the recipes are hidden, discovered only by trying combinations. A correct mix records the recipe in a journal and adds the potion to inventory; a wrong mix triggers a harmless, cartoonish cauldron explosion. Every sprite and tile is generated at startup from hand-authored pixel grids in code — no image files in the project.',
-    tags: ['Phaser 3', 'TypeScript', 'Vite', 'Procedural Pixel Art', 'Discovery Mechanic', 'In Development'],
-    github: 'https://github.com/Michamm79/WitchsBrew',
-    codeDownload: 'https://github.com/Michamm79/WitchsBrew/archive/refs/heads/main.zip',
-    media: [{ type: 'image', src: WitchsBrew_Visual, label: 'World Preview - Concept Art', system: 'Exploration' }],
+    title: 'Evigheden',
+    overline: 'Behavior Classification · GAS',
+    inDevelopment: true,
+    thumbnail: ComingSoon,
+    description: 'A five-axis behavioral telemetry system that assigns players a personalized combat archetype from how they actually play. Sampled at 10Hz across levels 3–5, resolved via similarity scoring against designer-authored vectors — with a swappable classifier interface for a future trained model.',
+    tags: ['UE5', 'C++', 'GAS', 'Behavior Classifier'],
+    github: 'https://github.com/Michamm79/Evigheden',
     recruiterHighlights: [
-      'Order-independent recipe system supports 1–3 ingredient combinations with a hidden lookup table (findRecipe()) — first-time matches write to the journal automatically.',
-      'Fully data-driven content: ingredients, potions, recipes, villagers, and the town map live in flat data files, so adding a new potion or villager is a data-only change with no engine code touched.',
-      'Every sprite, tile, and UI icon is procedurally rasterized at boot from character-grid definitions via a shared PixelGrid helper — zero binary art assets in the project.',
-      'Event-driven GameState (extends Phaser EventEmitter) drives all three UI panels — inventory, journal, and cauldron — so HUD elements stay in sync without manual refresh calls or polling.',
+      'Five-axis telemetry (aggression, momentum, exploration, verticality, evasiveness) resolves to one of five archetypal runes via similarity scoring.',
+      'Each rune archetype is a single ScriptableObject-equivalent asset — designers configure stat multipliers, passives, and finishers without touching code.',
+      'Two-tier economy: Specialized Runes are granted once and tied to identity; Standard Runes are found, lost, and transferable.',
     ],
   },
   {
     id: 2,
-    title: "Evigheden",
-    category: 'Behavior Classification · Gameplay Ability System',
-    color: 'blue',
-    thumbnail: ComingSoon,
-    description: 'A six-dimension behavior classifier that assigns players one of six personalized combat archetypes from how they actually play, plus a ScriptableObject-based authoring tool for rapid iteration on archetype balance. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed. Rebuilt in Unreal Engine 5, with archetype abilities and modifiers authored in the Gameplay Ability System.',
-    tags: ['Unreal Engine 5', 'C++', 'Gameplay Ability System', 'GameplayTags', 'Behavior Classifier', 'In Development'],
-    github: 'https://github.com/Michamm79/Evigheden',
-    codeDownload: 'https://github.com/Michamm79/Evigheden/archive/refs/heads/main.zip',
-    media: [{ type: 'image', src: ComingSoon, label: 'Rune Authoring & Inspector Workflow', system: 'Designer Tooling' }],
+    title: 'Mobile Prototypes',
+    overline: 'Velthiros · Maelstrom Mobile',
+    inDevelopment: true,
+    thumbnail: Velthiros_Visual,
+    description: 'Two separate mobile-native builds, each its own codebase and repo. Velthiros is a trial-based survival RPG — the player is abducted by a demonic entity and forced through a recurring gauntlet of arena trials. Maelstrom Mobile is a touch-first reimagining of Maelstrom\u2019s core loop — pull-based gathering, permanent gauntlet upgrades, and coliseum wave combat.',
+    tags: ['JavaScript', 'TypeScript', 'Vite', 'Touch Input'],
+    github: 'https://github.com/Michamm79/Velthiros',
     recruiterHighlights: [
-      'Behavior Classifier runs levels 3–5, tracking combat patterns across six dimensions — aggression, dodge frequency, stealth, defensive play, sprint momentum, and precision. At level 5 it surfaces the Specialized Rune that best reflects how the player actually fights.',
-      'Six Specialized Rune archetypes (Berserker, Sentinel, Phantom, Duelist, Vanguard, Acrobat) plus a secret seventh with performance-gated unlock conditions, authored as layered abilities and modifiers in the Gameplay Ability System.',
-      'Two-tier rune economy: Specialized Runes are granted once and tied to identity; Standard Runes are found in the world, losable, and transferable between players.',
-      'Reevaluation system allows archetype switching with a difficulty-scaled penalty — free on Easy/Medium, punishing on Hard, locked entirely in Regressor\'s Endgame.',
-      'Rebuilt from an earlier Unity implementation; the UE5 version is where the design ships properly.',
+      'Velthiros: a hidden weapon unlock triggered by a five-minute idle timer + four-direction combo, shared once across every scene that can surface it.',
+      'Maelstrom Mobile: a continuous behavior-telemetry system reads play patterns from frame one, banking the tutorial as roughly half the evidence for an early rune grant.',
+      'Both are independent codebases with their own repos and build tooling — not ports of the PC/UE5 originals.',
     ],
   },
   {
     id: 3,
     title: 'Mall Cop Madhouse',
-    category: 'Asymmetric Multiplayer · Stealth / Chase',
-    color: 'purple',
+    overline: 'Asymmetric Multiplayer',
+    inDevelopment: false,
     thumbnail: mallCopMall,
-    description: 'Asymmetric stealth-and-chase game: Hooligans complete disruptive tasks while a taser-wielding Mall Cop hunts them down and carries them to the jail zone.',
-    tags: ['Unity', 'C#', 'Photon Pun', 'Multiplayer', 'Asymmetric', 'UI/UX'],
-    media: [
-      { type: 'image', src: coreTwo, label: 'Core Loop — Stealth + Task Timeline', system: 'Gameplay' },
-      { type: 'image', src: lobbyFive, label: 'Lobby + Role Selection UI', system: 'UI/UX' },
-      { type: 'image', src: coreEight, label: 'Level Layout — Navigation & Sightlines', system: 'Level Design' },
-      { type: 'image', src: menuTwo, label: 'Match Setup — Player Onboarding & Controls', system: 'UI/UX' },
-    ],
+    description: 'Asymmetric stealth-and-chase: Hooligans complete disruptive tasks while a taser-wielding Mall Cop hunts them down and carries them to the jail zone.',
+    tags: ['Unity', 'C#', 'Photon Pun'],
     recruiterHighlights: [
-      'Asymmetric multiplayer loop (objectives vs hunter pressure) designed for readable decisions.',
       'Two-phase Photon RPC capture system with master-client authority to prevent race conditions.',
-      'UI/UX flows: role select, onboarding, task tracking, and clear in-world objectives.',
+      'Asymmetric multiplayer loop (objectives vs hunter pressure) designed for readable decisions.',
     ],
   },
   {
     id: 4,
-    title: 'Project Maelstrom',
-    category: 'Systems RPG · Pack AI · Reactive Narrative',
-    color: 'pink',
-    thumbnail: PM_Overview,
-    description: 'A systems-driven RPG set in a corporate-dystopian world where corporations control the flow of information as tightly as they control power. The amnesiac player wakes inside a maze-like containment structure and must navigate five natural biomes — desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm — facing enemy encounters modeled as corporate virus and defense mechanisms rather than traditional monsters. Full inventory, crafting, and alchemy systems let players gather materials and craft what they need to progress. Underneath that sits a reactive narrative system: how a player engages — favoring direct confrontation with enemies versus deliberate exploration — shapes the accuracy of the information they piece together about the world\'s central conflict, which in turn affects how skeptical or trusting late-game NPCs are and what outcomes are available, regardless of which side the player ultimately chooses to support.',
-    tags: ['Unreal Engine 5', 'C++', 'Pack AI', 'Systems Design', 'Reactive Narrative', 'In Development'],
-    github: 'https://github.com/Michamm79/Project_Maelstrom',
-    codeDownload: 'https://github.com/Michamm79/Project_Maelstrom/archive/refs/heads/main.zip',
-    media: [
-      { type: 'image', src: PM_Overview, label: 'Project Overview', system: 'Overview' },
-      { type: 'image', src: PM_Combat, label: 'Enemy Encounters — Pack Behavior', system: 'Combat' },
-      { type: 'image', src: PM_PlayerFocus, label: 'Crafting Pipeline — Orb System Overview', system: 'Crafting' },
-    ],
-    recruiterHighlights: [
-      'Built a pack-coordination AI system for enemy encounters: agents share environmental and positional awareness to surround the player, execute full-frontal assaults, or attack in coordinated patterns, dynamically choosing tactics based on the player\'s positioning. Individual agents run their own state machines while a higher-level layer allocates roles across the group, so encounters escalate and relent rather than swarming.',
-      'Two-orb crafting pipeline: transmutation pairs materials into tools and weapons; alchemy decomposes materials into elements for deeper combinations — all data-driven on asset definitions.',
-      'Element pool architecture aggregates quantities across decomposed materials; alchemy is gated behind player progression and unlocks a second crafting layer.',
-      'Weighted randomized item spawn system within designer-defined collider zones, with minimum separation validation and graceful falloff when space runs out.',
-      'Special items gated behind dual conditions — player level and active quest — neither alone sufficient to reveal the item.',
-      'Designed and coded an information-integrity system where playstyle (combat-focused vs. exploration-focused) determines the accuracy of information the player uncovers about the central conflict, shaping late-game NPC trust and available outcomes independent of faction choice. Integration into the current build is in progress.',
-    ],
-  },
-  {
-    id: 5,
-    title: 'B-52 Training Suite — USAF',
-    category: 'VR Training · Multiplayer · USAF',
-    color: 'blue',
-    thumbnail: B52_USAF,
-    description: 'Large-scale VR training platform (Unity) that cut B-52 crew training time by 95%, recognized in an official USAF whitepaper.',
-    tags: ['Unity', 'UE5', 'VR', 'Photon', 'XR Training', 'Checklist Systems'],
-    media: [
-      { type: 'youtube', src: 'https://youtu.be/yfuFpTZCy2g?si=TgEWj1p08yPcPYMQ', poster: B52_USAF, label: 'Training Cockpit (In-Engine)', system: 'Multiplayer' },
-      { type: 'youtube', src: 'https://youtu.be/RwfVfCtx3-M?si=CVPqiLuieOj_MsIj', poster: B52_internaltraining, label: 'XR Training Highlights', system: 'Multiplayer' },
-    ],
-    recruiterHighlights: [
-      'Inspector-serialized ChecklistManager: each step owns its own verification type (Audio / Confirm / Interact), target object ID, and interaction mode.',
-      'Multi-trainee Photon networking with synchronized session state and master-client authority.',
-      '95% reduction in training time and 19% fewer procedural errors, per official USAF whitepaper; up to 75% increase in crew retention, per company-reported figures.',],
-  },
-  {
-    id: 6,
     title: 'Sensorama R&D',
-    category: 'VR · Sensor-Driven AI · Adversary Design',
-    color: 'purple',
+    overline: 'Sensor-Driven AI · OSU VR Lab',
+    inDevelopment: false,
     thumbnail: sensorama,
     description: 'Research project that piped live sensor data (LiDAR, radar, heat signature) from physical hardware into a game world, making AI creatures react to real space in real time.',
-    tags: ['Unity', 'C#', 'LiDAR', 'Sensor-Driven AI', 'Stealth', 'OSU VR Lab'],
-    media: [
-      { type: 'image', src: sensorama, label: 'Sensorama Hardware Setup', system: 'R&D' },
-      { type: 'image', src: sensorama_Environment, label: 'Gameplay Mechanics / Environment', system: 'Research & Development' }
-    ], recruiterHighlights: [
+    tags: ['Unity', 'C#', 'LiDAR'],
+    recruiterHighlights: [
       'Buffered point-cloud ingestion with a fixed 64-point-per-frame cap to prevent hitches.',
       'Sphere-overlap alerts decouple sensor data from AI behavior — creatures decide independently.',
-      'Layered detection with distinct tells: players learn each sensor type before meeting the next, so the threat is legible before it becomes difficult.',
-      'Escalation tied to progress rather than to alerts — most stealth games ratchet on failure; this one ratchets on success, so the pressure of nearly winning is the tensest moment in the run.',
-      'Cross-disciplinary R&D bridging hardware constraints and real-time game design.',
     ],
   },
 ];
 
 // ─────────────────────────────────────────────
-// HUB SECTIONS
+// RELEASED — playable right now, own link
 // ─────────────────────────────────────────────
-const SECTIONS = [
+const RELEASED = [
   {
-    id: 'work',
-    label: 'Work',
-    hubDesc: 'Engineering and designing data-driven player mechanics, responsive AI frameworks, and scalable designer tooling.',
-    sectionDesc: 'Engineering and designing interconnected gameplay loops: specializing in data-driven player mechanics, responsive AI frameworks, and designer-facing architecture.'
+    title: 'Valtara',
+    thumbLabel: 'VLT',
+    desc: 'Playable vertical slice — procedural exploration, UE5.8.',
+    link: 'https://graysongamedev.itch.io/valtara',
+    linkLabel: 'Play on itch.io',
+    thumbnail: Valtara_Visual,
   },
   {
-    id: 'experience',
-    label: 'Exp',
-    hubDesc: '8+ years engineering shipped Steam titles and co-building VR platforms for the USAF.',
-    sectionDesc: '8+ years bridging game design and production programming. Shipped commercial Steam titles and co-built whitepaper-certified VR platforms for the USAF.'
+    title: "Witch's Brew",
+    thumbLabel: 'WB',
+    desc: 'Discovery-mixing pixel game, procedurally rendered.',
+    link: 'https://github.com/Michamm79/WitchsBrew',
+    linkLabel: 'View repo',
+    thumbnail: WitchsBrew_Visual,
   },
   {
-    id: 'skills',
-    label: 'Skills',
-    hubDesc: 'Expert C++ & C# (Unreal/Unity). Specialized in AI, GAS combat, and network sync.',
-    sectionDesc: 'Expert C++ & C# (Unreal/Unity). Full-stack game development: from system architecture, GAS combat, and multiplayer syncing to rapid prototyping and mechanical balance.'
+    title: 'B-52 Training Suite',
+    thumbLabel: 'B52',
+    desc: 'USAF-whitepaper-certified VR training platform.',
+    link: 'https://youtu.be/yfuFpTZCy2g',
+    linkLabel: 'Watch demo',
+    thumbnail: B52_USAF,
   },
   {
-    id: 'about',
-    label: 'About',
-    hubDesc: 'Translating high-level design concepts into optimized code and clean workflows.',
-    sectionDesc: 'Gameplay Engineer with 8+ years of experience architecting extensible interactive frameworks. I specialize in building data-driven player mechanics, synchronized multiplayer architecture, AI & Behavior systems, and custom developer tooling that accelerates team production velocity by keeping design teams close to the asset data.\n\nThe driving philosophy behind my work is bridging deep technical execution with systemic responsiveness. I focus on creating interconnected worlds where every combat encounter, AI decision, and environment interaction feels naturally responsive—designing robust architecture that scales smoothly while preserving the invisible nuances of great game feel.'
+    title: 'Velthiros',
+    thumbLabel: 'VLT-M',
+    desc: 'Trial-based mobile action RPG — abducted, ranked, made to entertain.',
+    link: 'https://michamm79.github.io/Velthiros/',
+    linkLabel: 'Play in browser',
+    thumbnail: MobilePrototypes_Visual,
   },
   {
-    id: 'contact',
-    label: 'Contact',
-    hubDesc: 'Available immediately for new roles. Let’s connect via email, GitHub, or LinkedIn.',
-    sectionDesc: 'Available immediately for gameplay engineering, technical design, or systems roles. Let’s connect via email, GitHub, or LinkedIn to build something exceptional together.'
+    title: 'Project Maelstrom Mobile',
+    thumbLabel: 'PMM',
+    desc: 'Touch-first orb crafting — gather, transmute, alchemise.',
+    link: 'https://michamm79.github.io/Project-Maelstrom-Mobile/',
+    linkLabel: 'Play in browser',
+    thumbnail: MobilePrototypes_Visual,
   },
 ];
 
-// ORBIT_ORDER: maps clock position → SECTIONS index
-// clock: 0=top, 1=upper-right, 2=lower-right, 3=lower-left, 4=left
-// Idle ring: Work(top), History(upper-right), Contact(lower-right), About(lower-left), Skills(left)
-const ORBIT_ORDER = [0, 1, 4, 3, 2];
+// ─────────────────────────────────────────────
+// PUBLISHED TITLES — real Steam storefronts
+// ─────────────────────────────────────────────
+const PUBLISHED = [
+  {
+    title: 'Hive Slayer',
+    thumbLabel: 'HS',
+    role: 'King Crow Studios · VR wave shooter',
+    desc: 'Free-to-play VR bug shooter for Oculus Rift S and HTC Vive. 94% positive on Steam.',
+    link: 'https://store.steampowered.com/app/910190/Hive_Slayer/',
+    linkLabel: 'Play free on Steam',
+  },
+  {
+    title: 'Necroball',
+    thumbLabel: 'NB',
+    role: 'King Crow Studios · Competitive party sport',
+    desc: 'Fast-paced local/online multiplayer sport where necromancers control hordes of minions. 91% positive on Steam.',
+    link: 'https://store.steampowered.com/app/563410/',
+    linkLabel: 'View on Steam',
+  },
+];
 
-const SECTION_ICONS = {
-  work: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>,
-  experience: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>,
-  skills: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>,
-  about: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>,
-  contact: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>,
-};
-
-// Code snippets for Work cards
-const CODE_SNIPPETS = {
-  witchs_brew: {
-    file: 'recipes.ts', lang: 'typescript',
-    code: `// Order-independent recipe lookup —
-// A+B matches the same recipe as B+A
-export function findRecipe(
-  ingredients: IngredientId[]
-): PotionId | null {
-  const key = [...ingredients].sort().join('+');
-
-  for (const recipe of RECIPES) {
-    const recipeKey = [...recipe.ingredients]
-      .sort()
-      .join('+');
-    if (recipeKey === key) return recipe.potion;
-  }
-  return null;
-}
-
-// Called from CauldronPanel on "Mix!"
-export function mix(
-  slots: IngredientId[],
-  state: GameState
-): MixResult {
-  const potion = findRecipe(slots);
-  slots.forEach(id => state.removeIngredient(id));
-
-  if (!potion) return { success: false };
-
-  const firstDiscovery = !state.hasRecipe(potion);
-  state.addPotion(potion);
-  if (firstDiscovery) state.recordRecipe(potion, slots);
-
-  return { success: true, potion, firstDiscovery };
-}`,
+// ─────────────────────────────────────────────
+// EXPERIENCE (full detail — feeds both the condensed
+// right column and the full Experience section)
+// ─────────────────────────────────────────────
+const EXPERIENCE_FULL = [
+  {
+    company: 'King Crow Studios',
+    role: 'Gameplay Engineer',
+    dates: 'March 2022 — January 2026 · Remote',
     bullets: [
-      'Recipes are order-independent — ingredients are sorted before comparison, so [FireCap, DewRoot] and [DewRoot, FireCap] resolve to the same match.',
-      'Ingredients are consumed on both success and failure — mixing has a real cost, which is what makes the discovery mechanic meaningful rather than free trial-and-error.',
-      'firstDiscovery gates the journal write — a potion can be re-brewed freely once known, but the recipe is only recorded into GameState the first time it is found.',
-      'mix() is the single choke point between UI and state: CauldronPanel never touches GameState directly, it just calls mix() and reacts to the returned MixResult.',
+      'Architected a data-driven checklist engine that dynamically verified procedural compliance for a real-time, multi-user VR training platform (Unity). This direct technical implementation cut crew training cycle times by 95% and was officially recognized in a USAF Whitepaper for reducing human procedural errors by 19%.',
+      'Designed and deployed session/room-based multiplayer infrastructure utilizing Photon PUN across multiple client training programs, engineering strict authoritative state synchronization and optimized RPC pipelines for stable, low-latency replication under concurrent live loads across VR, desktop, and mobile platforms simultaneously.',
+      'Contributed core gameplay engineering systems post-release to shipped Steam titles Necroball (Oct 2021, 91% positive) and Hive Slayer (Oct 2020, 94% positive, Free-to-Play), focusing on performance optimization, responsive game feel, and stable build deployment pipelines.',
+      'Architected a suite of custom Unity Inspector and Unreal Engine editor tools driven by decoupled ScriptableObject systems. This design framework allowed non-technical content designers to rapidly author, iterate, and balance complex combat data and enemy variables safely in-editor, boosting production velocity by removing engineering dependencies.',
+    ],
+    metric: '-95% training time (USAF)',
+  },
+  {
+    company: 'VedX Solutions',
+    role: 'VR Experience Developer',
+    dates: 'January 2021 — January 2022 · Remote',
+    bullets: [
+      'Architected real-time VR simulations and interactive software (Unity, C#) for research clients, engineering a reusable component-based interaction framework — grab, socket, and multi-axis mechanical constraints — grounded in 3D spatial math.',
+      'Designed and implemented a combat system for a VR prototype, including a timing-based sliding parry requiring precise real-time input handling.',
     ],
   },
-  evigheden_runes: {
-    file: 'RuneData.cs', lang: 'csharp',
-    code: `using UnityEngine;
-
-// Single Rune ScriptableObject — designers configure
-// every behavior on one asset, no code per archetype
-[CreateAssetMenu(fileName = "NewRune", menuName = "Evigheden/Rune")]
-public class RuneData : ScriptableObject
-{
-    [Header("Identity")]
-    public string runeName;
-    [TextArea] public string description;
-    public Sprite icon;
-
-    [Header("Stat Modifiers")]
-    public float healthMultiplier    = 1f;
-    public float damageMultiplier    = 1f;
-    public float moveSpeedMultiplier = 1f;
-    public float dodgeCooldownMod    = 0f;
-
-    [Header("Dodge Behavior")]
-    public DodgeStyle dodgeStyle;     // Roll | Dash | Blink | Phase
-    public float     dodgeDistance;
-    public float     iFrameDuration;
-
-    [Header("Combo Finisher")]
-    public FinisherType finisher;     // Cleave | Pierce | Knockback | Detonate
-    public float        finisherDamage;
-    public GameObject   finisherVFX;
-
-    [Header("Passive")]
-    public PassiveTrigger passiveTrigger;  // OnHit | OnDodge | OnKill | OnLowHP
-    public PassiveEffect  passiveEffect;
-    public float          passiveValue;
-
-    [Header("Presentation")]
-    public Color     auraColor;
-    public AudioClip equipSound;
-}
-
-public class RuneController : MonoBehaviour
-{
-    [SerializeField] private RuneData equippedRune;
-    private CharacterStats stats;
-
-    public void EquipRune(RuneData rune)
-    {
-        if (equippedRune != null) UnapplyRune(equippedRune);
-        equippedRune = rune;
-        ApplyRune(rune);
-    }
-
-    private void ApplyRune(RuneData r)
-    {
-        stats.ApplyMultiplier(StatType.Health,    r.healthMultiplier);
-        stats.ApplyMultiplier(StatType.Damage,    r.damageMultiplier);
-        stats.ApplyMultiplier(StatType.MoveSpeed, r.moveSpeedMultiplier);
-        DodgeSystem.SetStyle(r.dodgeStyle, r.dodgeDistance, r.iFrameDuration);
-        ComboSystem.SetFinisher(r.finisher, r.finisherDamage, r.finisherVFX);
-        PassiveSystem.Register(r.passiveTrigger, r.passiveEffect, r.passiveValue);
-        AudioSource.PlayClipAtPoint(r.equipSound, transform.position);
-    }
-}`,
+  {
+    company: 'Oregon State University — Kesterson VR Immersion Lab',
+    role: 'Assistant Instructor & Lab Technician',
+    dates: 'August 2017 — June 2020',
     bullets: [
-      'Each Specialized Rune archetype is a single ScriptableObject asset — stat multipliers, passive triggers, and class-specific bonuses all configured through the Inspector. Designers author one asset and the entire archetype is defined.',
-      'CreateAssetMenu means right-click in the Project window → Create → Evigheden → Rune. No engineering involvement to add a new archetype.',
-      'The Behavior Classifier reads these assets at the Level 5 assignment gate — it scores the player across six combat dimensions and selects the rune whose archetype best matches how they actually played.',
-      'Header attributes group fields in the Inspector so the authoring experience stays readable as the rune library grows.',
+      "Led development of Sensorama, a cross-institutional R&D capstone collaboration with the University of Stuttgart's robotics program: engineered a simulated real-time sensor-fusion pipeline (LiDAR, radar, and thermal data patterns) driving systemic AI creature behavior within a game environment.",
+      'Designed and prototyped functional 3D action-RPG frameworks within both Unreal Engine and Unity, developing modular player ability pipelines, responsive hit-registration mechanics, and state-machine-driven creature AI combat behaviors.',
+      'Modeled 3D environmental assets and props in Maya and Blender, while providing technical mentorship, code review, and real-time engine orientation to students integrating assets into VR pipelines.',
     ],
   },
-  maelstrom: {
-    file: 'OrbContainer.cpp', lang: 'cpp',
-    code: `#include "OrbContainer.h"
-#include "GameFramework/Actor.h"
-#include "Engine/World.h"
+];
 
-UOrbContainer::UOrbContainer()
-{
-    PrimaryComponentTick.bCanEverTick = false; // Kept lightweight, no ticking
-    LeftOrb = nullptr;
-    RightOrb = nullptr;
-    CraftedResultSpawnPoint = nullptr;
-}
+// condensed cards for the Experience column in the work section
+const EXPERIENCE = EXPERIENCE_FULL.map((e) => ({
+  company: e.company.split(' — ')[0],
+  role: e.role,
+  dates: e.dates,
+  summary: e.bullets[0],
+  metric: e.metric,
+}));
 
-UMaterialSO* UOrbContainer::GetOrb(EHand Hand) const
-{
-    return (Hand == EHand::Left) ? LeftOrb : RightOrb;
-}
+// ─────────────────────────────────────────────
+// SKILLS
+// ─────────────────────────────────────────────
+const SKILLS = [
+  ['Languages', 'C++ (Expert) · C# (Expert) · Blueprint · TypeScript · JavaScript · Lua · Python (Beginner)'],
+  ['Engines & Frameworks', 'Unreal Engine 5 · Unity (8+ yrs) · Gameplay Ability System (GAS) · Zenject / Vcontainment'],
+  ['Gameplay & Combat', 'Data-Driven Combat Frameworks · Combo Systems · Technical Pacing · Encounter Structure · Balance & Tuning'],
+  ['AI & Creature Systems', 'Coordinated Multi-Agent AI · State Machines · Engagement Slot Allocation'],
+  ['Architecture & Tooling', 'ScriptableObject Architecture · Custom Inspector Tooling · Extensible Developer Tooling · Modular State Machines'],
+  ['Networking & Platforms', 'Multiplayer Architecture · Authoritative State Sync (Photon) · VR / AR / XR · Cross-Platform Deployment'],
+  ['3D Art & Asset Pipelines', 'Maya · Blender · Animation Systems · Environment Modeling · Asset Optimization'],
+  ['Web & Infrastructure', 'React · Node.js · HTML/CSS · Vercel · SVG/CSS Motion Animation'],
+  ['Workflow & Versioning', 'Git · Plastic SCM · Perforce · Agile/Scrum Methodologies · Cross-Discipline Collaboration · Mentorship (Sensorama Team Lead, Lab Assistant Instructor)'],
+];
 
-bool UOrbContainer::PutInOrb(EHand Hand, UMaterialSO* Material)
-{
-    if (!Material) return false;
-
-    if (Hand == EHand::Left)
-    {
-        if (LeftOrb != nullptr) return false;
-        LeftOrb = Material;
-    }
-    else
-    {
-        if (RightOrb != nullptr) return false;
-        RightOrb = Material;
-    }
-
-    OnOrbContentsChanged.Broadcast();
-    return true;
-}
-
-void UOrbContainer::ClearOrb(EHand Hand)
-{
-    if (Hand == EHand::Left) LeftOrb = nullptr;
-    else RightOrb = nullptr;
-
-    OnOrbContentsChanged.Broadcast();
-}
-
-UTransmutationRecipe* UOrbContainer::PeekTransmutation() const
-{
-    if (!LeftOrb || !RightOrb) return nullptr;
-    return FTransmutationSystem::FindRecipe(LeftOrb, RightOrb, PlayerLevel);
-}
-
-AActor* UOrbContainer::TryTransmute()
-{
-    UTransmutationRecipe* Recipe = PeekTransmutation();
-    if (!Recipe) return nullptr;
-
-    LeftOrb = nullptr;
-    RightOrb = nullptr;
-    OnOrbContentsChanged.Broadcast();
-
-    return SpawnResult(Recipe->ResultPrefab);
-}
-
-bool UOrbContainer::DecomposeOrb(EHand Hand)
-{
-    if (!IsAlchemyUnlocked()) return false;
-
-    UMaterialSO* Target = GetOrb(Hand);
-    if (!Target) return false;
-
-    for (const FElementComposition& Comp : Target->ElementComposition)
-    {
-        if (!Comp.Element || Comp.Quantity <= 0) continue;
-
-        // TMap alternative to TryGetValue
-        int32* ExistingQuantity = ElementPool.Find(Comp.Element);
-        if (ExistingQuantity)
-        {
-            ElementPool.Add(Comp.Element, *ExistingQuantity + Comp.Quantity);
-        }
-        else
-        {
-            ElementPool.Add(Comp.Element, Comp.Quantity);
-        }
-    }
-
-    ClearOrb(Hand);
-    OnElementPoolChanged.Broadcast();
-    return true;
-}
-
-TArray<UAlchemyRecipe*> UOrbContainer::GetAvailableAlchemyRecipes() const
-{
-    if (!IsAlchemyUnlocked()) return TArray<UAlchemyRecipe*>();
-    return FAlchemySystem::FindAvailableRecipes(ElementPool, PlayerLevel);
-}
-
-AActor* UOrbContainer::TryAlchemize(UAlchemyRecipe* Recipe)
-{
-    if (!IsAlchemyUnlocked() || !Recipe) return nullptr;
-    if (!FAlchemySystem::ConsumeElements(Recipe, ElementPool)) return nullptr;
-
-    OnElementPoolChanged.Broadcast();
-    return SpawnResult(Recipe->ResultPrefab);
-}
-
-AActor* UOrbContainer::SpawnResult(TSubclassOf<AActor> PrefabClass)
-{
-    if (!PrefabClass) return nullptr;
-
-    UWorld* World = GetWorld();
-    if (!World) return nullptr;
-
-    // Default to the owner actor's transform if no specific point is targeted
-    FVector SpawnLocation = GetOwner()->GetActorLocation();
-    FRotator SpawnRotation = GetOwner()->GetActorRotation();
-
-    if (CraftedResultSpawnPoint)
-    {
-        SpawnLocation = CraftedResultSpawnPoint->GetComponentLocation();
-        SpawnRotation = CraftedResultSpawnPoint->GetComponentRotation();
-    }
-
-    FActorSpawnParameters SpawnParams;
-    SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-    AActor* SpawnedActor = World->SpawnActor<AActor>(PrefabClass, SpawnLocation, SpawnRotation, SpawnParams);
-    
-    if (SpawnedActor)
-    {
-        OnCraftedResultSpawned.Broadcast(SpawnedActor);
-    }
-
-    return SpawnedActor;
-}
-}`,
-    bullets: [
-      'Two orb slots sit on the player at all times. Materials fill them; what happens next is the player\'s choice — transmute into a tool or decompose into elements.',
-      'Transmutation is order-independent: (stick, stone) and (stone, stick) match the same recipe. The lookup normalizes the pair before searching.',
-      'Alchemy decomposes an orb material into its constituent elements, which accumulate in a pool. Alchemy itself is gated behind player level — it unlocks a second crafting layer.',
-      'OrbContainer has zero UI dependencies. All state changes fire UnityEvents; the UI subscribes and reacts independently, keeping the crafting logic clean.',
-    ],
-  },
-  maelstrom_boss: {
-    file: 'AlchemySystem.cpp', lang: 'cpp',
-    code: `#include "AlchemySystem.h"
-    #include "Engine/AssetManager.h"
-    #include "Engine/StreamableManager.h"
-    
-    // Define static allocation memory tracking
-    TArray<UAlchemyRecipe*> UAlchemySystem::RegisteredRecipes;
-    bool UAlchemySystem::bIsInitialized = false;
-    
-    // --- Recipe Affordable Logic ---
-    bool UAlchemyRecipe::CanAfford(const TMap<UElementSO*, int32>& Pool) const
-    {
-        for (const FElementCost& Cost : Inputs)
-        {
-            if (!Cost.Element || Cost.Quantity <= 0) continue;
-    
-            const int32* FoundQuantity = Pool.Find(Cost.Element);
-            if (!FoundQuantity || *FoundQuantity < Cost.Quantity)
-            {
-                return false; // Pool missing element or has insufficient quantity
-            }
-        }
-        return true;
-    }
-    
-    // --- Lifecycle Management ---
-    void UAlchemySystem::InitializeSystem()
-    {
-        if (bIsInitialized) return;
-    
-        ClearRegistry();
-    
-        // High Performance: Use Unreal's AssetManager instead of synchronous Resources.LoadAll
-        UAssetManager& AssetManager = UAssetManager::Get();
-        FStreamableManager& StreamableManager = AssetManager.GetStreamableManager();
-    
-        // Scans your Game/Recipes/Alchemy folder paths efficiently
-        TArray<FAssetData> AssetList;
-        AssetManager.GetPrimaryAssetDataList(FName("AlchemyRecipe"), AssetList);
-    
-        for (const FAssetData& Asset : AssetList)
-        {
-            if (UAlchemyRecipe* LoadedRecipe = Cast<UAlchemyRecipe>(Asset.GetAsset()))
-            {
-                RegisterRecipe(LoadedRecipe);
-            }
-        }
-    
-        bIsInitialized = true;
-    }
-    
-    void UAlchemySystem::RegisterRecipe(UAlchemyRecipe* Recipe)
-    {
-        if (!Recipe) return;
-    
-        if (!RegisteredRecipes.Contains(Recipe))
-        {
-            // Enhanced Validation Check: Warn designers immediately during editor initialization
-            if (Recipe->Inputs.Num() == 0 || !Recipe->ResultPrefab)
-            {
-                UE_LOG(LogTemp, Warning, TEXT("AlchemySystem: Recipe %s registered with empty inputs or missing prefab!"), *Recipe->GetName());
-            }
-            RegisteredRecipes.Add(Recipe);
-        }
-        bIsInitialized = true;
-    }
-    
-    void UAlchemySystem::ClearRegistry()
-    {
-        RegisteredRecipes.Empty();
-        bIsInitialized = false;
-    }
-    
-    // --- Lookup ---
-    TArray<UAlchemyRecipe*> UAlchemySystem::FindAvailableRecipes(const TMap<UElementSO*, int32>& Pool, int32 PlayerLevel)
-    {
-        if (!bIsInitialized)
-        {
-            InitializeSystem();
-        }
-    
-        TArray<UAlchemyRecipe*> AvailableRecipes;
-    
-        for (UAlchemyRecipe* Recipe : RegisteredRecipes)
-        {
-            if (!Recipe) continue;
-            if (Recipe->RequiredPlayerLevel > PlayerLevel) continue;
-            
-            if (Recipe->CanAfford(Pool))
-            {
-                AvailableRecipes.Add(Recipe);
-            }
-        }
-    
-        return AvailableRecipes;
-    }
-    
-    // --- Validation & Mutation ---
-    bool UAlchemySystem::CanFulfill(const UAlchemyRecipe* Recipe, const TMap<UElementSO*, int32>& Pool)
-    {
-        return Recipe != nullptr && Recipe->CanAfford(Pool);
-    }
-    
-    bool UAlchemySystem::ConsumeElements(const UAlchemyRecipe* Recipe, TMap<UElementSO*, int32>& Pool)
-    {
-        if (!CanFulfill(Recipe, Pool)) return false;
-    
-        // Safely subtract inputs without leaving partial mutations if conditions fail mid-loop
-        for (const FElementCost& Cost : Recipe->Inputs)
-        {
-            if (!Cost.Element || Cost.Quantity <= 0) continue;
-    
-            int32* TargetQuantity = Pool.Find(Cost.Element);
-            if (TargetQuantity)
-            {
-                *TargetQuantity -= Cost.Quantity;
-                
-                // Clean up empty tracking data elements automatically out of memory mapping
-                if (*TargetQuantity <= 0)
-                {
-                    Pool.Remove(Cost.Element);
-                }
-            }
-        }
-    
-        return true;
-    }
-    
-}`,
-    bullets: [
-      'The recipe evaluation loop checks the global player progression tier and inventory matrix simultaneously, returning the full array of affordable items to the UI in a single pass.',
-      'Material decomposition extracts variable element compounds dynamically through nested collection iterations, cleaning up empty database keys automatically post-transaction.',
-      'Asset loading bypasses heavy synchronous folder scans in favor of an async-ready manager registry, preventing performance spikes and frame hitches during menu initialization.',
-      'The entire system behaves as a deterministic transaction machine, using input boundary clamps to catch bad structural data configurations at the data asset layer before runtime compilation.',
-    ],
-  },
-  maelstrom_cinematic: {
-    file: 'BossCinematicDirector.cs', lang: 'csharp',
-    code: `using System;
-using System.Collections;
-using UnityEngine;
-
-public class BossCinematicDirector : MonoBehaviour
-{
-    [SerializeField] private CinematicSequence sequence;
-    [SerializeField] private CinematicCamera cam;
-    [SerializeField] private VFXController vfx;
-    [SerializeField] private AudioSource audioSource;
-
-    public void Play(BossActor boss)
-    {
-        StartCoroutine(RunSequence(boss));
-    }
-
-    private IEnumerator RunSequence(BossActor boss)
-    {
-        foreach (CinematicBeat beat in sequence.beats)
-        {
-            switch (beat.type)
-            {
-                case BeatType.Camera:
-                    cam.MoveTo(beat.cameraTarget, beat.duration);
-                    break;
-                case BeatType.Animation:
-                    boss.Animator.CrossFade(beat.animState, 0.15f);
-                    break;
-                case BeatType.Physics:
-                    boss.Rigidbody.AddForce(beat.impulse, ForceMode.Impulse);
-                    break;
-                case BeatType.VFX:
-                    vfx.Play(beat.effectId, beat.worldPosition);
-                    break;
-                case BeatType.Audio:
-                    audioSource.PlayOneShot(beat.clip);
-                    break;
-            }
-
-            if (beat.waitForEnd)
-            {
-                yield return new WaitForSeconds(beat.duration);
-            }
-        }
-        OnSequenceComplete?.Invoke();
-    }
-
-    public event Action OnSequenceComplete;
-}`,
-    bullets: [
-      'Each beat in the sequence is a data-driven instruction — camera move, animation crossfade, physics impulse, VFX spawn, or audio cue — authored in the Inspector, not hardcoded.',
-      'WaitForEnd per beat lets some steps run in parallel (fire VFX and audio together) while others block until they finish before the next beat fires.',
-      'The director knows nothing about specific boss behaviors — it just drives a sequence. Any boss or encounter can hand it a different CinematicSequence asset.',
-      'OnSequenceComplete fires when the full sequence ends, letting the boss AI resume control cleanly without the director needing to know what comes next.',
-    ],
-  },
-  valtara_artifacts: {
-    file: 'ArtifactSpawnSystem.cpp', lang: 'cpp',
-    code: `// ArtifactSpawnSubsystem.cpp
-
-    #include "ArtifactSpawnSubsystem.h"
-    #include "GuardianBase.h"
-    #include "Engine/World.h"
-    #include "Kismet/KismetMathLibrary.h"
-    
-    void UArtifactSpawnSubsystem::Initialize(FSubsystemCollectionBase& Collection)
-    {
-        Super::Initialize(Collection);
-    }
-    
-    void UArtifactSpawnSubsystem::Deinitialize()
-    {
-        SpawnedArtifacts.Empty();
-        Super::Deinitialize();
-    }
-    
-    void UArtifactSpawnSubsystem::SpawnAllArtifacts()
-    {
-        // Sort by SpawnOrder so we spawn in the intended sequence.
-        TArray<FArtifactSpawnDefinition> Ordered = SpawnDefinitions;
-        Ordered.Sort([](const FArtifactSpawnDefinition& A, const FArtifactSpawnDefinition& B)
-        {
-            return A.SpawnOrder < B.SpawnOrder;
-        });
-    
-        for (const FArtifactSpawnDefinition& Def : Ordered)
-        {
-            SpawnArtifactPair(Def);
-        }
-    }
-    
-    AArtifactBase* UArtifactSpawnSubsystem::SpawnArtifactPair(const FArtifactSpawnDefinition& Definition)
-    {
-        UWorld* World = GetWorld();
-        if (!World || !Definition.ArtifactClass || !Definition.GuardianClass)
-        {
-            return nullptr;
-        }
-    
-        FVector SpawnLocation;
-        if (!FindBiomeSpawnLocation(Definition.PreferredBiome, SpawnLocation))
-        {
-            UE_LOG(LogTemp, Warning, TEXT("No biome region found for artifact %d"), (int32)Definition.ArtifactType);
-            return nullptr;
-        }
-    
-        FActorSpawnParameters SpawnParams;
-        SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-    
-        // Spawn the artifact at the chosen location.
-        AArtifactBase* NewArtifact = World->SpawnActor<AArtifactBase>(
-            Definition.ArtifactClass, SpawnLocation, FRotator::ZeroRotator, SpawnParams);
-    
-        if (!NewArtifact)
-        {
-            return nullptr;
-        }
-    
-        // Spawn the guardian near the artifact — slightly offset so they're visibly paired.
-        FVector GuardianOffset = FVector(200.0f, 0.0f, 0.0f);
-        AGuardianBase* NewGuardian = World->SpawnActor<AGuardianBase>(
-            Definition.GuardianClass, SpawnLocation + GuardianOffset, FRotator::ZeroRotator, SpawnParams);
-    
-        if (NewGuardian)
-        {
-            NewArtifact->BoundGuardian = NewGuardian;
-            NewGuardian->WatchedArtifact = NewArtifact;
-        }
-    
-        SpawnedArtifacts.Add(Definition.ArtifactType, NewArtifact);
-        return NewArtifact;
-    }
-    
-    bool UArtifactSpawnSubsystem::FindBiomeSpawnLocation(EBiomeType Biome, FVector& OutLocation) const
-    {
-        for (const FBiomeRegion& Region : BiomeRegions)
-        {
-            if (Region.BiomeType == Biome)
-            {
-                // Pick a random point within the region radius.
-                const FVector2D RandomOffset = FMath::RandPointInCircle(Region.RegionRadius);
-                OutLocation = Region.RegionCenter + FVector(RandomOffset.X, RandomOffset.Y, 0.0f);
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    FArtifactSpawnDefinition UArtifactSpawnSubsystem::GetSpawnDefinition(EArtifactType Type) const
-    {
-        for (const FArtifactSpawnDefinition& Def : SpawnDefinitions)
-        {
-            if (Def.ArtifactType == Type)
-            {
-                return Def;
-            }
-        }
-        return FArtifactSpawnDefinition();
-    }
-    
-    AArtifactBase* UArtifactSpawnSubsystem::GetArtifact(EArtifactType Type) const
-    {
-        if (const TObjectPtr<AArtifactBase>* Found = SpawnedArtifacts.Find(Type))
-        {
-            return *Found;
-        }
-        return nullptr;
-    }
-    
-    bool UArtifactSpawnSubsystem::IsArtifactCollected(EArtifactType Type) const
-    {
-        if (AArtifactBase* Artifact = GetArtifact(Type))
-        {
-            return Artifact->CurrentState == EArtifactState::Collected;
-        }
-        return false;
-    }
-    
-    int32 UArtifactSpawnSubsystem::GetCollectedArtifactCount() const
-    {
-        int32 Count = 0;
-        for (const auto& Pair : SpawnedArtifacts)
-        {
-            if (Pair.Value && Pair.Value->CurrentState == EArtifactState::Collected)
-            {
-                Count++;
-            }
-        }
-        return Count;
-    }
-}`,
-    bullets: [
-      'Each artifact carries a required BiomeType. The procedural generator produces zones tagged by biome — the artifact placement system matches them at runtime. Excalibur will always be in urban decay.',
-      'Zone selection is randomized among all matching unoccupied zones, so artifact position varies even within the same biome type across playthroughs.',
-      'Collection count drives late-guardian awareness. When all but the last two artifacts have been found, the remaining guardians are notified. The comment says everything: they are not surprised.',
-      'ArtifactPickup is attached at runtime rather than baked into the prefab, keeping the prefab clean and the collection logic centralized.',
-    ],
-  },
-  valtara_companion: {
-    file: 'CompanionBehaviorSystem.cpp', lang: 'cpp',
-    code: `// FoxBehaviorComponent.cpp
-
-    #include "FoxBehaviorComponent.h"
-    #include "FoxCompanion.h"
-    #include "BarleyCharacter.h"
-    #include "GuardianBase.h"
-    
-    #include "AIController.h"
-    #include "Navigation/PathFollowingComponent.h"
-    #include "Engine/World.h"
-    
-    UFoxBehaviorComponent::UFoxBehaviorComponent()
-    {
-      PrimaryComponentTick.bCanEverTick = true;
-      // Behavior decisions don't need every frame; ~10Hz is fluid enough.
-      PrimaryComponentTick.TickInterval = 0.1f;
-    }
-    
-    void UFoxBehaviorComponent::BeginPlay()
-    {
-      Super::BeginPlay();
-      Fox = Cast<AFoxCompanion>(GetOwner());
-    }
-    
-    void UFoxBehaviorComponent::TickComponent(float DeltaTime,
-      ELevelTick TickType,
-      FActorComponentTickFunction* ThisTickFunction)
-    {
-      Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-    
-      TimeInCurrentState += DeltaTime;
-    
-      if (ScriptedLockRemaining > 0.f)
-      {
-        ScriptedLockRemaining -= DeltaTime;
-        return;
-      }
-    
-      EvaluateBehavior(DeltaTime);
-    }
-    
-    void UFoxBehaviorComponent::EvaluateBehavior(float DeltaTime)
-    {
-      if (!Fox.IsValid()) return;
-
-      ABarleyCharacter* Barley = Fox->GetBondedTarget();
-      if (!Barley) return;
-    
-      const FVector  FoxLoc    = Fox->GetActorLocation();
-      const FVector  BarleyLoc = Barley->GetActorLocation();
-      const float    Distance  = FVector::Dist(FoxLoc, BarleyLoc);
-    
-      // ---- Highest priority: a guardian is in our awareness ------------------
-      if (AGuardianBase* Guardian = KnownGuardian.Get())
-      {
-        const FVector GuardianLoc = Guardian->GetActorLocation();
-        const float   GtoB = FVector::Dist(GuardianLoc, BarleyLoc);
-    
-        // If Barley is close to the guardian, Fox moves to a triangulating
-        // position — visible, near both, but not interrupting.
-        if (GtoB < 700.f)
-        {
-          SetState(EFoxBehaviorState::Welcoming);
-          const FVector Triangulate = (BarleyLoc + GuardianLoc) * 0.5f
-            + FVector(0.f, 0.f, 0.f);
-          IssueMoveTo(Triangulate);
-          return;
-        }
-      }
-    
-      // ---- Distance-driven default states ------------------------------------
-      if (Distance > MaxFollowDistance)
-      {
-        // Too far — Fox prioritizes catching up and sets Following.
-        SetState(EFoxBehaviorState::Following);
-        IssueMoveTo(BarleyLoc);
-        return;
-      }
-    
-      if (Distance < CloseFollowDistance)
-      {
-        // Close. Fox idles or stays. The state choice depends on Barley's motion.
-        if (Barley->GetVelocity().Size() < 50.f)
-        {
-          SetState(EFoxBehaviorState::Idle);
-        }
-        else
-        {
-          SetState(EFoxBehaviorState::Following);
-          // Light "follow at side" target — short offset behind Barley.
-          const FVector Behind = BarleyLoc
-            - Barley->GetActorForwardVector() * 150.f;
-          IssueMoveTo(Behind);
-        }
-        return;
-      }
-    
-      // Medium distance — sometimes Fox decides to lead (looks back, runs ahead).
-      if (Barley->GetVelocity().Size() > 200.f
-        && FMath::FRand() < ChanceToLeadPerSecond * DeltaTime * 10.f) // tickrate-aware
-      {
-        SetState(EFoxBehaviorState::Leading);
-        const FVector Ahead = BarleyLoc
-          + Barley->GetActorForwardVector() * 350.f;
-        IssueMoveTo(Ahead);
-        return;
-      }
-    
-      SetState(EFoxBehaviorState::Following);
-      IssueMoveTo(BarleyLoc);
-    }
-    
-    void UFoxBehaviorComponent::SetState(EFoxBehaviorState NewState)
-    {
-      if (!Fox.IsValid()) return;
-      if (NewState == Fox->GetCurrentBehavior()) return;
-      if (TimeInCurrentState < MinStateDuration) return;
-    
-      Fox->SetCurrentBehavior(NewState);
-      TimeInCurrentState = 0.f;
-    }
-    
-    void UFoxBehaviorComponent::IssueMoveTo(const FVector& Target)
-    {
-      if (!Fox.IsValid()) return;
-      if (AAIController* AI = Cast<AAIController>(Fox->GetController()))
-      {
-        AI->MoveToLocation(Target, 50.f, /*StopOnOverlap*/ true,
-          /*UsePathfinding*/ true, /*ProjectDestination*/ true);
-      }
-    }
-    
-    void UFoxBehaviorComponent::NotifyGuardianNearby(AGuardianBase* Guardian)
-    {
-      KnownGuardian = Guardian;
-    }
-    
-    void UFoxBehaviorComponent::NotifyGuardianLost(AGuardianBase* Guardian)
-    {
-      if (KnownGuardian.Get() == Guardian)
-      {
-        KnownGuardian = nullptr;
-      }
-    }
-    
-    bool UFoxBehaviorComponent::RequestScriptedState(EFoxBehaviorState State, float LockDuration)
-    {
-      if (!Fox.IsValid()) return false;
-      Fox->SetCurrentBehavior(State);
-      TimeInCurrentState = 0.f;
-      ScriptedLockRemaining = FMath::Max(0.f, LockDuration);
-      return true;
-    }
-}`,
-    bullets: [
-      'FoxContextTrigger is a component dropped on any GameObject in the world — artifact zones, guardian areas, story beats. Set the triggered state and priority. Fox reacts automatically with no code changes per encounter.',
-      'Priority system ensures story moments override ambient environmental triggers. Mel\'s encounter zone has higher priority than a nearby artifact trigger.',
-      'SetStateForStoryMoment() handles scripted cinematic beats — Fox running up to Mel while the Monster roars, Fox going still near Enkidu — without disrupting the proximity detection system.',
-      'UnityEvent<FoxState> fires on every transition. Audio, VFX, and UI systems subscribe independently. FoxBehaviorSystem knows nothing about any of them.',
-    ],
-  },
-  mallcop: {
-    file: 'CaptureManager.cs', lang: 'csharp',
-    code: `using UnityEngine;
-using Photon.Pun;
-
-// Two-phase capture: tase+carry first,
-// then jail delivery scores the point
-[PunRPC]
-public void RPC_BeginCapture(
-    int hooliganActorId, int jailZoneId)
-{
-    var hooligan = playerRegistry[hooliganActorId];
-    hooligan.SetCaptured(true);
-    hooligan.AttachToCarrier(_mallCopTransform);
-    jailZones[jailZoneId].ReserveSlot(hooliganActorId);
-}
-
-[PunRPC]
-public void RPC_BookIn(
-    int hooliganActorId, int jailZoneId)
-{
-    var hooligan = playerRegistry[hooliganActorId];
-    hooligan.SetCaptured(false);
-    jailZones[jailZoneId].BookIn(hooliganActorId);
-    captureCount++;
-    if (captureCount >= capturesRequired)
-        photonView.RPC("RPC_MallCopWins", RpcTarget.All);
-}
-
-public void InitiateCapture(int hooliganId)
-{
-    // Only master client validates — prevents double-capture
-    if (!PhotonNetwork.IsMasterClient) return;
-    int zone = GetNearestJailZone();
-    photonView.RPC("RPC_BeginCapture",
-        RpcTarget.All, hooliganId, zone);
-}`,
-    bullets: [
-      'Two-phase RPC: BeginCapture fires on tase (attaches Hooligan, reserves slot), BookIn fires on delivery — prevents slot claiming before arrival.',
-      'Master client authority on InitiateCapture eliminates the race condition where two clients try to capture the same player.',
-      'AttachToCarrier handles physics parenting — carried player moves with the cop on all clients without a separate sync stream.',
-      'Win check inside RPC_BookIn runs on all clients simultaneously — no polling loop needed.',
-    ],
-  },
-  b52: {
-    file: 'ChecklistManager.cs', lang: 'csharp',
-    code: `using System;
-using UnityEngine;
-
-// Each step owns its verification type —
-// Audio, Confirm button, or cockpit Interact
-[Serializable]
-public class ChecklistStep
-{
-    public string          stepId;
-    public string          instruction;
-    public VerificationType verifyType;    // Audio | Confirm | Interact
-    public string          targetObjectId; // which cockpit object to touch
-    public InteractMode    interactMode;   // Toggle | Hold | Rotate | Press
-    public Sprite          referenceImage; // optional diagram shown in UI
-    public bool            isComplete;
-}
-
-public class ChecklistManager : MonoBehaviour
-{
-    [SerializeField] List<ChecklistStep> steps;
-    private int currentIndex;
-
-    public void ReportInteraction(string objectId)
-    {
-        var step = steps[currentIndex];
-        if (step.verifyType != VerificationType.Interact) return;
-        if (step.targetObjectId != objectId)              return;
-        CompleteStep(step);
-    }
-
-    public void ReportConfirm() // called by UI confirm / audio end
-    {
-        var step = steps[currentIndex];
-        if (step.verifyType == VerificationType.Audio    ||
-            step.verifyType == VerificationType.Confirm)
-            CompleteStep(step);
-    }
-
-    private void CompleteStep(ChecklistStep step)
-    {
-        step.isComplete = true;
-        currentIndex++;
-        OnStepCompleted?.Invoke(step);
-        if (currentIndex >= steps.Count)
-            OnChecklistComplete?.Invoke();
-    }
-
-    public event Action<ChecklistStep> OnStepCompleted;
-    public event Action                OnChecklistComplete;
-}`,
-    bullets: [
-      'Each step carries its own VerificationType — Audio (listen then confirm), Confirm (button gate), or Interact (touch specific cockpit object the right way).',
-      'Interact steps validate by object ID and interaction mode — wrong switch or wrong action silently fails, matching real procedural training fidelity.',
-      'ReferenceImage field lets the UI display a cockpit diagram alongside the instruction with no coupling back to the checklist logic.',
-      'Fully serialized in the Unity Inspector — training authors reorder or replace steps without any code changes.',
-    ],
-  },
-  sensorama: {
-    file: 'SensorDataMapper.cs', lang: 'csharp',
-    code: `using System.Collections.Generic;
-using UnityEngine;
-
-public class SensorDataMapper : MonoBehaviour
-{
-    [SerializeField] private float threatRadius = 1.5f;
-    [SerializeField] private LayerMask creatureMask;
-    private Queue<Vector3> sensorBuffer = new();
-
-    public void IngestPointCloud(Vector3[] points)
-    {
-        foreach (var pt in points)
-            sensorBuffer.Enqueue(pt);
-    }
-
-    private void FixedUpdate()
-    {
-        int limit = Mathf.Min(sensorBuffer.Count, 64);
-        for (int i = 0; i < limit; i++)
-            AlertNearbyCreatures(sensorBuffer.Dequeue());
-    }
-
-    private void AlertNearbyCreatures(Vector3 origin)
-    {
-        var hits = Physics.OverlapSphere(
-            origin, threatRadius, creatureMask);
-        foreach (var col in hits)
-            col.GetComponent<CreatureAI>()?
-               .OnEnvironmentThreat(origin);
-    }
-}`,
-    bullets: [
-      'LiDAR sends point clouds in irregular bursts — queued data is handled in fixed 64-point chunks per frame to avoid hitches.',
-      'The per-frame cap keeps performance stable even when the sensor dumps a large burst at once.',
-      'Sphere overlap finds any creature near each hit point and sends an alert — the sensor system doesn\'t know anything about AI behavior.',
-      'Each creature decides for itself how to react, keeping the sensor and AI systems fully decoupled.',
-    ],
-  },
-  typescript_state: {
-    file: 'GameStateManager.ts', lang: 'typescript',
-    code: `type GamePhase =
-    'lobby' | 'loading' | 'playing'
-  | 'round_end' | 'game_over';
-
-class Observable<T> {
-  private listeners = new Set<((e: StateChangeEvent<T>) => void)>();
-  private _value: T;
-
-  constructor(initial: T) { this._value = initial; }
-  get value(): T { return this._value; }
-
-  set(next: T): void {
-    const e = { prev: this._value, next, timestamp: Date.now() };
-    this._value = next;
-    this.listeners.forEach(fn => fn(e));
-  }
-
-  subscribe(fn: (e: StateChangeEvent<T>) => void): () => void {
-    this.listeners.add(fn);
-    return () => this.listeners.delete(fn);
-  }
-}
-
-export class GameStateManager {
-  readonly phase = new Observable<GamePhase>('lobby');
-  private static instance: GameStateManager;
-
-  static getInstance(): GameStateManager {
-    return this.instance ??= new GameStateManager();
-  }
-
-  transitionTo(next: GamePhase): void {
-    const allowed: Record<GamePhase, GamePhase[]> = {
-      lobby:     ['loading'],
-      loading:   ['playing'],
-      playing:   ['round_end'],
-      round_end: ['playing', 'game_over'],
-      game_over: ['lobby']
-    };
-    if (!allowed[this.phase.value].includes(next)) return;
-    this.phase.set(next);
-  }
-}`,
-    bullets: [
-      'Observable<T> is generic — the same class handles a GamePhase, score, player list, anything. TypeScript enforces correctness at compile time.',
-      'subscribe() returns its own unsubscribe function — callers clean up with one call, no manual listener tracking needed.',
-      'transitionTo() validates against an allowed-moves map — illegal state transitions are silently rejected, the game can never reach an undefined phase.',
-      'Lazy singleton via nullish coalescing assignment (??=) — one instance, created only when first needed, no boilerplate.',
-    ],
-  },
-
+// ─────────────────────────────────────────────
+// ABOUT
+// ─────────────────────────────────────────────
+const ABOUT = {
+  bio: [
+    'Gameplay Engineer & Systems Designer with 8+ years of experience architecting extensible interactive frameworks. I specialize in building data-driven player mechanics, synchronized multiplayer architecture, and custom developer tooling that accelerates team production velocity by keeping design teams close to the asset data.',
+    'The driving philosophy behind my work is bridging deep technical execution with systemic responsiveness. I focus on creating interconnected worlds where every combat encounter, AI decision, and environment interaction feels naturally responsive — designing robust architecture that scales smoothly while preserving the invisible nuances of great game feel.',
+  ],
+  credentials: [
+    { org: 'Epic Games & Coursera', detail: 'Game Design & Development with UE Professional Certificate' },
+    { org: 'Oregon State University', detail: 'B.A. Digital Communication Arts', sub: 'Game Development Specialization · Minor: History & Education' },
+  ],
 };
 
 // ─────────────────────────────────────────────
-// UTILITY
+// CONTACT
 // ─────────────────────────────────────────────
-function getYouTubeId(url) {
-  try {
-    const u = new URL(url);
-    const v = u.searchParams.get('v');
-    if (v) return v;
-    const parts = u.pathname.split('/').filter(Boolean);
-    return parts[parts.length - 1] || null;
-  } catch { return null; }
-}
+const CONTACT_ICONS = { mail: Mail, phone: Phone, github: Github, linkedin: Linkedin };
+const CONTACT_LINKS = [
+  { href: 'mailto:hammondsk.09@gmail.com', label: 'hammondsk.09@gmail.com', kind: 'mail' },
+  { href: 'tel:+15419731430', label: '(541) 973-1430', kind: 'phone' },
+  { href: 'https://github.com/Michamm79', label: 'github.com/Michamm79', kind: 'github', target: '_blank' },
+  { href: 'https://www.linkedin.com/in/michamm', label: 'LinkedIn Profile', kind: 'linkedin', target: '_blank' },
+];
 
 // ─────────────────────────────────────────────
-// STARS background
+// STARS background (carried from original)
 // ─────────────────────────────────────────────
-const STARS = Array.from({ length: 200 }, (_, i) => {
+const STARS = Array.from({ length: 140 }, (_, i) => {
   const rr = Math.random();
-  let color, shadow;
-  if (rr < .06) { color = '#f7eb63'; shadow = '0 0 6px rgba(238,203,44,.9)'; }
-  else if (rr < .11) { color = '#b7edff'; shadow = '0 0 5px rgba(183,237,255,.7)'; }
-  else if (rr < .16) { color = '#cc00ee'; shadow = '0 0 5px rgba(204,0,238,.7)'; }
-  else { color = '#ffffff'; shadow = 'none'; }
-  const sz = rr < .04 ? 2.4 + Math.random() * .8 : rr < .10 ? 1.4 + Math.random() * .6 : .4 + Math.random() * .9;
-  return { id: i, left: Math.random() * 100, top: Math.random() * 100, size: sz, opacity: .14 + Math.random() * .76, color, shadow };
+  let color;
+  if (rr < 0.3) color = '#ff2d8f';
+  else if (rr < 0.55) color = '#2b8cff';
+  else if (rr < 0.7) color = '#c084fc';
+  else color = '#ffffff';
+  const sz = rr < 0.1 ? 2 + Math.random() : 0.6 + Math.random() * 1.2;
+  return {
+    id: i,
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    size: sz,
+    opacity: 0.2 + Math.random() * 0.7,
+    color,
+  };
 });
 
 // ─────────────────────────────────────────────
-// MAIN COMPONENT
+// STYLES
 // ─────────────────────────────────────────────
-export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState('work');
-  const [selectedMedia, setSelectedMedia] = useState(null);
-  const hubWrapRef = useRef(null);
-  const centerRef = useRef(null);
-  const bubblesRef = useRef([]);
+const GlobalStyles = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap');
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    html { overflow-x: hidden; }
+    body { background:#050308; overflow-x: hidden; }
 
-  // ── sizing helpers ──
-  const hubSize = useCallback(() => Math.min(680, Math.max(320, window.innerWidth * 0.62)), []);
-  const bubbleSize = useCallback(() => Math.max(58, Math.round(88 * hubSize() / 680)), [hubSize]);
-  const orbitR = useCallback(() => Math.round(248 * hubSize() / 680), [hubSize]);
-
-  function orbitPos(clockIdx) {
-    const hs = hubSize(), cx = hs / 2, r = orbitR(), bs = bubbleSize();
-    const angle = -Math.PI / 2 + clockIdx * (2 * Math.PI / SECTIONS.length);
-    return { left: Math.round(cx + r * Math.cos(angle) - bs / 2), top: Math.round(cx + r * Math.sin(angle) - bs / 2) };
-  }
-
-  function railPos(sectionIdx) {
-    const hs = hubSize(), bs = bubbleSize();
-    const railRight = hs - bs - 12;
-    const totalH = SECTIONS.length * bs + (SECTIONS.length - 1) * 8;
-    const startY = (hs - totalH) / 2;
-    return { left: railRight, top: Math.round(startY + sectionIdx * (bs + 8)) };
-  }
-
-  // ── apply sizes ──
-  const applyLayout = useCallback((toRail) => {
-    const hs = hubSize();
-    const scale = hs / 680;
-    const bs = bubbleSize();
-    const cs = Math.max(260, Math.round(400 * scale));
-
-    if (hubWrapRef.current) {
-      hubWrapRef.current.style.width = hs + 'px';
-      hubWrapRef.current.style.height = hs + 'px';
-      const ring1 = hubWrapRef.current.querySelector('.hub-ring-1');
-      const ring2 = hubWrapRef.current.querySelector('.hub-ring-2');
-      const ringTech = hubWrapRef.current.querySelector('.hub-ring-tech');
-      if (ring1) { ring1.style.width = ring1.style.height = Math.round(500 * scale) + 'px'; }
-      if (ring2) { ring2.style.width = ring2.style.height = Math.round(548 * scale) + 'px'; }
-      if (ringTech) { ringTech.style.width = ringTech.style.height = Math.round(368 * scale) + 'px'; }
+    :root {
+      --neon-pink:#ff2d8f;
+      --neon-blue:#2b8cff;
+      --neon-purple:#a855f7;
+      --neon-purple-bright:#c084fc;
+      --ice:#b7edff;
+      --gold:#eecb2c;
     }
-    if (centerRef.current) {
-      centerRef.current.style.width = cs + 'px';
-      centerRef.current.style.height = cs + 'px';
-      // expose circle size as CSS var so inner content can scale
-      centerRef.current.style.setProperty('--cs', cs + 'px');
+
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(5,3,8,0.78);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(168,85,247,0.18);
     }
-    bubblesRef.current.forEach((b, i) => {
-      if (!b) return;
-      b.style.width = bs + 'px';
-      b.style.height = bs + 'px';
-      const pos = orbitPos(ORBIT_ORDER.indexOf(i));
-      b.style.left = pos.left + 'px';
-      b.style.top = pos.top + 'px';
-    });
-  }, [hubSize, bubbleSize, orbitR]);
+    .nav-name { font-family:'Cinzel',serif; font-weight:700; font-size:.95rem; letter-spacing:.16em; text-transform:uppercase; color:#fff; }
+    .nav-links { display:flex; gap:2.1rem; list-style:none; }
+    .nav-links a {
+      font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.13em; text-transform:uppercase;
+      color:rgba(255,255,255,.68); text-decoration:none; transition:color .2s; position:relative; cursor:pointer;
+    }
+    .nav-links a:hover { color:#fff; }
+    .nav-links a::after {
+      content:''; position:absolute; left:0; right:0; bottom:-6px; height:2px;
+      background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple),var(--neon-blue));
+      transform:scaleX(0); transition:transform .25s ease;
+    }
+    .nav-links a:hover::after { transform:scaleX(1); }
 
-  // ── init & resize ──
-  useEffect(() => {
-    applyLayout(!!activeSection);
-    const onResize = () => applyLayout(!!activeSection);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [applyLayout, activeSection]);
+    .hero {
+      position:relative; min-height:82vh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; text-align:center; overflow:hidden;
+      padding:4rem 1.5rem 5rem; font-family:'EB Garamond',serif;
+    }
+    .hero-bg {
+      position:absolute; inset:0; z-index:0;
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 20%, rgba(255,45,143,.35) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 60% at 75% 30%, rgba(43,140,255,.30) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 60% at 50% 85%, rgba(168,85,247,.30) 0%, transparent 65%),
+        linear-gradient(180deg,#0a0614 0%,#050308 55%,#050308 100%);
+    }
+    .hero-bg::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(180deg,transparent 0%,transparent 60%,#050308 100%);
+    }
+    .hero-content { position:relative; z-index:2; max-width:820px; }
+    .hero-eyebrow {
+      font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.35em; text-transform:uppercase;
+      color:var(--neon-purple-bright); margin-bottom:1.4rem;
+      text-shadow:0 0 12px rgba(192,132,252,.8),0 0 28px rgba(192,132,252,.4);
+    }
+    .hero-name {
+      font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,8vw,5.2rem); line-height:1.02;
+      letter-spacing:.02em; text-transform:uppercase;
+      background:linear-gradient(90deg,var(--neon-pink) 0%,var(--neon-purple-bright) 45%,var(--neon-blue) 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      filter:drop-shadow(0 0 14px rgba(255,45,143,.55)) drop-shadow(0 0 30px rgba(168,85,247,.45)) drop-shadow(0 0 55px rgba(43,140,255,.30));
+      margin-bottom:1.1rem;
+    }
+    .hero-tagline {
+      font-family:'Cinzel',serif; font-size:clamp(.95rem,1.6vw,1.15rem); letter-spacing:.09em;
+      color:rgba(255,255,255,.85); margin-bottom:2.6rem; text-shadow:0 0 18px rgba(255,255,255,.12);
+    }
+    .hero-ctas { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+    .btn {
+      font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+      padding:.85rem 1.9rem; border-radius:4px; text-decoration:none; display:inline-flex;
+      align-items:center; gap:.5rem; transition:transform .18s ease, box-shadow .18s ease; cursor:pointer; border:none;
+    }
+    .btn-primary {
+      background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple)); color:#fff;
+      box-shadow:0 0 18px rgba(255,45,143,.55), 0 0 40px rgba(255,45,143,.25);
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 28px rgba(255,45,143,.75), 0 0 60px rgba(255,45,143,.35); }
+    .btn-adventure {
+      border:1px solid rgba(43,140,255,.55); color:var(--ice); background:rgba(43,140,255,.06);
+      box-shadow:0 0 16px rgba(43,140,255,.35), inset 0 0 12px rgba(43,140,255,.08);
+    }
+    .btn-adventure:hover {
+      border-color:var(--ice); background:rgba(183,237,255,.12);
+      box-shadow:0 0 26px rgba(43,140,255,.6), 0 0 46px rgba(168,85,247,.3), inset 0 0 14px rgba(183,237,255,.15);
+      transform:translateY(-2px);
+    }
+    .cta-band {
+      position:relative; z-index:2; margin-top:3.2rem; padding:1.1rem 2rem;
+      background:linear-gradient(90deg, rgba(255,45,143,.14), rgba(168,85,247,.14), rgba(43,140,255,.14));
+      border-top:1px solid rgba(255,255,255,.1); border-bottom:1px solid rgba(255,255,255,.1);
+      box-shadow:0 0 30px rgba(168,85,247,.18); display:inline-flex; align-items:center; gap:1rem; border-radius:6px;
+    }
+    .cta-band span { font-family:'Cinzel',serif; font-size:.78rem; letter-spacing:.08em; color:rgba(255,255,255,.9); }
 
-  // ── section toggle ──
-  const selectSection = (id) => {
-    setActiveSection(id);
-    setTimeout(() => applyLayout(true), 0);
-  };
-  const resetHub = () => {
-    setActiveSection(null);
-    setTimeout(() => applyLayout(false), 0);
-  };
-  const toggleSection = (id) => {
-    if (activeSection === id) resetHub();
-    else selectSection(id);
-  };
+    .work { background:#000; padding:4.5rem 2rem 6rem; border-top:1px solid rgba(168,85,247,.14); font-family:'EB Garamond',serif; }
+    .work-header { text-align:center; margin-bottom:3.2rem; }
+    .work-title {
+      font-family:'Cinzel',serif; font-weight:700; font-size:1.6rem; letter-spacing:.12em; text-transform:uppercase;
+      background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple-bright),var(--neon-blue));
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      filter:drop-shadow(0 0 16px rgba(168,85,247,.35)); margin-bottom:.6rem;
+    }
+    .work-sub { font-size:.9rem; color:rgba(255,255,255,.5); }
 
-  const activeSec = SECTIONS.find(s => s.id === activeSection);
+    .columns {
+      display:grid; grid-template-columns:1fr 1.35fr 1fr; gap:0; max-width:1400px; margin:0 auto;
+      border:1px solid rgba(168,85,247,.14); border-radius:10px; overflow:hidden; background:rgba(8,5,16,.5);
+    }
+    @media (max-width:980px) { .columns { grid-template-columns:1fr; } .col { border-right:none !important; border-bottom:1px solid rgba(168,85,247,.14); } }
+    .col { padding:2rem 1.6rem; }
+    .col-released { border-right:1px solid rgba(168,85,247,.14); }
+    .col-middle { border-right:1px solid rgba(168,85,247,.14); background:rgba(255,255,255,.012); }
 
-  // ── media modal ──
-  const openMedia = (project, mediaIndex = 0) => setSelectedMedia({ project, mediaIndex });
+    .col-label { display:flex; align-items:center; gap:.5rem; font-family:'JetBrains Mono',monospace; font-size:.95rem; letter-spacing:.04em; margin-bottom:1.6rem; padding-bottom:.9rem; border-bottom:1px solid rgba(255,255,255,.08); }
+    .col-label .tag { color:rgba(255,255,255,.35); font-size:.85rem; }
+    .col-label .name { font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+    .col-released .name { color:var(--neon-pink); text-shadow:0 0 12px rgba(255,45,143,.6),0 0 26px rgba(255,45,143,.3); }
+    .col-middle .name { color:var(--neon-purple-bright); text-shadow:0 0 12px rgba(168,85,247,.6),0 0 26px rgba(168,85,247,.3); }
+    .col-exp .name { color:var(--ice); text-shadow:0 0 12px rgba(183,237,255,.6),0 0 26px rgba(183,237,255,.3); }
 
+    .rel-card { display:flex; gap:.9rem; padding:.9rem 0; border-bottom:1px solid rgba(255,255,255,.06); }
+    .rel-card:last-child { border-bottom:none; }
+    .rel-thumb { width:68px; height:68px; border-radius:6px; flex-shrink:0; overflow:hidden; border:1px solid rgba(255,255,255,.1); background:linear-gradient(135deg, rgba(255,45,143,.3), rgba(168,85,247,.3)); display:flex; align-items:center; justify-content:center; }
+    .rel-thumb img { width:100%; height:100%; object-fit:cover; }
+    .rel-thumb-fallback { font-family:'JetBrains Mono',monospace; font-size:.6rem; color:rgba(255,255,255,.5); }
+    .rel-body { flex:1; min-width:0; }
+    .rel-title { font-family:'Cinzel',serif; font-size:.82rem; font-weight:600; color:#fff; margin-bottom:.25rem; }
+    .rel-desc { font-size:.82rem; color:rgba(255,255,255,.55); line-height:1.45; margin-bottom:.4rem; }
+    .rel-link { font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--neon-pink); text-decoration:none; border-bottom:1px solid rgba(255,45,143,.4); }
+    .rel-link:hover { color:#ff6bb0; border-color:#ff6bb0; }
+
+    .proj-card { background:rgba(255,255,255,.015); border:1px solid rgba(168,85,247,.14); border-radius:8px; padding:1.1rem 1.2rem; margin-bottom:1rem; transition:border-color .2s, box-shadow .2s, transform .2s; cursor:pointer; }
+    .proj-card:hover { border-color:rgba(168,85,247,.5); box-shadow:0 0 24px rgba(168,85,247,.15); transform:translateY(-2px); }
+    .proj-overline { font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.06em; color:var(--neon-purple-bright); margin-bottom:.35rem; display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+    .dev-badge { font-family:'JetBrains Mono',monospace; font-size:.56rem; letter-spacing:.04em; color:var(--neon-pink); background:rgba(255,45,143,.1); border:1px solid rgba(255,45,143,.35); padding:.1rem .4rem; border-radius:3px; text-transform:uppercase; }
+    .proj-title { font-family:'Cinzel',serif; font-size:.95rem; font-weight:600; color:#fff; margin-bottom:.45rem; }
+    .proj-desc { font-size:.85rem; color:rgba(255,255,255,.55); line-height:1.55; margin-bottom:.6rem; }
+    .proj-tags { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.6rem; }
+    .proj-tag { font-family:'JetBrains Mono',monospace; font-size:.6rem; padding:.18rem .5rem; border-radius:3px; border:1px solid rgba(43,140,255,.3); color:rgba(183,237,255,.85); background:rgba(43,140,255,.05); }
+    .proj-code-toggle { display:inline-flex; align-items:center; gap:.4rem; font-family:'JetBrains Mono',monospace; font-size:.65rem; color:rgba(255,255,255,.4); border-top:1px solid rgba(255,255,255,.06); padding-top:.6rem; margin-top:.2rem; }
+
+    .exp-item { padding:1rem 0; border-bottom:1px solid rgba(255,255,255,.06); position:relative; padding-left:1.1rem; }
+    .exp-item:last-child { border-bottom:none; }
+    .exp-item::before { content:''; position:absolute; left:0; top:1.35rem; width:6px; height:6px; border-radius:50%; background:var(--ice); box-shadow:0 0 8px rgba(183,237,255,.8); }
+    .exp-company { font-family:'Cinzel',serif; font-size:.85rem; font-weight:600; color:#fff; }
+    .exp-role { font-size:.78rem; color:var(--neon-pink); margin:.15rem 0; }
+    .exp-dates { font-family:'JetBrains Mono',monospace; font-size:.62rem; color:rgba(255,255,255,.4); margin-bottom:.5rem; }
+    .exp-summary { font-size:.8rem; color:rgba(255,255,255,.55); line-height:1.5; margin-bottom:.4rem; }
+    .exp-metric { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--ice); background:rgba(43,140,255,.08); border:1px solid rgba(43,140,255,.25); padding:.2rem .55rem; border-radius:3px; }
+    .exp-more { display:block; margin-top:.7rem; font-family:'JetBrains Mono',monospace; font-size:.65rem; color:rgba(255,255,255,.35); text-decoration:none; cursor:pointer; }
+    .exp-more:hover { color:var(--ice); }
+
+    .pro-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.1rem; max-width:1400px; margin:0 auto; }
+    @media (max-width:980px) { .pro-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:560px) { .pro-grid { grid-template-columns:1fr; } }
+    .pro-card { background:rgba(255,255,255,.02); border:1px solid rgba(43,140,255,.16); border-radius:8px; padding:1.3rem 1.2rem; transition:border-color .2s, box-shadow .2s, transform .2s; }
+    .pro-card:hover { border-color:rgba(43,140,255,.5); box-shadow:0 0 22px rgba(43,140,255,.16); transform:translateY(-2px); }
+    .pro-thumb { width:44px; height:44px; border-radius:6px; background:linear-gradient(135deg, rgba(43,140,255,.3), rgba(168,85,247,.3)); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:.6rem; color:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.1); margin-bottom:.8rem; }
+    .pro-title { font-family:'Cinzel',serif; font-size:.92rem; font-weight:600; color:#fff; margin-bottom:.3rem; }
+    .pro-role { font-family:'JetBrains Mono',monospace; font-size:.62rem; color:var(--neon-pink); margin-bottom:.6rem; }
+    .pro-desc { font-size:.82rem; color:rgba(255,255,255,.55); line-height:1.5; margin-bottom:.8rem; }
+    .pro-link { font-family:'JetBrains Mono',monospace; font-size:.66rem; color:var(--ice); text-decoration:none; border-bottom:1px solid rgba(183,237,255,.4); }
+    .pro-link:hover { color:#fff; border-color:#fff; }
+
+    /* ── modal (simplified, matches new palette) ── */
+    .modal-overlay { position:fixed; inset:0; background:rgba(5,3,8,.94); backdrop-filter:blur(20px); display:flex; align-items:center; justify-content:center; z-index:2000; padding:2rem; }
+    .modal-content { position:relative; max-height:90vh; width:min(96vw,760px); background:rgba(8,5,16,.96); border:1px solid rgba(168,85,247,.35); border-radius:10px; box-shadow:0 0 60px rgba(168,85,247,.2); overflow:auto; padding:2rem; font-family:'EB Garamond',serif; }
+    .modal-close { position:absolute; top:1.2rem; right:1.2rem; background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.4); border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--neon-purple-bright); transition:all .2s; }
+    .modal-close:hover { background:var(--neon-purple); color:#fff; }
+    .modal-title { font-family:'Cinzel',serif; font-size:1.2rem; letter-spacing:.06em; color:#fff; margin-bottom:.3rem; }
+    .modal-overline { font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--neon-purple-bright); margin-bottom:1.2rem; }
+    .modal-desc { font-size:.95rem; color:rgba(255,255,255,.7); line-height:1.65; margin-bottom:1.3rem; }
+    .modal-highlights { list-style:none; }
+    .modal-highlights li { font-size:.88rem; color:rgba(255,255,255,.65); line-height:1.55; padding:.5rem 0 .5rem 1.1rem; border-left:2px solid rgba(168,85,247,.3); margin-bottom:.5rem; }
+    .modal-github { display:inline-flex; align-items:center; gap:.5rem; margin-top:.5rem; padding:.6rem 1.1rem; border:1px solid rgba(43,140,255,.4); border-radius:4px; color:var(--ice); text-decoration:none; font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; transition:all .2s; }
+    .modal-github:hover { background:rgba(43,140,255,.12); border-color:var(--ice); }
+
+    /* ── carried-over sections, each with a distinct identity ── */
+    .sec { padding:5rem 2rem 5.5rem; position:relative; overflow:hidden; }
+    .sec-inner { max-width:1100px; margin:0 auto; position:relative; z-index:2; }
+    .sec-title {
+      font-family:'Cinzel',serif; font-weight:700; font-size:1.5rem; letter-spacing:.12em; text-transform:uppercase;
+      text-align:center; margin-bottom:.6rem;
+    }
+    .sec-sub { text-align:center; font-size:.85rem; color:rgba(255,255,255,.45); margin-bottom:3rem; font-family:'JetBrains Mono',monospace; letter-spacing:.03em; }
+
+    /* Experience — ice/blue, timeline glow */
+    .sec-experience { background:#020306; border-top:1px solid rgba(43,140,255,.16); }
+    .sec-experience .sec-title { color:var(--ice); text-shadow:0 0 18px rgba(183,237,255,.4); }
+    .exp-full-item { padding:1.6rem 0 1.6rem 1.6rem; border-left:2px solid rgba(43,140,255,.25); position:relative; margin-bottom:1.5rem; }
+    .exp-full-item::before { content:''; position:absolute; left:-7px; top:1.9rem; width:12px; height:12px; border-radius:50%; background:var(--ice); box-shadow:0 0 12px rgba(183,237,255,.9); }
+    .exp-full-company { font-family:'Cinzel',serif; font-size:1.05rem; font-weight:700; color:#fff; letter-spacing:.04em; }
+    .exp-full-role { font-size:.9rem; font-weight:600; color:var(--neon-pink); margin-top:.2rem; }
+    .exp-full-dates { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:rgba(255,255,255,.4); margin:.3rem 0 .9rem; }
+    .exp-full-bullet { font-size:.92rem; line-height:1.65; color:rgba(255,255,255,.75); padding:.35rem 0 .35rem .9rem; border-left:2px solid rgba(43,140,255,.2); margin-bottom:.4rem; }
+
+    /* Skills — purple, grid of tag cards */
+    .sec-skills { background:#050308; border-top:1px solid rgba(168,85,247,.16); }
+    .sec-skills .sec-title { color:var(--neon-purple-bright); text-shadow:0 0 18px rgba(168,85,247,.4); }
+    .skill-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem; }
+    .skill-card { padding:1.2rem; border-radius:6px; background:rgba(168,85,247,.04); border:1px solid rgba(168,85,247,.16); border-left:3px solid var(--neon-purple); transition:all .25s ease; }
+    .skill-card:hover { border-color:rgba(168,85,247,.4); box-shadow:0 0 16px rgba(168,85,247,.15); }
+    .skill-card-label { font-family:'Cinzel',serif; font-size:.85rem; font-weight:700; color:#fff; letter-spacing:.05em; text-transform:uppercase; margin-bottom:.7rem; }
+    .skill-tag { font-size:.75rem; padding:.22rem .55rem; border-radius:3px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); color:rgba(255,255,255,.75); white-space:nowrap; }
+
+    /* About — pink, portrait + bio */
+    .sec-about { background:#020103; border-top:1px solid rgba(255,45,143,.16); }
+    .sec-about .sec-title { color:var(--neon-pink); text-shadow:0 0 18px rgba(255,45,143,.4); }
+    .about-layout { display:flex; gap:2.6rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:2.6rem; }
+    .about-portrait-wrap { position:relative; flex-shrink:0; }
+    .about-portrait-glow { position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(255,45,143,.3) 0%, transparent 70%); transform:scale(1.3); }
+    .about-portrait { width:180px; height:180px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,45,143,.5); box-shadow:0 0 26px rgba(255,45,143,.3); position:relative; z-index:2; }
+    .about-bio { flex:1; min-width:260px; font-size:1.02rem; line-height:1.7; color:rgba(255,255,255,.85); margin-bottom:1rem; }
+    .about-creds { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.2rem; border-top:1px solid rgba(255,45,143,.15); padding-top:1.8rem; }
+    .cred-card { padding:1.1rem; border-radius:6px; background:rgba(255,45,143,.04); border:1px solid rgba(255,45,143,.16); border-left:3px solid var(--neon-pink); }
+    .cred-org { font-family:'Cinzel',serif; font-size:.85rem; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:.03em; }
+    .cred-detail { font-size:.8rem; font-weight:600; color:var(--neon-pink); margin-top:.2rem; }
+    .cred-sub { font-size:.72rem; color:rgba(255,255,255,.45); margin-top:.25rem; }
+
+    /* Contact — blended pink/blue/purple, glowing CTA */
+    .sec-contact { background:#000; border-top:1px solid rgba(168,85,247,.16); text-align:center; }
+    .sec-contact .sec-title { background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple-bright),var(--neon-blue)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 16px rgba(168,85,247,.35)); }
+    .contact-lead { font-size:1.1rem; color:rgba(255,255,255,.8); margin-bottom:2.2rem; max-width:60ch; margin-left:auto; margin-right:auto; }
+    .contact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; max-width:760px; margin:0 auto; }
+    .contact-card { display:flex; align-items:center; gap:.75rem; padding:1rem; border-radius:6px; background:rgba(255,255,255,.02); border:1px solid rgba(168,85,247,.16); color:#fff; text-decoration:none; font-size:.9rem; transition:all .25s ease; }
+    .contact-card:hover { border-color:rgba(168,85,247,.5); box-shadow:0 0 18px rgba(168,85,247,.18); background:rgba(168,85,247,.05); }
+    .contact-card svg { width:18px; height:18px; color:var(--neon-purple-bright); flex-shrink:0; }
+  `}</style>
+);
+
+// ─────────────────────────────────────────────
+// PROJECT MODAL
+// ─────────────────────────────────────────────
+function ProjectModal({ project, onClose }) {
+  if (!project) return null;
   return (
-    <div style={{ minHeight: '100vh', background: '#000', color: '#fff', fontFamily: "'EB Garamond', serif", overflowX: 'hidden' }}>
-
-      {/* ── FONTS ── */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400&display=swap');
-        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior:smooth; overflow-y:scroll; }
-        body { background:#000; }
-        :root {
-          --gold:#eecb2c; --gold-hi:#f7eb63;
-          --magenta:#cc00ee; --magenta-dim:#8800aa;
-          --ice:#b7edff; --black-ice:#2BCFFF;
-          --ink:#000; --ink-mid:#06040e; --ink-lift:#0c0818; --ink-panel:#110d1e;
-          --white:#fff; --white-dim:#B3B3B3;
-        }
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
-        @keyframes spin-slow {
-          from{transform:translate(-50%,-50%) rotate(0deg)}
-          to  {transform:translate(-50%,-50%) rotate(360deg)}
-        }
-        @keyframes card-in { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes label-in{ from{opacity:0;transform:translateY(4px)}  to{opacity:1;transform:translateY(0)} }
-
-        .hub-bubble {
-          position:absolute; border-radius:50%;
-          background:radial-gradient(circle at 34% 30%,rgba(10,8,26,.96) 0%,rgba(0,0,0,.98) 100%);
-          border:1px solid rgba(238,203,44,.55);
-          box-shadow:0 0 12px rgba(238,203,44,.22),0 4px 20px rgba(0,0,0,.7);
-          display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-          cursor:pointer; z-index:15;
-        }
-        .hub-bubble:hover  { border-color:rgba(247,235,99,.65); box-shadow:0 0 26px rgba(238,203,44,.22),0 0 60px rgba(238,203,44,.09); transform:scale(1.08); }
-        .hub-bubble.active { border-color:rgba(238,203,44,.9); box-shadow:0 0 22px rgba(238,203,44,.45),0 0 50px rgba(238,203,44,.18); }
-        .hub-bubble.active:hover { transform:none; }
-        .bubble-icon { display:flex; align-items:center; justify-content:center; color:var(--gold); transition:color .25s,filter .25s; }
-        .bubble-icon svg { width:27px; height:27px; }
-        .hub-bubble:hover .bubble-icon, .hub-bubble.active .bubble-icon { color:var(--gold-hi); filter:drop-shadow(0 0 5px rgba(247,235,99,.75)); }
-        .bubble-label { font-family:'Cinzel',serif; font-size:.4rem; letter-spacing:.09rem; text-transform:uppercase; color:rgba(238,203,44,1); transition:color .25s; }
-        .hub-bubble:hover .bubble-label, .hub-bubble.active .bubble-label { color:var(--gold-hi); }
-
-        .hub-ring { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); border-radius:50%; pointer-events:none; transition:opacity .5s; }
-        .hub-ring-1 { border:2px solid rgba(175,250,255,.75); }
-        .hub-ring-2 { border:1px solid rgba(255,110,180,.75); }
-        .hub-ring-tech {
-          border:1px solid rgba(204,0,238,.08);
-          animation:spin-slow 70s linear infinite;
-        }
-        .hub-ring-tech::before, .hub-ring-tech::after {
-          content:''; position:absolute; width:6px; height:6px; border-radius:50%;
-          background:var(--gold); box-shadow:0 0 8px rgba(238,203,44,.7);
-        }
-        .hub-ring-tech::before { top:-3px; left:50%; margin-left:-3px; }
-        .hub-ring-tech::after  { bottom:-3px; left:50%; margin-left:-3px; }
-        .section-active-hub .hub-ring,
-        .section-active-hub .hub-ring-tech { opacity:.25; }
-
-        .top-bar {
-          position:fixed; top:0; left:0; right:0; height:52px;
-          z-index:100; display:flex; align-items:center; justify-content:space-between;
-          padding:0 2rem; background:rgba(0,0,0,.84);
-          border-bottom:1px solid rgba(238,203,44,.16); backdrop-filter:blur(16px);
-          transform:translateY(-100%); opacity:0;
-          transition:transform .45s cubic-bezier(.4,0,.2,1),opacity .45s ease;
-          pointer-events:none;
-        }
-        .top-bar.visible { transform:translateY(0); opacity:1; pointer-events:auto; }
-        .top-bar-name { font-family:'Cinzel',serif; font-size:.82rem; font-weight:600; letter-spacing:.20em; color:#fff; text-transform:uppercase; }
-        .top-bar-title { font-size:.58rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); }
-        .top-bar-close { background:none; border:1px solid rgba(238,203,44,.3); border-radius:50%; width:28px; height:28px; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:border-color .2s; }
-        .top-bar-close:hover { border-color:var(--gold); }
-
-        /* section dropdown */
-        .section-dropdown {
-          max-height:0; overflow:hidden;
-          transition:max-height .55s cubic-bezier(.4,0,.2,1);
-          background:var(--ink-mid);
-        }
-        .section-dropdown.open { max-height:9999px; }
-        .section-panel { display:none; padding:2rem clamp(1rem,4vw,3rem) 3rem; animation:card-in .35s ease both; }
-        .section-panel.active { display:block; }
-
-        .panel-header { display:flex; align-items:center; gap:.75rem; margin-bottom:1.8rem; padding-bottom:.75rem; border-bottom:1px solid rgba(238,203,44,.14); }
-        .panel-icon { color:var(--gold); display:flex; }
-        .panel-icon svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.5; }
-        .panel-title { font-family:'Cinzel',serif; font-size:1rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-hi); text-shadow:0 0 18px rgba(247,235,99,.30); }
-        .panel-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,540px),1fr)); gap:1.25rem; }
-        .panel-card { background:rgba(15,10,30,.7); border:1px solid rgba(238,203,44,.12); border-radius:6px; padding:1.1rem 1.25rem; }
-
-        /* project cards */
-        .project-card-hub {
-          background:rgba(8,5,20,.85); border:1px solid rgba(238,203,44,.12); border-radius:8px;
-          cursor:pointer; overflow:hidden; transition:border-color .22s,box-shadow .22s,transform .22s;
-        }
-        .project-card-hub:hover { border-color:rgba(238,203,44,.35); box-shadow:0 0 28px rgba(238,203,44,.10); transform:translateY(-3px); }
-        .card-hub-header { padding:1rem 1.2rem .6rem; }
-        .card-hub-overline { font-family:'Cinzel',serif; font-size:.46rem; letter-spacing:.14em; text-transform:uppercase; color:var(--magenta); margin-bottom:.3rem; }
-        .card-hub-title { font-family:'Cinzel',serif; font-size:.9rem; font-weight:600; color:var(--gold-hi); margin-bottom:.4rem; letter-spacing:.06em; }
-        .card-hub-desc { font-size:1rem; color:rgba(255,255,255,.65); line-height:1.6; margin-bottom:.5rem; }
-        .card-hub-tags { display:flex; flex-wrap:wrap; gap:.3rem; }
-        .card-hub-tag { font-family:'Cinzel',serif; font-size:.42rem; letter-spacing:.08em; text-transform:uppercase; padding:.18rem .45rem; border-radius:3px; border:1px solid rgba(238,203,44,.25); color:rgba(238,203,44,.75); background:rgba(238,203,44,.04); }
-
-        .card-images-strip { display:flex; gap:6px; overflow-x:auto; padding:6px 0; scrollbar-width:thin; scrollbar-color:rgba(238,203,44,.3) transparent; }
-        .card-images-strip img { height:105px; flex-shrink:0; border-radius:4px; border:1px solid rgba(238,203,44,.15); object-fit:cover; cursor:pointer; transition:border-color .2s,transform .2s; }
-        .card-images-strip img:hover { border-color:rgba(238,203,44,.55); transform:scale(1.03); }
-
-        .card-body-hub { display:grid; grid-template-columns:1fr 1fr; gap:0; }
-        @media(max-width:680px){ .card-body-hub { grid-template-columns:1fr; } }
-        .card-code-col { padding:.75rem 1rem 1rem; border-top:1px solid rgba(238,203,44,.08); background:rgba(0,0,0,.35); overflow:auto; }
-        .code-file-tab { display:flex; align-items:center; gap:.45rem; margin-bottom:.55rem; }
-        .code-lang-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
-        .code-lang-dot.csharp { background:#9b59b6; box-shadow:0 0 6px rgba(155,89,182,.7); }
-        .code-lang-dot.cpp    { background:#0095d5; box-shadow:0 0 6px rgba(0,149,213,.7); }
-        .code-lang-dot.typescript { background:#3178c6; box-shadow:0 0 6px rgba(49,120,198,.7); }
-        .code-file-name { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:rgba(255,255,255,.55); letter-spacing:.04em; }
-        .card-code-pre { font-family:'JetBrains Mono',monospace; font-size:.62rem; line-height:1.7; color:#c9d1d9; white-space:pre; overflow-x:auto; }
-        .card-detail-col { padding:.75rem 1rem 1rem; border-top:1px solid rgba(238,203,44,.08); border-left:1px solid rgba(238,203,44,.06); }
-        .card-detail-title { font-family:'Cinzel',serif; font-size:.54rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.6rem; }
-        .card-detail-item { font-size:.82rem; color:rgba(255,255,255,.62); line-height:1.6; padding:.3rem 0; border-bottom:1px solid rgba(238,203,44,.06); }
-        .card-detail-item:last-child { border-bottom:none; }
-
-        /* media card buttons */
-        .media-open-btn { display:inline-flex; align-items:center; gap:.4rem; margin:.6rem 1.2rem .8rem; padding:.35rem .75rem; border:1px solid rgba(238,203,44,.3); border-radius:3px; background:rgba(238,203,44,.06); color:var(--gold); font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.10em; text-transform:uppercase; cursor:pointer; transition:all .2s; }
-        .media-open-btn:hover { background:rgba(238,203,44,.14); border-color:var(--gold); }
-
-        /* experience */
-        .exp-entry { padding:1rem 0; border-bottom:1px solid rgba(238,203,44,.10); }
-        .exp-entry:last-child { border-bottom:none; }
-        .exp-company { font-family:'Cinzel',serif; font-size:.80rem; font-weight:600; color:var(--gold-hi); letter-spacing:.08em; }
-        .exp-role { font-size:.78rem; color:var(--ice); margin:.18rem 0; letter-spacing:.06em; }
-        .exp-dates { font-size:.70rem; color:rgba(255,255,255,.45); letter-spacing:.06em; margin-bottom:.5rem; }
-        .exp-bullet { font-size:.85rem; color:rgba(255,255,255,.68); line-height:1.65; padding:.22rem 0 .22rem 1rem; border-left:2px solid rgba(238,203,44,.20); margin:.3rem 0; }
-
-        /* skills */
-        .skill-group-label { font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.4rem; }
-        .skill-group-items { font-size:.82rem; color:rgba(255,255,255,.65); line-height:1.7; }
-
-        /* contact */
-        .contact-links { display:flex; flex-direction:column; gap:.6rem; margin-top:1rem; }
-        .contact-link { display:inline-flex; align-items:center; gap:.6rem; color:rgba(255,255,255,.75); text-decoration:none; font-size:.88rem; transition:color .2s; }
-        .contact-link svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.5; color:var(--gold); flex-shrink:0; }
-        .contact-link:hover { color:var(--gold-hi); }
-
-        .panel-text { font-size:.92rem; color:rgba(255,255,255,.70); line-height:1.75; max-width:70ch; margin-bottom:1rem; }
-
-        /* scroll indicator */
-        .scroll-indicator { display:flex; flex-direction:column; align-items:center; gap:.3rem; margin-top:-.75rem; opacity:0; pointer-events:none; transition:opacity .4s; cursor:pointer; }
-        .scroll-indicator.visible { opacity:1; pointer-events:auto; }
-        .scroll-indicator-text { font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--black-ice); text-shadow:0 0 8px rgba(43,207,255,1); }
-        .scroll-indicator svg { width:25px; height:25px; fill:none; stroke:var(--black-ice); stroke-width:2; stroke-linecap:round; filter:drop-shadow(0 0 4px rgba(43,207,255,.6)); margin-bottom: .5rem}
-
-        @media (max-width: 600px) {
-          .hub-bubble .bubble-label { font-size:.38rem; }
-          .card-body-hub { grid-template-columns: 1fr; }
-          .panel-grid { grid-template-columns: 1fr; }
-        }
-        .gold-line-wrap { width:100%; max-width:860px; margin:0 auto; padding:0 2rem; opacity:0; transition:opacity .4s; }
-        .gold-line-wrap.visible { opacity:1; }
-        .gold-line { height:1px; background:linear-gradient(to right,transparent,rgba(238,203,44,.65),rgba(204,0,238,.45),transparent); }
-
-        /* modal */
-        .modal-overlay { position:fixed; inset:0; background:rgba(5,3,15,.97); backdrop-filter:blur(26px); display:flex; align-items:center; justify-content:center; z-index:2000; padding:2rem; }
-        .modal-content { position:relative; max-height:95vh; width:min(98vw,900px); background:rgba(8,5,26,.92); border:1px solid rgba(181,123,238,.52); border-radius:8px; box-shadow:0 0 60px rgba(74,45,138,.22),0 40px 100px rgba(0,0,0,.78); display:flex; flex-direction:column; gap:.75rem; overflow:auto; padding:1.5rem; }
-        .modal-close { position:absolute; top:1rem; right:1rem; background:rgba(181,123,238,.10); border:1px solid rgba(181,123,238,.4); border-radius:3px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#b57bee; transition:all .2s; z-index:10; }
-        .modal-close:hover { background:#b57bee; color:#05030f; }
-        .modal-title { font-family:'Cinzel',serif; font-size:clamp(.82rem,1.75vw,1.1rem); letter-spacing:.14em; text-align:center; text-transform:uppercase; color:var(--gold-hi); }
-        .modal-divider { height:1px; background:linear-gradient(to right,transparent,rgba(238,203,44,.4),transparent); margin:.2rem 0; }
-        .media-label-modal { text-align:center; color:rgba(200,185,240,.72); font-style:italic; font-size:.95rem; }
-        .modal-media { width:100%; border-radius:6px; object-fit:contain; background:rgba(0,0,0,.45); aspect-ratio:16/9; border:1px solid rgba(74,45,138,.4); }
-        .recruiter-box { background:rgba(74,45,138,.08); border:1px solid rgba(74,45,138,.35); border-left:2px solid var(--gold); border-radius:6px; padding:.85rem 1.1rem; }
-        .recruiter-box-title { font-family:'Cinzel',serif; font-size:.60rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:.6rem; text-align:center; }
-        .recruiter-box ul { margin:0; padding-left:1.1rem; }
-        .recruiter-box li { color:rgba(200,185,240,.72); margin:.3rem 0; font-size:1rem; line-height:1.55; }
-        .code-btn-modal { display:inline-flex; align-items:center; gap:.5rem; padding:.50rem .9rem; border:1px solid rgba(201,159,40,.55); border-radius:3px; background:rgba(201,159,40,.07); color:#fec001; text-decoration:none; font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; transition:all .2s; }
-        .code-btn-modal:hover { background:#c99f28; color:#05030f; }
-      `}</style>
-
-      {/* ── BACKGROUND ── */}
-      <div style={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse 90% 70% at 50% 44%,#0e0828 0%,#060418 40%,#030210 70%,#000 100%)', zIndex: 0 }} />
-      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 1 }}>
-        {/* nebulae */}
-        {[
-          { x: 18, y: 22, s: 520, c: 'rgba(30,10,120,.40)', r: -18 }, { x: 75, y: 65, s: 480, c: 'rgba(60,0,140,.32)', r: 16 },
-          { x: 50, y: 14, s: 420, c: 'rgba(238,203,44,.09)', r: 0 }, { x: 82, y: 78, s: 460, c: 'rgba(204,0,238,.18)', r: 30 },
-          { x: 50, y: 50, s: 600, c: 'rgba(40,8,100,.22)', r: 0 },
-        ].map((n, i) => (
-          <div key={i} style={{
-            position: 'fixed', borderRadius: '50%', filter: 'blur(70px)',
-            width: n.s, height: Math.round(n.s * .54), left: `${n.x}%`, top: `${n.y}%`,
-            background: `radial-gradient(ellipse,${n.c} 0%,transparent 70%)`,
-            transform: `translate(-50%,-50%) rotate(${n.r}deg)`
-          }} />
-        ))}
-        {STARS.map(s => (
-          <div key={s.id} style={{
-            position: 'fixed', borderRadius: '50%', width: s.size, height: s.size,
-            left: `${s.left}%`, top: `${s.top}%`, background: s.color, opacity: s.opacity, boxShadow: s.shadow
-          }} />
-        ))}
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}><X size={16} /></button>
+        <div className="modal-overline">{project.overline}</div>
+        <div className="modal-title">{project.title}</div>
+        <p className="modal-desc">{project.description}</p>
+        {project.recruiterHighlights?.length > 0 && (
+          <ul className="modal-highlights">
+            {project.recruiterHighlights.map((h, i) => <li key={i}>{h}</li>)}
+          </ul>
+        )}
+        {project.github && (
+          <a className="modal-github" href={project.github} target="_blank" rel="noopener noreferrer">
+            <ExternalLink size={13} /> View on GitHub
+          </a>
+        )}
       </div>
-
-      {/* ── TOP BAR ── */}
-      <div className={`top-bar ${activeSection ? 'visible' : ''}`}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
-          {/* Your name stays permanently anchored */}
-          <span className="top-bar-name">Grayson Hammond</span>
-
-          {/* DYNAMIC BLOCK: Only renders the line and title if a section is active */}
-          {activeSection && (
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              animation: 'fadeIn .4s ease both' // Optional: Gives it a smooth transition in
-            }}>
-              <div style={{ width: 1, height: 14, background: 'rgba(238,203,44,.20)', margin: '0 .5rem' }} />
-              <span className="top-bar-title" style={{ color: 'var(--gold-hi)' }}>
-                Gameplay Engineer
-              </span>
-            </div>
-          )}
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          {/* <a href={ResumePDF} download="GraysonHammond_Resume.pdf" target="_blank" rel="noopener noreferrer"
-           style={{
-              fontFamily:"'Cinzel',serif", fontSize:'.62rem', letterSpacing:'.14em',
-              textTransform:'uppercase', color:'var(--gold)', textDecoration:'none',
-              border:'1px solid rgba(238,203,44,.35)', borderRadius:'3px',
-              padding:'.35rem .7rem', transition:'all .2s', display:'inline-flex',
-              alignItems:'center', gap:'.4rem', whiteSpace:'nowrap'
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--gold-hi)'; e.currentTarget.style.color = 'var(--gold-hi)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(238,203,44,.35)'; e.currentTarget.style.color = 'var(--gold)'; }}>
-            <Download size={11} /> Résumé
-          </a> */}
-          <button className="top-bar-close" onClick={resetHub}><X size={12} /></button>
-        </div>
-      </div>
-      {/* ── HUB PAGE ── */}
-      <div style={{
-        position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center',
-        paddingTop: activeSection ? 'calc(52px + 4vh)' : '6vh', paddingBottom: '3rem',
-        transition: 'padding-top .45s cubic-bezier(.4,0,.2,1)'
-      }}>
-
-        {/* HUB WRAP */}
-        <div ref={hubWrapRef} className={activeSection ? 'section-active-hub' : ''}
-          style={{ position: 'relative', width: 680, height: 680, flexShrink: 0 }}>
-
-          {/* rings */}
-          <div className="hub-ring hub-ring-1" style={{ width: 500, height: 500 }} />
-          <div className="hub-ring hub-ring-2" style={{ width: 548, height: 548 }} />
-          <div className="hub-ring hub-ring-tech" style={{ width: 368, height: 368 }} />
-
-          {/* center circle */}
-          <div ref={centerRef} style={{
-            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
-            width: 330, height: 330, borderRadius: '50%', '--cs': '330px',
-            background: 'radial-gradient(circle at 38% 36%,rgba(20,10,50,.96) 0%,rgba(4,2,14,.98) 100%)',
-            border: '1px solid rgba(238,203,44,.8)',
-            boxShadow: '0 0 36px rgba(238,203,44,.46),0 0 80px rgba(204,0,238,.52),inset 0 0 24px rgba(204,0,238,.2)',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            overflow: 'hidden', zIndex: 10,
-          }}>
-            {/* emblem — original inline SVG, scales with circle via --cs */}
-            <div style={{
-              width: 'calc(var(--cs, 330px) * 0.36)', height: 'calc(var(--cs, 330px) * 0.36)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-              filter: 'drop-shadow(0 0 10px rgba(238,203,44,.65)) drop-shadow(0 0 22px rgba(204,0,238,.50)) drop-shadow(0 0 40px rgba(204,0,238,.25))'
-            }}>
-              <div style={{
-                width: 'calc(var(--cs, 330px) * 0.35)',
-                height: 'calc(var(--cs, 330px) * 0.35)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0
-              }}>
-                <img
-                  src={MoonEmblem}
-                  alt="Moon Emblem"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'invert(1)' }}
-                />
-              </div>
-            </div>
-            <div style={{
-              fontFamily: "'Cinzel',serif",
-              fontSize: 'calc(var(--cs, 330px) * 0.058)', fontWeight: 700, letterSpacing: '.10em',
-              color: '#fff', textShadow: '0 0 24px rgba(247,235,99,.42)', lineHeight: 1.2, textTransform: 'uppercase',
-              textAlign: 'center', marginTop: 'calc(var(--cs, 330px) * 0.02)'
-            }}>
-              Grayson<br />Hammond
-            </div>
-            <div style={{
-              fontSize: 'calc(var(--cs, 330px) * 0.040)', letterSpacing: '.16em',
-              color: 'var(--magenta)', textTransform: 'uppercase',
-              marginTop: 'calc(var(--cs, 330px) * 0.01)', textAlign: 'center',
-              textShadow: '0 0 12px rgba(204,0,238,.60)'
-            }}>
-              Gameplay Engineer
-            </div>
-            {(() => {
-              const currentSec = SECTIONS.find(sec => sec.id === activeSection);
-              if (!currentSec) return null;
-
-              return (
-                <div style={{
-                  marginTop: 'calc(var(--cs, 330px) * 0.025)',
-                  padding: '.75rem .8rem', borderTop: '2px solid rgba(238,203,44,.28)',
-                  textAlign: 'center', animation: 'label-in .3s ease both', width: '80%'
-                }}>
-                  <div style={{
-                    fontFamily: "'Cinzel',serif",
-                    fontSize: 'calc(var(--cs, 330px) * 0.040)', fontWeight: 600,
-                    letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--gold-hi)',
-                    marginBottom: '.25rem'
-                  }}>
-                    {currentSec.label}
-                  </div>
-                  <div style={{
-                    fontSize: 'calc(var(--cs, 330px) * 0.036)',
-                    color: 'rgba(255,255,255,.80)', lineHeight: 1.5,
-                    maxWidth: 200, margin: '0 auto',
-                    textShadow: '0 0 6px rgba(255,255,255,.20)'
-                  }}>
-                    {currentSec.hubDesc}
-                  </div>
-                </div>
-              );
-            })()}          </div>
-
-          {/* bubbles */}
-          {SECTIONS.map((sec, i) => (
-            <div key={sec.id}
-              ref={el => bubblesRef.current[i] = el}
-              className={`hub-bubble ${activeSection === sec.id ? 'active' : ''}`}
-              style={{ width: 88, height: 88 }}
-              onClick={() => toggleSection(sec.id)}>
-              <div className="bubble-icon">{SECTION_ICONS[sec.id]}</div>
-              <div className="bubble-label">{sec.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* scroll indicator */}
-        <div className={`scroll-indicator ${activeSection ? 'visible' : ''}`}
-          onClick={() => document.getElementById('sectionDropdown')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
-          <span className="scroll-indicator-text">Scroll for details</span>
-          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9" /></svg>
-        </div>
-
-        {/* gold divider */}
-        <div className={`gold-line-wrap ${activeSection ? 'visible' : ''}`}>
-          <div className="gold-line" />
-        </div>
-
-        {/* ── SECTION CONTENT ── */}
-        <div id="sectionDropdown" className={`section-dropdown ${activeSection ? 'open' : ''}`}
-          style={{ width: '100%', maxWidth: 920 }}>
-
-          {/* WORK */}
-          <div className={`section-panel ${activeSection === 'work' ? 'active' : ''}`} data-section="work">
-            <div className="panel-header">
-              <div className="panel-icon">{SECTION_ICONS.work}</div>
-              <div className="panel-title">Featured Work</div>
-            </div>
-            <div className="panel-grid">
-
-              {/* Valtara */}
-              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.currentTarget.click(); // Fires your existing click behavior
-                  }
-                }}
-                onClick={(e) => {
-                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-                  e.currentTarget.querySelector('.media-open-btn')?.click();
-                }}>
-                <div className="card-hub-header">
-                  <div className="card-hub-overline">Exploration · Procedural World · Playable Vertical Slice</div>
-                  <div className="card-hub-title">Valtara</div>
-                  <div className="card-hub-desc">A third-person exploration game set in a world after its collapse — seven artifacts scattered across a landscape that assembles itself differently every time you play, each watched over by a guardian with its own terms. Only when the opening conversation with Enkidu ends does the world resolve into being: biomes settle, artifacts find their places, and beams of light rise from everything still within reach. A sabertooth travels alongside you throughout. Built solo in Unreal Engine 5.8 on a custom C++ gameplay framework with procedural world generation and PCG-driven vegetation.</div>
-                  <div className="card-hub-tags">{['UE 5.8', 'C++', 'Procedural Generation', 'PCG', 'Companion AI', 'Playable Slice'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
-                  {[Valtara_Visual].map((src, i) => (
-                    <img key={i} src={src} alt="Valtara_Visual" loading="lazy" onClick={() => openMedia(PROJECTS[0], i)} />
-                  ))}
-                </div>
-                <CodeCard snippets={[CODE_SNIPPETS.valtara_artifacts, CODE_SNIPPETS.valtara_companion]} github={PROJECTS[0].github} codeDownload={PROJECTS[0].codeDownload} />
-              </div>
-
-              {/* Witch's Brew — Discovery Mixing */}
-              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.currentTarget.click(); // Fires your existing click behavior
-                  }
-                }}
-                onClick={(e) => {
-                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-                  e.currentTarget.querySelector('.media-open-btn')?.click();
-                }}>
-                <div className="card-hub-header">
-                  <div className="card-hub-overline">Discovery Mixing · Procedural Pixel Art · In Development</div>
-                  <div className="card-hub-title">Witch's Brew</div>
-                  <div className="card-hub-desc">2.5D handheld-style pixel game in the visual tradition of The Legend of Zelda: The Minish Cap. A witch in a small medieval town collects ingredients and mixes up to three at a cauldron to brew potions requested by townspeople — recipes are hidden and discovered only by trying combinations. Every sprite and tile is generated at startup from hand-authored pixel grids in code, with zero binary art assets.</div>
-                  <div className="card-hub-tags">{['Phaser 3', 'TypeScript', 'Vite', 'Procedural Pixel Art', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
-                  {[WitchsBrew_Visual].map((src, i) => (
-                    <img key={i} src={src} alt="Witch's Brew" loading="lazy" onClick={() => openMedia(PROJECTS[1], i)} />
-                  ))}
-                </div>
-                <CodeCard snippet={CODE_SNIPPETS.witchs_brew} github={PROJECTS[1].github} codeDownload={PROJECTS[1].codeDownload} />
-              </div>
-
-              {/* Evigheden — Rune Architecture */}
-              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.currentTarget.click(); // Fires your existing click behavior
-                  }
-                }}
-                onClick={(e) => {
-                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-                  e.currentTarget.querySelector('.media-open-btn')?.click();
-                }}>
-                <div className="card-hub-header">
-                  <div className="card-hub-overline">Behavior Classification · Gameplay Ability System · In Development</div>
-                  <div className="card-hub-title">Evigheden — Rune System</div>
-                  <div className="card-hub-desc">A six-dimension behavior classifier that assigns players one of six personalized combat archetypes from how they actually play, plus a ScriptableObject-based authoring tool for rapid iteration on archetype balance. A classifier silently tracks how the player fights from levels 3–5 — aggression, dodge frequency, stealth, defense, mobility — and at level 5 surfaces a personalized Specialized Rune recommendation alongside alternatives. Six archetypes, one secret. Standard Runes are found, lost, and taken throughout the world. Regressor\'s Endgame resets everything when the death threshold is crossed. Combat AI built with IK Rig animation retargeting, Animation Blueprints, and montages.</div>
-                  <div className="card-hub-tags">{['UE5', 'C++', 'Gameplay Ability System', 'Behavior Classifier', 'PC'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <CodeCard snippet={CODE_SNIPPETS.evigheden_runes} github={PROJECTS[2].github} codeDownload={PROJECTS[2].codeDownload} />
-              </div>
-
-              {/* Project Maelstrom */}
-              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.currentTarget.click(); // Fires your existing click behavior
-                  }
-                }}
-                onClick={(e) => {
-                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-                  e.currentTarget.querySelector('.media-open-btn')?.click();
-                }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Systems RPG · Pack AI · Reactive Narrative</div>
-                  <div className="card-hub-title">Project Maelstrom</div>
-                  <div className="card-hub-desc">A systems-driven RPG set in a corporate-dystopian world where corporations control the flow of information as tightly as they control power. The amnesiac player wakes inside a maze-like containment structure and must navigate five natural biomes — desert, plains/forest, snowy mountain, wetland, and an abandoned data-center/server-farm — facing enemy encounters modeled as corporate virus and defense mechanisms rather than traditional monsters. Full inventory, crafting, and alchemy systems let players gather materials and craft what they need to progress, while a reactive narrative system ties information accuracy — and late-game NPC trust — to how the player chooses to engage.</div>
-                  <div className="card-hub-tags">{['UE5', 'C++', 'Systems Design', 'Crafting & Alchemy', 'Reactive Narrative', 'In Development'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
-                  {[PM_Overview, PM_Combat, PM_PlayerFocus].map((src, i) => (
-                    <img key={i} src={src} alt="Project Maelstrom" loading="lazy" onClick={() => openMedia(PROJECTS[4], i)} />
-                  ))}
-                </div>
-                <CodeCard snippets={[CODE_SNIPPETS.maelstrom, CODE_SNIPPETS.maelstrom_boss, CODE_SNIPPETS.maelstrom_cinematic]} />
-              </div>
-
-              {/* Mall Cop Madhouse */}
-              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.currentTarget.click(); // Fires your existing click behavior
-                  }
-                }}
-                onClick={(e) => {
-                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-                  e.currentTarget.querySelector('.media-open-btn')?.click();
-                }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Asymmetric Multiplayer · Capture Mechanics · Photon PUN</div>
-
-                  <div className="card-hub-title">Mall Cop Madhouse</div>
-                  <div className="card-hub-desc">Asymmetric stealth-and-chase: Hooligans complete disruptive tasks while the taser-wielding Mall Cop hunts, carries, and books them into jail to score.</div>
-                  <div className="card-hub-tags">{['Unity', 'C#', 'Photon Pun', 'Asymmetric', 'Multiplayer', 'TypeScript'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
-                  {[coreEight, lobbyFive, coreTwo].map((src, i) => (
-                    <img key={i} src={src} alt="Mall Cop Madhouse" loading="lazy" onClick={() => openMedia(PROJECTS[3], i === 0 ? 2 : i === 1 ? 1 : 0)} />
-                  ))}
-                </div>
-                <CodeCard snippets={[CODE_SNIPPETS.mallcop, CODE_SNIPPETS.typescript_state]} />
-              </div>
-
-              {/* B-52 */}
-              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.currentTarget.click(); // Fires your existing click behavior
-                  }
-                }}
-                onClick={(e) => {
-                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-                  e.currentTarget.querySelector('.media-open-btn')?.click();
-                }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">VR Training · Multiplayer · USAF Whitepaper</div>
-                  <div className="card-hub-title">B-52 Training Suite — USAF</div>
-                  <div className="card-hub-desc">VR training platform (Unity) that cut B-52 crew training time by 95%, with a data-driven checklist system for procedural verification.</div>
-                  <div className="card-hub-tags">{['Unity', 'Photon', 'VR', 'Checklist Systems'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
-                  <img src={B52_USAF} alt="B-52 cockpit" onClick={() => openMedia(PROJECTS[5], 0)} />
-                  <img src={B52_internaltraining} alt="B-52 training" loading="lazy" onClick={() => openMedia(PROJECTS[5], 1)} />
-                </div>
-                <CodeCard snippet={CODE_SNIPPETS.b52} />
-              </div>
-
-              {/* Sensorama */}
-              <div className="project-card-hub" tabIndex={0} // Makes it focusable via Tab key
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    e.currentTarget.click(); // Fires your existing click behavior
-                  }
-                }}
-                onClick={(e) => {
-                  if (e.target.closest('.media-open-btn') || e.target.closest('.card-images-strip')) return;
-                  e.currentTarget.querySelector('.media-open-btn')?.click();
-                }}>                <div className="card-hub-header">
-                  <div className="card-hub-overline">Sensor-Driven AI · Adversary Design · OSU VR Lab</div>
-                  <div className="card-hub-title">Sensorama R&D</div>
-                  <div className="card-hub-desc">Research project piping live LiDAR, radar, and heat signature data into a game world — AI creatures react to real physical space in real time.</div>
-                  <div className="card-hub-tags">{['Unity', 'LiDAR', 'Environmental AI', 'OSU VR Lab'].map(t => <span key={t} className="card-hub-tag">{t}</span>)}</div>
-                </div>
-                <div className="card-images-strip" style={{ padding: '0 1rem 6px' }}>
-                  <img src={sensorama} alt="Sensorama" loading="lazy" onClick={() => openMedia(PROJECTS[6], 0)} />
-                  <img src={sensorama_Environment} alt="Sensorama environment" onClick={() => openMedia(PROJECTS[6], 1)} />
-                </div>                <CodeCard snippet={CODE_SNIPPETS.sensorama} />
-              </div>
-
-            </div>
-          </div>
-
-          {/* EXPERIENCE */}
-          <div className={`section-panel ${activeSection === 'experience' ? 'active' : ''}`} data-section="experience">
-            <div className="panel-header">
-              <div className="panel-icon">{SECTION_ICONS.experience}</div>
-              <div className="panel-title">Professional Experience</div>
-            </div>
-
-            {/* KING CROW STUDIOS */}
-            <div className="exp-entry" style={{ marginBottom: '2.5rem' }}>
-              <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>King Crow Studios</div>
-              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Gameplay Engineer</div>
-              <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>March 2022 — January 2026 · Remote</div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {[
-                  "Architected a data-driven checklist engine that dynamically verified procedural compliance for a real-time, multi-user VR training platform (Unity). This direct technical implementation cut crew training cycle times by 95% and was officially recognized in a USAF Whitepaper for reducing human procedural errors by 19%.",
-                  "Designed and deployed session/room-based multiplayer infrastructure utilizing Photon PUN across multiple client training programs, engineering strict authoritative state synchronization and optimized RPC pipelines for stable, low-latency replication under concurrent live loads across VR, desktop, and mobile platforms simultaneously.",
-                  "Contributed core gameplay engineering systems post-release to shipped Steam titles Necroball (Oct 2021, 91% positive) and Hive Slayer (Oct 2020, 94% positive, Free-to-Play), focusing on performance optimization, responsive game feel, and stable build deployment pipelines.",
-                  "Architected a suite of custom Unity Inspector and Unreal Engine editor tools driven by decoupled ScriptableObject systems. This empowering design framework allowed non-technical content designers to rapidly author, iterate, and balance complex combat data and enemy variables safely in-editor, boosting production velocity by removing engineering dependencies."
-                ].map((bullet, idx) => (
-                  <div key={idx} className="exp-bullet" style={{
-                    position: 'relative', paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
-                    color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)',
-                    boxShadow: 'inset 2px 0 0 rgba(204,0,238,0.1)'
-                  }}>
-                    {bullet.includes('Necroball') ? (
-                      <span>
-                        Contributed core gameplay engineering systems to shipped Steam titles <em>Necroball</em> (Oct 2021, 91% positive) and <em>Hive Slayer</em> (Oct 2020, 94% positive, Free-to-Play), focusing on performance optimization, responsive game feel, and stable build deployment pipelines.
-                      </span>
-                    ) : bullet}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, rgba(238,203,44,0.15), transparent)', marginBottom: '2rem' }} />
-
-            {/* VEDX SOLUTIONS */}
-            <div className="exp-entry" style={{ marginBottom: '2.5rem' }}>
-              <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>VedX Solutions</div>
-              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>VR Experience Developer</div>
-              <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>January 2021 — January 2022 · Remote</div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {[
-                  "Architected real-time VR simulations and interactive software (Unity, C#) for research clients, engineering a reusable component-based interaction framework — grab, socket, and multi-axis mechanical constraints — grounded in 3D spatial math.",
-                  "Designed and implemented a combat system for a VR prototype, including a timing-based sliding parry requiring precise real-time input handling."
-                ].map((bullet, idx) => (
-                  <div key={idx} className="exp-bullet" style={{
-                    paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
-                    color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)'
-                  }}>
-                    {bullet}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, rgba(238,203,44,0.15), transparent)', marginBottom: '2rem' }} />
-
-            {/* OREGON STATE UNIVERSITY */}
-            <div className="exp-entry">
-              <div className="exp-company" style={{ fontFamily: "'Cinzel', serif", fontSize: '1.15rem', fontWeight: 700, color: 'var(--gold-hi)', letterSpacing: '.06em', textTransform: 'uppercase' }}>Oregon State University — Kesterson VR Immersion Lab</div>
-              <div className="exp-role" style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem', letterSpacing: '.04em' }}>Lab Technician</div>
-              <div className="exp-dates" style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.1rem', marginBottom: '0.8rem', letterSpacing: '.02em' }}>September 2018 — June 2020</div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {[
-                  "Led development of Sensorama, a cross-institutional R&D capstone collaboration with the University of Stuttgart's robotics program: engineered a simulated real-time sensor-fusion pipeline (LiDAR, radar, and thermal data patterns) driving systemic AI creature behavior within a game environment.",
-                  "Designed and prototyped functional 3D action-RPG frameworks within both Unreal Engine and Unity, developing modular player ability pipelines, responsive hit-registration mechanics, and state-machine-driven creature AI combat behaviors.",
-                  "Modeled 3D environmental assets and props in Maya and Blender, while providing technical mentorship, code review, and real-time engine orientation to students integrating assets into VR pipelines."
-                ].map((bullet, idx) => (
-                  <div key={idx} className="exp-bullet" style={{
-                    paddingLeft: '1rem', lineHeight: '1.6', fontSize: '1rem',
-                    color: 'rgba(255,255,255,0.85)', borderLeft: '2px solid rgba(238,203,44,0.3)'
-                  }}>
-                    {bullet}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* SKILLS */}
-          <div className={`section-panel ${activeSection === 'skills' ? 'active' : ''}`} data-section="skills">
-            <div className="panel-header">
-              <div className="panel-icon">{SECTION_ICONS.skills}</div>
-              <div className="panel-title">Technical Proficiencies</div>
-            </div>
-
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '1.25rem',
-              width: '100%'
-            }}>
-              {[
-                ['Languages', 'C++ (Expert) · C# (Expert) · Blueprint · TypeScript · JavaScript · Lua · Python (Beginner)'],
-                ['Engines & Frameworks', 'Unreal Engine 5 · Unity (8+ yrs) · Gameplay Ability System (GAS) · Zenject / Vcontainment'],
-                ['Gameplay & Combat', 'Data-Driven Combat Frameworks · Combo Systems · Technical Pacing · Encounter Structure · Balance & Tuning'],
-                ['AI & Creature Systems', 'Coordinated Multi-Agent AI · Behavior Trees · Blackboards · State Machines · Engagement Slot Allocation'],
-                ['Architecture & Tooling', 'ScriptableObject Architecture · Custom Inspector Tooling · Extensible Developer Tooling · Modular State Machines'],
-                ['Networking & Platforms', 'Multiplayer Architecture · Authoritative State Sync (Photon) · VR / AR / XR · Cross-Platform Deployment'],
-                ['3D Art & Asset Pipelines', 'Maya · Blender · Animation Systems · Environment Modeling · Asset Optimization'],
-                ['Web & Infrastructure', 'React · Node.js · HTML/CSS · Vercel · SVG/CSS Motion Animation'],
-                ['Workflow & Versioning', 'Git · Plastic SCM · Perforce · Agile/Scrum Methodologies · Cross-Discipline Collaboration · Mentorship (Sensorama Team Lead, Lab Assistant Instructor)']
-              ].map(([label, items]) => (
-                <div key={label} className="panel-card" style={{
-                  padding: '1.25rem',
-                  borderRadius: '4px',
-                  background: 'linear-gradient(135deg, rgba(20,10,40,0.35) 0%, rgba(5,2,15,0.55) 100%)',
-                  border: '1px solid rgba(238,203,44,0.12)',
-                  borderLeft: '3px solid var(--magenta)', // Sharp magenta indicator accent line
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.75rem',
-                  transition: 'all 0.25s ease'
-                }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(238,203,44,0.3)';
-                    e.currentTarget.style.boxShadow = '0 0 14px rgba(204,0,238,0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(238,203,44,0.12)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}>
-
-                  {/* Category Label */}
-                  <div className="skill-group-label" style={{
-                    fontFamily: "'Cinzel', serif",
-                    fontSize: '0.88rem',
-                    fontWeight: 700,
-                    color: 'var(--gold-hi)',
-                    letterSpacing: '.06em',
-                    textTransform: 'uppercase'
-                  }}>
-                    {label}
-                  </div>
-
-                  {/* Tag Container */}
-                  <div className="skill-group-items" style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '0.4rem'
-                  }}>
-                    {items.split(' · ').map((item) => {
-                      // Highlights core expertise fields with a subtle background glow
-                      const isExpert = item.includes('(Expert)') || item.includes('5') || item.includes('8+ yrs') || item.includes('GAS');
-
-                      return (
-                        <span key={item} style={{
-                          fontSize: '0.78rem',
-                          padding: '0.2rem 0.5rem',
-                          borderRadius: '3px',
-                          background: isExpert ? 'rgba(204,0,238,0.12)' : 'rgba(255,255,255,0.03)',
-                          border: isExpert ? '1px solid rgba(204,0,238,0.25)' : '1px solid rgba(255,255,255,0.06)',
-                          color: isExpert ? '#fff' : 'rgba(255,255,255,0.8)',
-                          letterSpacing: '0.01em',
-                          whiteSpace: 'nowrap'
-                        }}>
-                          {item}
-                        </span>
-                      );
-                    })}
-                  </div>
-
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ABOUT */}
-          <div className={`section-panel ${activeSection === 'about' ? 'active' : ''}`} data-section="about">
-            <div className="panel-header">
-              <div className="panel-icon">{SECTION_ICONS.about}</div>
-              <div className="panel-title">About Me</div>
-            </div>
-
-            <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'flex-start', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
-              <div style={{ position: 'relative', flexShrink: 0 }}>
-                {/* Glow effect behind profile picture */}
-                <div style={{
-                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                  borderRadius: '50%', background: 'radial-gradient(circle, rgba(238,203,44,0.2) 0%, transparent 70%)',
-                  transform: 'scale(1.25)', zIndex: 1
-                }} />
-                <img src={profileImage} alt="Grayson Hammond" style={{
-                  width: 185, height: 185, borderRadius: '50%',
-                  objectFit: 'cover', border: '2px solid rgba(238,203,44,.5)',
-                  boxShadow: '0 0 24px rgba(238,203,44,.25)', position: 'relative', zIndex: 2
-                }} />
-              </div>
-
-              <div style={{ flex: 1, minWidth: 240 }}>
-                <p className="panel-text" style={{ lineHeight: '1.65', fontSize: '1.1rem', color: 'rgba(255,255,255,0.90)', marginBottom: '1rem' }}>
-                  Gameplay Engineer & Systems Designer with 8+ years of experience architecting extensible interactive frameworks. I specialize in building data-driven player mechanics, synchronized multiplayer architecture, and custom developer tooling that accelerates team production velocity by keeping design teams close to the asset data.
-                </p>
-                <p className="panel-text" style={{ lineHeight: '1.65', fontSize: '1.1rem', color: 'rgba(255,255,255,0.90)' }}>
-                  The driving philosophy behind my work is bridging deep technical execution with systemic responsiveness. I focus on creating interconnected worlds where every combat encounter, AI decision, and environment interaction feels naturally responsive—designing robust architecture that scales smoothly while preserving the invisible nuances of great game feel.
-                </p>
-              </div>
-            </div>
-
-            {/* CREDENTIALS SECTION */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', borderTop: '1px solid rgba(238,203,44,.15)', paddingTop: '2rem' }}>
-
-              {/* Epic Games Cert */}
-              <div style={{
-                padding: '1.2rem', borderRadius: '4px',
-                background: 'linear-gradient(135deg, rgba(20,10,40,0.4) 0%, rgba(5,2,15,0.6) 100%)',
-                border: '1px solid rgba(238,203,44,0.15)', borderLeft: '3px solid var(--gold-hi)'
-              }}>
-                <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.9rem', fontWeight: 700, color: '#fff', letterSpacing: '.04em', textTransform: 'uppercase' }}>
-                  Epic Games & Coursera
-                </div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem' }}>
-                  Game Design & Development with UE Professional Certificate
-                </div>
-              </div>
-
-              {/* Oregon State University */}
-              <div style={{
-                padding: '1.2rem', borderRadius: '4px',
-                background: 'linear-gradient(135deg, rgba(20,10,40,0.4) 0%, rgba(5,2,15,0.6) 100%)',
-                border: '1px solid rgba(238,203,44,0.15)', borderLeft: '3px solid var(--gold-hi)'
-              }}>
-                <div style={{ fontFamily: "'Cinzel', serif", fontSize: '0.9rem', fontWeight: 700, color: '#fff', letterSpacing: '.04em', textTransform: 'uppercase' }}>
-                  Oregon State University
-                </div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--magenta)', marginTop: '0.2rem' }}>
-                  B.A. Digital Communication Arts
-                </div>
-                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginTop: '0.3rem' }}>
-                  Game Development Specialization · Minor: History & Education
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* CONTACT */}
-          <div className={`section-panel ${activeSection === 'contact' ? 'active' : ''}`} data-section="contact">
-            <div className="panel-header">
-              <div className="panel-icon">{SECTION_ICONS.contact}</div>
-              <div className="panel-title">Get in Touch</div>
-            </div>
-
-            <p className="panel-text" style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.85)', marginBottom: '2rem' }}>
-              Available immediately for gameplay engineering, technical design, or systems architecture roles. Let’s connect via email, GitHub, or LinkedIn.
-            </p>
-
-            {/* Restructured Contact Links into a clean grid */}
-            <div className="contact-links" style={{
-              display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem'
-            }}>
-              {[
-                { href: "mailto:hammondsk.09@gmail.com", label: "hammondsk.09@gmail.com", icon: <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />, extra: <polyline points="22,6 12,13 2,6" /> },
-                { href: "tel:+15419731430", label: "(541) 973-1430", icon: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 9.81 19.79 19.79 0 0 1 .1 1.18 2 2 0 0 1 2.09 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /> },
-                { href: "https://github.com/Michamm79", label: "github.com/Michamm79", icon: <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />, target: "_blank" },
-                { href: "https://www.linkedin.com/in/michamm", label: "LinkedIn Profile", icon: <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />, extra: <rect x="2" y="9" width="4" height="12" />, target: "_blank" }
-              ].map((link, idx) => (
-                <a key={idx} href={link.href} target={link.target} rel={link.target ? "noopener noreferrer" : undefined} style={{
-                  display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem',
-                  borderRadius: '4px', background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(238,203,44,0.1)', color: '#fff', textDecoration: 'none',
-                  fontSize: '0.9rem', transition: 'all 0.25s ease'
-                }}
-                  // Adds instant clean interactive states via basic inline JS fallbacks if you don't use global CSS hover styling
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(238,203,44,0.04)';
-                    e.currentTarget.style.borderColor = 'rgba(238,203,44,0.3)';
-                    e.currentTarget.style.boxShadow = '0 0 12px rgba(238,203,44,0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
-                    e.currentTarget.style.borderColor = 'rgba(238,203,44,0.1)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: 'var(--gold-hi)' }}>
-                    {link.icon}
-                    {link.extra}
-                  </svg>
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-        </div>{/* /section-dropdown */}
-      </div>{/* /hub-page */}
-
-      {/* ── MEDIA MODAL ── */}
-      {selectedMedia && (
-        <div className="modal-overlay" onClick={() => setSelectedMedia(null)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedMedia(null)}><X size={16} /></button>
-            {(() => {
-              const { project, mediaIndex } = selectedMedia;
-              const m = project.media?.[mediaIndex];
-              return (
-                <>
-                  <div className="modal-title">{project.title}</div>
-                  <div className="modal-divider" />
-                  {m?.label && <p className="media-label-modal">{m.label}</p>}
-                  {project.recruiterHighlights?.length > 0 && (
-                    <div className="recruiter-box">
-                      <div className="recruiter-box-title">✦ Recruiter Highlights ✦</div>
-                      <ul>{project.recruiterHighlights.map((h, i) => <li key={i}>{h}</li>)}</ul>
-                    </div>
-                  )}
-                  {m && (m.type === 'image' || m.type === 'gif') ? (
-                    <img src={m.src} alt={m.label || 'media'} className="modal-media" />
-                  ) : m?.type === 'youtube' ? (
-                    (() => {
-                      const id = getYouTubeId(m.src);
-                      return id
-                        ? <iframe className="modal-media" src={`https://www.youtube.com/embed/${id}`}
-                          title={m.label || 'YouTube'} allowFullScreen
-                          allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" />
-                        : <div style={{ textAlign: 'center', opacity: .7 }}>Couldn't parse YouTube link.</div>;
-                    })()
-                  ) : m ? (
-                    <video className="modal-media" controls autoPlay playsInline poster={m.poster || project.thumbnail} src={m.src} />
-                  ) : null}
-                  <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '.5rem' }}>
-                    {project.github && (
-                      <a className="code-btn-modal" href={project.github} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
-                        <ExternalLink size={14} /> View GitHub
-                      </a>
-                    )}
-                    {project.codeDownload && (
-                      <a className="code-btn-modal" href={project.codeDownload} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
-                        <Download size={14} /> Download Code
-                      </a>
-                    )}
-                  </div>
-                </>
-              );
-            })()}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
 // ─────────────────────────────────────────────
-// CODE CARD sub-component
+// MAIN COMPONENT
 // ─────────────────────────────────────────────
-function CodeCard({ snippet, snippets, github, codeDownload }) {
-  const [open, setOpen] = useState(false);
-  const [tab, setTab] = useState(0);
-  // Accept either a single snippet or an array
-  const list = snippets || [snippet];
-  const active = list[tab];
-
-  const highlight = (code) => {
-    return code
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  };
+export default function Portfolio() {
+  const [activeProject, setActiveProject] = useState(null);
 
   return (
-    <div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem' }}>
-        <button className="media-open-btn" onClick={() => setOpen(v => !v)}>
-          <Eye size={12} /> {open ? 'Hide Code' : 'View Code & Details'}
-        </button>
-        {github && (
-          <a className="media-open-btn" href={github} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
-            <ExternalLink size={12} /> GitHub
-          </a>
-        )}
-        {codeDownload && (
-          <a className="media-open-btn" href={codeDownload} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
-            <Download size={12} /> Download
-          </a>
-        )}
+    <div style={{ minHeight: '100vh', background: '#050308', color: '#fff' }}>
+      <GlobalStyles />
+
+      {/* background stars, sit behind everything */}
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+        {STARS.map((s) => (
+          <div key={s.id} style={{
+            position: 'fixed', borderRadius: '50%', width: s.size, height: s.size,
+            left: `${s.left}%`, top: `${s.top}%`, background: s.color, opacity: s.opacity,
+          }} />
+        ))}
       </div>
-      {open && (
-        <div style={{ animation: 'card-in .25s ease both' }}>
-          {list.length > 1 && (
-            <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid rgba(238,203,44,.12)', marginBottom: 0 }}>
-              {list.map((s, i) => (
-                <button key={i} onClick={(e) => { e.stopPropagation(); setTab(i); }} style={{
-                  padding: '.3rem .85rem', background: tab === i ? 'rgba(238,203,44,.10)' : 'transparent',
-                  border: 'none', borderBottom: tab === i ? '2px solid var(--gold)' : '2px solid transparent',
-                  color: tab === i ? 'var(--gold-hi)' : 'rgba(255,255,255,.45)',
-                  fontFamily: "'JetBrains Mono',monospace", fontSize: '.55rem',
-                  cursor: 'pointer', transition: 'all .18s', letterSpacing: '.04em',
-                }}>
-                  {s.file}
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="card-body-hub">
-            <div className="card-code-col">
-              <div className="code-file-tab">
-                <div className={`code-lang-dot ${active.lang === 'cpp' ? 'cpp' : active.lang === 'typescript' ? 'typescript' : 'csharp'}`} />
-                <span className="code-file-name">{active.file}</span>
-              </div>
-              <pre className="card-code-pre" dangerouslySetInnerHTML={{ __html: highlight(active.code) }} />
-            </div>
-            <div className="card-detail-col">
-              <div className="card-detail-title">What's going on here</div>
-              {active.bullets.map((b, i) => <div key={i} className="card-detail-item">{b}</div>)}
-            </div>
+
+      {/* ── NAV ── */}
+      <nav className="nav">
+        <div className="nav-name">Grayson Hammond</div>
+        <ul className="nav-links">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      {/* ── HERO ── */}
+      <section className="hero">
+        <div className="hero-bg" />
+        <div className="hero-content">
+          <div className="hero-eyebrow">Gameplay Engineer</div>
+          <h1 className="hero-name">Grayson Hammond</h1>
+          <p className="hero-tagline">Architecting the systems behind the worlds you'll lose yourself in</p>
+          <div className="hero-ctas">
+            <a href="#work" className="btn btn-primary">View my work</a>
+            <a href="#work" className="btn btn-adventure">Adventure awaits</a>
+          </div>
+          <div className="cta-band">
+            <span>8+ years · Unreal Engine 5 · Unity · C++ · C#</span>
           </div>
         </div>
-      )}
+      </section>
+
+      {/* ── WORK: three columns ── */}
+      <section className="work" id="work">
+        <div className="work-header">
+          <div className="work-title">Featured Work</div>
+          <div className="work-sub">Released builds · Active development · Where it was forged</div>
+        </div>
+
+        <div className="columns">
+          {/* Released */}
+          <div className="col col-released">
+            <div className="col-label"><span className="tag">//</span><span className="name">Released</span></div>
+            {RELEASED.map((r) => (
+              <div className="rel-card" key={r.title}>
+                <div className="rel-thumb">
+                  {r.thumbnail
+                    ? <img src={r.thumbnail} alt={r.title} />
+                    : <span className="rel-thumb-fallback">{r.thumbLabel}</span>}
+                </div>
+                <div className="rel-body">
+                  <div className="rel-title">{r.title}</div>
+                  <div className="rel-desc">{r.desc}</div>
+                  <a href={r.link} target="_blank" rel="noopener noreferrer" className="rel-link">{r.linkLabel} →</a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Projects */}
+          <div className="col col-middle">
+            <div className="col-label"><span className="tag">//</span><span className="name">Projects</span></div>
+            {PROJECTS.map((p) => (
+              <div className="proj-card" key={p.id} onClick={() => setActiveProject(p)}>
+                <div className="proj-overline">
+                  {p.overline}
+                  {p.inDevelopment && <span className="dev-badge">In Development</span>}
+                </div>
+                <div className="proj-title">{p.title}</div>
+                <div className="proj-desc">{p.description.slice(0, 130)}{p.description.length > 130 ? '…' : ''}</div>
+                <div className="proj-tags">
+                  {p.tags.map((t) => <span key={t} className="proj-tag">{t}</span>)}
+                </div>
+                <div className="proj-code-toggle"><Eye size={12} /> View details</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Experience */}
+          <div className="col col-exp">
+            <div className="col-label"><span className="tag">//</span><span className="name">Experience</span></div>
+            {EXPERIENCE.map((e) => (
+              <div className="exp-item" key={e.company}>
+                <div className="exp-company">{e.company}</div>
+                <div className="exp-role">{e.role}</div>
+                <div className="exp-dates">{e.dates}</div>
+                <div className="exp-summary">{e.summary}</div>
+                {e.metric && <span className="exp-metric">{e.metric}</span>}
+                <a href="#experience" className="exp-more">Full history →</a>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Published Titles */}
+        <div className="work-header" style={{ marginTop: '4.5rem' }}>
+          <div className="work-title">Published Titles</div>
+          <div className="work-sub">Shipped titles from studio engagements</div>
+        </div>
+        <div className="pro-grid">
+          {PUBLISHED.map((pub) => (
+            <div className="pro-card" key={pub.title}>
+              <div className="pro-thumb">{pub.thumbLabel}</div>
+              <div className="pro-title">{pub.title}</div>
+              <div className="pro-role">{pub.role}</div>
+              <div className="pro-desc">{pub.desc}</div>
+              <a href={pub.link} target="_blank" rel="noopener noreferrer" className="pro-link">{pub.linkLabel} →</a>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── EXPERIENCE ── */}
+      <section className="sec sec-experience" id="experience">
+        <div className="sec-inner">
+          <div className="sec-title">Professional Experience</div>
+          <div className="sec-sub">// where the systems were built</div>
+          {EXPERIENCE_FULL.map((e) => (
+            <div className="exp-full-item" key={e.company}>
+              <div className="exp-full-company">{e.company}</div>
+              <div className="exp-full-role">{e.role}</div>
+              <div className="exp-full-dates">{e.dates}</div>
+              {e.bullets.map((b, i) => (
+                <div className="exp-full-bullet" key={i}>{b}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── SKILLS ── */}
+      <section className="sec sec-skills" id="skills">
+        <div className="sec-inner">
+          <div className="sec-title">Technical Proficiencies</div>
+          <div className="sec-sub">// the toolkit</div>
+          <div className="skill-grid">
+            {SKILLS.map(([label, items]) => (
+              <div className="skill-card" key={label}>
+                <div className="skill-card-label">{label}</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.4rem' }}>
+                  {items.split(' · ').map((item) => (
+                    <span key={item} className="skill-tag">{item}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── ABOUT ── */}
+      <section className="sec sec-about" id="about">
+        <div className="sec-inner">
+          <div className="sec-title">About Me</div>
+          <div className="sec-sub">// the person behind the code</div>
+          <div className="about-layout">
+            <div className="about-portrait-wrap">
+              <div className="about-portrait-glow" />
+              <img src={profileImage} alt="Grayson Hammond" className="about-portrait" />
+            </div>
+            <div style={{ flex: 1, minWidth: 260 }}>
+              {ABOUT.bio.map((p, i) => (
+                <p className="about-bio" key={i}>{p}</p>
+              ))}
+            </div>
+          </div>
+          <div className="about-creds">
+            {ABOUT.credentials.map((c) => (
+              <div className="cred-card" key={c.org}>
+                <div className="cred-org">{c.org}</div>
+                <div className="cred-detail">{c.detail}</div>
+                {c.sub && <div className="cred-sub">{c.sub}</div>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTACT ── */}
+      <section className="sec sec-contact" id="contact">
+        <div className="sec-inner">
+          <div className="sec-title">Get in Touch</div>
+          <div className="sec-sub">// let's build something</div>
+          <p className="contact-lead">Available immediately for gameplay engineering, technical design, or systems architecture roles. Let's connect via email, GitHub, or LinkedIn.</p>
+          <div className="contact-grid">
+            {CONTACT_LINKS.map((link) => {
+              const Icon = CONTACT_ICONS[link.kind] || ExternalLink;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target={link.target}
+                  rel={link.target ? 'noopener noreferrer' : undefined}
+                  className="contact-card"
+                >
+                  <Icon size={16} />
+                  {link.label}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </div>
   );
 }
