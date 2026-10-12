@@ -570,15 +570,15 @@ export default function Portfolio() {
       <section className="hero">
         <div className="hero-bg" />
         <div className="hero-content">
-          <div className="hero-eyebrow">Gameplay Engineer</div>
+          <div className="hero-eyebrow">Gameplay Engineer | Software Developer</div>
           <h1 className="hero-name">Grayson Hammond</h1>
-          <p className="hero-tagline">Architecting the systems behind the worlds you'll lose yourself in</p>
+          <p className="hero-tagline">Architecting worlds you can love and lose yourself in</p>
           <div className="hero-ctas">
             <a href="#work" className="btn btn-primary">View my work</a>
             <a href="#work" className="btn btn-adventure">Adventure awaits</a>
           </div>
           <div className="cta-band">
-            <span>8+ years · Unreal Engine 5 · Unity · C++ · C#</span>
+            <span>8+ years · Unreal Engine · Unity · C++ · C#</span>
           </div>
         </div>
       </section>
