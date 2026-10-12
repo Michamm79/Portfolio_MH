@@ -103,14 +103,6 @@ const RELEASED = [
     thumbnail: Valtara_Visual,
   },
   {
-    title: "Witch's Brew",
-    thumbLabel: 'WB',
-    desc: 'Discovery-mixing pixel game, procedurally rendered.',
-    link: 'https://github.com/Michamm79/WitchsBrew',
-    linkLabel: 'View repo',
-    thumbnail: WitchsBrew_Visual,
-  },
-  {
     title: 'B-52 Training Suite',
     thumbLabel: 'B52',
     desc: 'USAF-whitepaper-certified VR training platform.',
@@ -124,7 +116,7 @@ const RELEASED = [
     desc: 'Trial-based mobile action RPG — abducted, ranked, made to entertain.',
     link: 'https://michamm79.github.io/Velthiros/',
     linkLabel: 'Play in browser',
-    thumbnail: MobilePrototypes_Visual,
+    thumbnail: Velthiros_Visual,
   },
   {
     title: 'Project Maelstrom Mobile',
@@ -133,6 +125,14 @@ const RELEASED = [
     link: 'https://michamm79.github.io/Project-Maelstrom-Mobile/',
     linkLabel: 'Play in browser',
     thumbnail: MobilePrototypes_Visual,
+  },
+  {
+    title: "Witch's Brew",
+    thumbLabel: 'WB',
+    desc: 'Discovery-mixing pixel game, procedurally rendered.',
+    link: 'https://github.com/Michamm79/WitchsBrew',
+    linkLabel: 'View repo',
+    thumbnail: WitchsBrew_Visual,
   },
 ];
 
